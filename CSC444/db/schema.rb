@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171008233405) do
+ActiveRecord::Schema.define(version: 20171009163340) do
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer "reviewID"
+    t.boolean "isTeen"
+    t.boolean "anonymous"
+    t.string "title"
+    t.date "date"
+    t.integer "helpful"
+    t.integer "teenID"
+    t.integer "clientID"
+    t.text "body"
+    t.integer "stars"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "teens", force: :cascade do |t|
     t.string "fname"

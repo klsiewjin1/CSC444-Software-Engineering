@@ -1,4 +1,18 @@
 <h1> Sign-up page for new Teens </h1>
+<p><%= @x %></p>
+<% if @teen.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@teen.errors.count, "error") %> prohibited
+        this teen from being saved:
+      </h2>
+      <ul>
+        <% @teen.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
 <%= form_with scope: :teen, url: teens_path, local: true do |form| %>
   <p>

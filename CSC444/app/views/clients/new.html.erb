@@ -1,1 +1,60 @@
-<h1>Clients - New</h1>
+<h1>New Clients</h1>
+<p><%= form_with scope: :client, url: clients_path, local: true do |form| %>
+  <p>
+    <%= form.label :"First Name" %><br>
+    <%= form.text_field :fname %>
+  </p>
+ 
+  <p>
+    <%= form.label :"Last Name" %><br>
+    <%= form.text_field :lname %>
+  </p>
+
+  <p>
+    <%= form.label :"Birth Date" %><br>
+    <%= form.text_field :bdate %>
+  </p> 
+
+<h2>Address Fields</h2>
+
+  <p>
+    <%= form.label :"State" %><br>
+    <%= form.text_field :state %>
+  </p>
+
+  <p>
+    <%= form.label :"Street Number" %><br>
+    <%= form.text_field :strnum %>
+  </p>  
+
+  <p>
+    <%= form.label :"Postal Code" %><br>
+    <%= form.text_field :pcode %>
+  </p>  
+ 
+  <p>
+    <%= form.label :"City" %><br>
+    <%= form.text_field :city %>
+  </p>  
+
+  <p>
+    <%= form.label :"Country" %><br>
+    <%= form.text_field :country %>
+  </p>  
+
+<h2>Contact info</h2>
+
+  <p>
+    <%= form.label :"Email Address" %><br>
+    <%= form.text_field :email %>
+  </p>  
+
+  <p>
+    <%= form.label :"Cell Phone" %><br>
+    <%= form.text_field :cellphone %>
+  </p>   
+
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

@@ -10,18 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171010030801) do
+ActiveRecord::Schema.define(version: 20171010032611) do
 
-  create_table "reviews", force: :cascade do |t|
-    t.boolean "isTeen"
-    t.boolean "anonymous"
-    t.string "title"
-    t.date "date"
-    t.integer "helpful"
-    t.integer "teen_id"
-    t.integer "client_id"
-    t.text "body"
-    t.integer "stars"
+  create_table "clients", force: :cascade do |t|
+    t.string "fname"
+    t.string "lname"
+    t.string "bdate"
+    t.string "state"
+    t.string "strnum"
+    t.string "pcode"
+    t.string "city"
+    t.string "country"
+    t.string "email"
+    t.string "cellphone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

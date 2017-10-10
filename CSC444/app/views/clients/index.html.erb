@@ -1,1 +1,19 @@
-<h1>Clients - Index</h1>
+<h1>Current Clients</h1>
+ 
+<table>
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+  </tr>
+ 
+  <% @clients.each do |client| %>
+    <tr>
+      <td><%= client.fname %></td>
+      <td><%= client.lname %></td>
+      <td><%= link_to 'status', client_path(client) %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to 'Become a new client!', new_client_path %>
+

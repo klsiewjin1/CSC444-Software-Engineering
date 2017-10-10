@@ -2,6 +2,13 @@ class ClientsController < ApplicationController
 	def new
 	end
 
+	def show
+		@client = Client.find(params[:id])
+	end
+
+	def index
+		@clients= Client.all
+	end
 	def create
 		@client = Client.new(client_params)
 

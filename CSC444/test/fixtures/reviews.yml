@@ -1,25 +1,23 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  reviewID: 1
   isTeen: false
   anonymous: false
   title: MyString
-  date: 2017-10-09
+  date: 2017-10-10
   helpful: 1
-  teenID: 1
-  clientID: 1
+  teen_id: 1
+  client_id: 1
   body: MyText
   stars: 1
 
 two:
-  reviewID: 1
   isTeen: false
   anonymous: false
   title: MyString
-  date: 2017-10-09
+  date: 2017-10-10
   helpful: 1
-  teenID: 1
-  clientID: 1
+  teen_id: 1
+  client_id: 1
   body: MyText
   stars: 1

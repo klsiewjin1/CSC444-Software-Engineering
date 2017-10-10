@@ -10,17 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171009163340) do
+ActiveRecord::Schema.define(version: 20171010030801) do
 
   create_table "reviews", force: :cascade do |t|
-    t.integer "reviewID"
     t.boolean "isTeen"
     t.boolean "anonymous"
     t.string "title"
     t.date "date"
     t.integer "helpful"
-    t.integer "teenID"
-    t.integer "clientID"
+    t.integer "teen_id"
+    t.integer "client_id"
     t.text "body"
     t.integer "stars"
     t.datetime "created_at", null: false

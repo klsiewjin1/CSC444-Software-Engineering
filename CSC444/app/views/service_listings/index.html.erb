@@ -1,2 +1,16 @@
-<h1>ServiceListings#index</h1>
-<p>Find me in app/views/service_listings/index.html.erb</p>
+
+<h1>All Service Listings</h1>
+
+<table>
+  <tr>
+    <th>Client Name</th>
+    <th>Service</th>
+  </tr>
+  
+  <% @service_listings.each do |service_listing| %>
+  <tr>
+    <td><%= service_listing.clientID %></td>
+    <td><%= service_listing.serviceID %></td>
+  </tr>
+  <% end %>
+</table>

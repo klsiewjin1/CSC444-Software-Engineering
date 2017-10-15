@@ -1,4 +1,4 @@
-<h1>Registration Complete</h1>
+<h1>Client Profile</h1>
 <p>
   <strong>First Name:</strong>
   <%= @client.fname %>
@@ -9,11 +9,11 @@
   <%= @client.lname %>
 </p>
 
-<h2>Client Current Listings</h2>
-<p>
-  <%= ServiceListing.where(:clientID => @client.id).pluck(:serviceID) %>
-</p>
-
+<h2>Current Client Service Listings</h2>
+  <p><% for servID in ServiceListing.where(:clientID => @client.id).pluck(:serviceID) %>
+    <%= Service.find(servID).name %>
+  </p>
+  <% end %>
 
 <h2>Register for a new service</h2>
 <p><%= form_with scope: :service_listing, url: service_listings_path, local: true do |form| %>

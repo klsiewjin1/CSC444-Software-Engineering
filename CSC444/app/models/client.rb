@@ -1,4 +1,4 @@
-class Teen < User
+class Client < User
   
   # Make this map to just use the User stuff
   def self.model_name

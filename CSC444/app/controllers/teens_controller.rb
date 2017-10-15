@@ -1,37 +1,74 @@
-# Exposes the Teenager entity
 class TeensController < ApplicationController
-	
-	def initialize 
-		# this becomes accessbile by all the endpoints views (erb)
-		@x = 6
-	end
+  before_action :set_teen, only: [:show, :edit, :update, :destroy]
 
-	def index
-		@teens = Teen.all
-	end
+  # GET /teens
+  # GET /teens.json
+  def index
+    @teens = Teen.all
+  end
 
-	def show
-		@teen = Teen.find(params[:id])
-	end
+  # GET /teens/1
+  # GET /teens/1.json
+  def show
+  end
 
-	def new
-		@teen = Teen.new
-	end
+  # GET /teens/new
+  def new
+    @teen = Teen.new
+  end
 
-	def create
-		@teen = Teen.new(teen_params)
-		
-		result = @teen.save
-		if result 
-			redirect_to teens_path
-		else
-			render 'new'
-		end
-	end	
+  # GET /teens/1/edit
+  def edit
+  end
 
-	private
-	# The params that a teen could have. Excludes all other attributes
-	def teen_params
-    	params.require(:teen).permit(:fname, :lname)
-  	end
+  # POST /teens
+  # POST /teens.json
+  def create
+    @teen = Teen.new(teen_params)
+
+    respond_to do |format|
+      if @teen.save
+        format.html { redirect_to @teen, notice: 'Teen was successfully created.' }
+        format.json { render :show, status: :created, location: @teen }
+      else
+        format.html { render :new }
+        format.json { render json: @teen.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /teens/1
+  # PATCH/PUT /teens/1.json
+  def update
+    respond_to do |format|
+      if @teen.update(teen_params)
+        format.html { redirect_to @teen, notice: 'Teen was successfully updated.' }
+        format.json { render :show, status: :ok, location: @teen }
+      else
+        format.html { render :edit }
+        format.json { render json: @teen.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /teens/1
+  # DELETE /teens/1.json
+  def destroy
+    @teen.destroy
+    respond_to do |format|
+      format.html { redirect_to teens_url, notice: 'Teen was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_teen
+      @teen = Teen.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def teen_params
+      params.fetch(:teen, {})
+    end
 end

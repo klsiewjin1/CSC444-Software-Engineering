@@ -1,13 +1,8 @@
 Rails.application.routes.draw do
-  
-  
-  get 'welcome/index'
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
-  resources :reviews
-  resources :teens
   resources :clients
-
+  resources :teens
+  resources :users
+  get 'welcome/index'
   root 'welcome#index'
 end

@@ -1,6 +1,8 @@
-class CreateTeens < ActiveRecord::Migration[5.1]
+class CreateUsers < ActiveRecord::Migration[5.1]
   def change
-    create_table :teens do |t|
+    create_table :users do |t|
+      t.string :type
+      t.string :username
       t.string :fname
       t.string :lname
       t.string :state
@@ -10,7 +12,7 @@ class CreateTeens < ActiveRecord::Migration[5.1]
       t.string :country
       t.string :email
       t.string :cellphone
-      t.string :bdate
+      t.date :bdate
 
       t.timestamps
     end

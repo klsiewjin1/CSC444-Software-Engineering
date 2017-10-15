@@ -4,6 +4,7 @@ class ClientsController < ApplicationController
 
 	def show
 		@client = Client.find(params[:id])
+		@services = Service.all
 	end
 
 	def index
@@ -21,7 +22,7 @@ class ClientsController < ApplicationController
 	end
 
 	private
-	# The params that a teen could have. Excludes all other attributes
+	# The params that a client could have. Excludes all other attributes
 	def client_params
     	params.require(:client).permit(:fname, :lname)
   	end

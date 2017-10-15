@@ -3,14 +3,16 @@
 
 <table>
   <tr>
-    <th>Client Name</th>
+    <th>Client first name</th>
+    <th>Client last name</th>
     <th>Service</th>
   </tr>
   
   <% @service_listings.each do |service_listing| %>
   <tr>
-    <td><%= service_listing.clientID %></td>
-    <td><%= service_listing.serviceID %></td>
+    <td><%= Client.find(service_listing.clientID).fname%></td>
+    <td><%= Client.find(service_listing.clientID).lname%></td>
+    <td><%= Service.find(service_listing.serviceID).name %></td>
   </tr>
   <% end %>
 </table>

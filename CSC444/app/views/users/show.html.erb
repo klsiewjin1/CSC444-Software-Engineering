@@ -1,48 +1,32 @@
 <p id="notice"><%= notice %></p>
 
+<% provide(:title, @user.username) %>
+<div class="siderow">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+      <%= gravatar_for @user %>
+      <%= @user.username %>
+      </h1>
+    </section>
+  </aside>
+</div>
+
+<div class="user_details">
 <p>
   <strong>Type:</strong>
   <%= @user.type %>
 </p>
 
 <p>
-  <strong>Username:</strong>
-  <%= @user.username %>
-</p>
-
-<p>
-  <strong>Fname:</strong>
+  <strong>Full Name:</strong>
   <%= @user.fname %>
-</p>
-
-<p>
-  <strong>Lname:</strong>
   <%= @user.lname %>
 </p>
 
 <p>
-  <strong>State:</strong>
-  <%= @user.state %>
-</p>
-
-<p>
-  <strong>Streetnum:</strong>
-  <%= @user.streetnum %>
-</p>
-
-<p>
-  <strong>Pcode:</strong>
-  <%= @user.pcode %>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @user.city %>
-</p>
-
-<p>
-  <strong>Country:</strong>
-  <%= @user.country %>
+  <strong>Address:</strong>
+  <%= @user.streetnum%>, <%=@user.city %>, <%= @user.state %>, <%= @user.country%> <%=@user.pcode %>
 </p>
 
 <p>
@@ -59,6 +43,7 @@
   <strong>Bdate:</strong>
   <%= @user.bdate %>
 </p>
+</div>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

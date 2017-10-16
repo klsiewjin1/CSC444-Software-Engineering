@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  root 'welcome#index'
+ 
+  get 'welcome/index'
+  
+  get 'signup', to: 'users#new'
   
   resources :clients
   resources :services
@@ -6,6 +11,4 @@ Rails.application.routes.draw do
 
   resources :teens
   resources :users
-  get 'welcome/index'
-  root 'welcome#index'
 end

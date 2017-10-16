@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 class Client < User
   
   # Make this map to just use the User stuff
@@ -6,7 +5,4 @@ class Client < User
     User.model_name
   end
   
-=======
-class Client < ApplicationRecord
->>>>>>> master
 end

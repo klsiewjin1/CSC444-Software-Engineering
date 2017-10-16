@@ -12,21 +12,6 @@
 
 ActiveRecord::Schema.define(version: 20171015233206) do
 
-  create_table "clients", force: :cascade do |t|
-    t.string "fname"
-    t.string "lname"
-    t.string "bdate"
-    t.string "state"
-    t.string "strnum"
-    t.string "pcode"
-    t.string "city"
-    t.string "country"
-    t.string "email"
-    t.string "cellphone"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "reviews_tables", force: :cascade do |t|
     t.integer "reviewerID"
     t.integer "revieweeID"
@@ -62,6 +47,7 @@ ActiveRecord::Schema.define(version: 20171015233206) do
     t.string "email"
     t.string "cellphone"
     t.date "bdate"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

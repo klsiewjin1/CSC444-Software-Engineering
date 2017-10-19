@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171015233206) do
+ActiveRecord::Schema.define(version: 20171019204250) do
+
+  create_table "clients", force: :cascade do |t|
+    t.string "fname"
+    t.string "lname"
+    t.string "bdate"
+    t.string "state"
+    t.string "strnum"
+    t.string "pcode"
+    t.string "city"
+    t.string "country"
+    t.string "email"
+    t.string "cellphone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "reviews_tables", force: :cascade do |t|
     t.integer "reviewerID"
@@ -34,8 +49,23 @@ ActiveRecord::Schema.define(version: 20171015233206) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "teens", force: :cascade do |t|
+    t.string "fname"
+    t.string "lname"
+    t.string "state"
+    t.string "streetnum"
+    t.string "pcode"
+    t.string "city"
+    t.string "country"
+    t.string "email"
+    t.string "cellphone"
+    t.string "bdate"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
-    t.string "type"
+    t.string "usertype"
     t.string "username"
     t.string "fname"
     t.string "lname"

@@ -16,14 +16,17 @@
       <%= f.label :email %>
       <%= f.email_field :email %>
 
+      <%= f.label :email_confirmation, "Email Confirmation" %>
+      <%= f.email_field :email_confirmation %>
+
       <%= f.label :password %>
       <%= f.password_field :password %>
 
-      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.label :password_confirmation, "Password Confirmation" %>
       <%= f.password_field :password_confirmation %>
       
       <%= f.label :usertype %>
-      <%= f.text_field :usertype %>
+      <%= f.select :usertype, [['Client', 'client'], ['Teenager', 'teenager']] %>
 
       <br><%= f.submit "Create my account", class: "btn btn-primary" %>
     <% end %>

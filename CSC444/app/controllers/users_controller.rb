@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  skip_before_action :require_login, only: [:new, :create]
 
   # GET /users
   # GET /users.json
@@ -28,6 +29,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        # login user after they sign up so they can use the site right away
+        login(@user)
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
@@ -69,6 +72,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:usertype, :username, :fname, :lname, :state, :streetnum, :pcode, :city, :country, :email, :cellphone, :bdate, :password, :password_confirmation)
+      params.require(:user).permit(:usertype, :username, :fname, :lname, :state, :streetnum, :pcode, :city, :country, :email, :cellphone, :bdate, :password, :password_confirmation, :email_confirmation)
     end
 end

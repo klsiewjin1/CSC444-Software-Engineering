@@ -11,6 +11,10 @@
     <!-- Temporary display showing login status -->
     <% if !current_user.nil? %>
       <strong>Current logged in user: <%= current_user[:username] %></strong>
+      <br/>
+      <strong>Usertype: <%= current_user[:usertype] %></strong>
+      <br/>
+      <strong><%= link_to("Click here to logout", logout_path, method: :delete) %></strong>
     <% else %>
       <strong>No user logged in! <%= link_to "Click here to login", login_path %></strong>
     <% end %>

@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20171025024342) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "reviews_tables", force: :cascade do |t|
+  create_table "reviews", force: :cascade do |t|
     t.integer "reviewerID"
     t.integer "revieweeID"
     t.text "review"

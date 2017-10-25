@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171019204250) do
+ActiveRecord::Schema.define(version: 20171025024342) do
 
   create_table "clients", force: :cascade do |t|
     t.string "fname"
@@ -36,9 +36,26 @@ ActiveRecord::Schema.define(version: 20171019204250) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "service_listing_approvals", force: :cascade do |t|
+    t.integer "serviceListingID"
+    t.integer "teenID"
+    t.boolean "approved"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "service_listing_groups", force: :cascade do |t|
+    t.integer "client_id"
+    t.integer "service_id"
+    t.float "hourly_rate"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "service_listings", force: :cascade do |t|
-    t.integer "clientID"
-    t.integer "serviceID"
+    t.integer "service_listing_group_id"
+    t.date "task_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  clientID: 1
+  serviceID: 1
+  hourlyRate: 1.5
+  description: MyString
+
+two:
+  clientID: 1
+  serviceID: 1
+  hourlyRate: 1.5
+  description: MyString

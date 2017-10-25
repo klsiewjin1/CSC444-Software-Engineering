@@ -6,13 +6,17 @@
     <th>Client first name</th>
     <th>Client last name</th>
     <th>Service</th>
+    <th>Hourly Rate</th>
+    <th>Task Date</th>
   </tr>
   
   <% @service_listings.each do |service_listing| %>
   <tr>
-    <td><%= Client.find(service_listing.clientID).fname%></td>
-    <td><%= Client.find(service_listing.clientID).lname%></td>
-    <td><%= Service.find(service_listing.serviceID).name %></td>
+    <td><%= User.find(service_listing.service_listing_group.client_id).fname %></td>
+    <td><%= User.find(service_listing.service_listing_group.client_id).lname %></td>
+    <td><%= Service.find(service_listing.service_listing_group.service_id).name %></td>
+    <td><%= service_listing.service_listing_group.hourly_rate %></td>
+    <td><%= service_listing.task_date %></td>
   </tr>
   <% end %>
 </table>

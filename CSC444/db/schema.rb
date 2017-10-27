@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171025024342) do
+ActiveRecord::Schema.define(version: 20171027170017) do
 
   create_table "clients", force: :cascade do |t|
     t.string "fname"
@@ -28,6 +28,16 @@ ActiveRecord::Schema.define(version: 20171025024342) do
   end
 
   create_table "reviews", force: :cascade do |t|
+    t.integer "reviewer_id"
+    t.integer "reviewee_id"
+    t.text "review"
+    t.integer "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "service_id"
+  end
+
+  create_table "reviews_tables", force: :cascade do |t|
     t.integer "reviewerID"
     t.integer "revieweeID"
     t.text "review"
@@ -37,8 +47,8 @@ ActiveRecord::Schema.define(version: 20171025024342) do
   end
 
   create_table "service_listing_approvals", force: :cascade do |t|
-    t.integer "serviceListingID"
-    t.integer "teenID"
+    t.integer "service_listing_id"
+    t.integer "teen_id"
     t.boolean "approved"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -82,12 +92,12 @@ ActiveRecord::Schema.define(version: 20171025024342) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "usertype"
+    t.string "user_type"
     t.string "username"
     t.string "fname"
     t.string "lname"
     t.string "state"
-    t.string "streetnum"
+    t.string "address"
     t.string "pcode"
     t.string "city"
     t.string "country"

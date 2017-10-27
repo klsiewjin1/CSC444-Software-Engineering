@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  validates :usertype, presence: true
+  validates :user_type, presence: true
   validates :username, uniqueness: true
 
 

@@ -5,4 +5,10 @@
 <%= link_to 'My Profile', @current_user %>
 <br/>
 <%= link_to 'Service Listings', controller: 'service_listings' %>
+<br/>
+
+<% if isclient %>
+  <%= link_to 'Add a new service posting!', '#' %>
+<% end %>
+
 

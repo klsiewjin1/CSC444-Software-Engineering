@@ -3,6 +3,8 @@
 
 <table>
   <tr>
+    <th>Client ID</th>
+    <th>ServiceListingGroup ID</th>
     <th>Client first name</th>
     <th>Client last name</th>
     <th>Service</th>
@@ -12,6 +14,8 @@
   
   <% @service_listings.each do |service_listing| %>
   <tr>
+    <td><%= User.find(service_listing.service_listing_group.client_id).id %></td>
+    <td><%= ServiceListingGroup.find(service_listing.service_listing_group_id).id %></td>
     <td><%= User.find(service_listing.service_listing_group.client_id).fname %></td>
     <td><%= User.find(service_listing.service_listing_group.client_id).lname %></td>
     <td><%= Service.find(service_listing.service_listing_group.service_id).name %></td>

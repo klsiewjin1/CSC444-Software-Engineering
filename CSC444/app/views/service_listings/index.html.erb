@@ -10,6 +10,7 @@
     <th>Service</th>
     <th>Hourly Rate</th>
     <th>Task Date</th>
+    <th>Link</th>
   </tr>
   
   <% @service_listings.each do |service_listing| %>
@@ -21,6 +22,7 @@
     <td><%= Service.find(service_listing.service_listing_group.service_id).name %></td>
     <td><%= service_listing.service_listing_group.hourly_rate %></td>
     <td><%= service_listing.task_date %></td>
+    <td><%= link_to 'See details', service_listing_path(service_listing) %></td>
   </tr>
   <% end %>
 </table>

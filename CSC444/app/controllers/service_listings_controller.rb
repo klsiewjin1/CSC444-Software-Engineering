@@ -7,6 +7,10 @@ class ServiceListingsController < ApplicationController
   def new
     @service_listing = ServiceListing.new
   end
+
+  def show
+
+  end
   
   # TODO: change this to save both to service_listing and service_listing_group
   def create
@@ -15,7 +19,8 @@ class ServiceListingsController < ApplicationController
       puts "Service created!"
       redirect_to controller: 'service_listings', notice: 'Job was successfully added.'
     else
-      render 'new'
+      flash[:errors] = @service_listing.errors
+      redirect_to action: 'new'
     end
     
 #    redirect_to client_path(@service_listing.client_id)

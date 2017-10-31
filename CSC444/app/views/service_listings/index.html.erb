@@ -12,14 +12,15 @@
     <th>Link</th>
   </tr>
   
+  <!-- all get functions in service_listings_helper.rb -->
   <% @service_listings.each do |service_listing| %>
   <tr>
-    <td><%= User.find(service_listing.service_listing_group.client_id).fname %></td>
-    <td><%= User.find(service_listing.service_listing_group.client_id).lname %></td>
-    <td><%= Review.where(reviewee_id: User.find(service_listing.service_listing_group.client_id).id).average(:rating).round(2) %></td>
-    <td><%= Service.find(service_listing.service_listing_group.service_id).name %></td>
-    <td><%= service_listing.service_listing_group.hourly_rate %></td>
-    <td><%= service_listing.task_date %></td>
+    <td><%= get_service_listing_client(service_listing).fname %></td>
+    <td><%= get_service_listing_client(service_listing).lname %></td>
+    <td><%= get_service_list_client_rating(service_listing) %></td>
+    <td><%= get_service_listing_service(service_listing) %></td>
+    <td><%= get_service_listing_hourly_rate(service_listing) %></td>
+    <td><%= get_service_listing_task_date(service_listing) %></td>
     <td><%= link_to 'See details', service_listing_path(service_listing) %></td>
   </tr>
   <% end %>

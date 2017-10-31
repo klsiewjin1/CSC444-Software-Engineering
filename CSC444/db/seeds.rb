@@ -17,7 +17,10 @@ teen3 = User.new(fname: 'CCC', lname: 'ZZZ', username: 'ccc', user_type: 'teen',
 # service_id not used currently, may use later to specify user ratings among services (e.g. someone could be much better at computer help than
 # shovelling snow)
 Review.delete_all
-reviews = Review.create([{ reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: User.all.where(fname: 'Kanye').first.id, rating: 5, service_id: 1 },
+reviews = Review.create([{ reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: 1, rating: 5, review: 'his name is jeff and he was great', service_id: 1 },
+                         { reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: 1, rating: 5, review: 'this jeff guy is greaet', service_id: 1 },
+                         { reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: User.all.where(fname: 'Kanye').first.id, rating: 5, service_id: 1 },
+                         { reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: User.all.where(fname: 'Kanye').first.id, rating: 5, service_id: 1 },
                          { reviewer_id: User.all.where(fname: 'BBB').first.id, reviewee_id: User.all.where(fname: 'Kanye').first.id, rating: 5, service_id: 1 },
                          { reviewer_id: User.all.where(fname: 'CCC').first.id, reviewee_id: User.all.where(fname: 'Kanye').first.id, rating: 4, service_id: 1 },
                          { reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: User.all.where(fname: 'Kendrick').first.id, rating: 5, service_id: 1 },
@@ -36,3 +39,5 @@ service_listings = ServiceListing.create([{ service_listing_group_id: ServiceLis
                                           { service_listing_group_id: ServiceListingGroup.minimum(:id), task_date: Date.new(2017, 10, 14) },
                                           { service_listing_group_id: ServiceListingGroup.minimum(:id), task_date: Date.new(2017, 10, 21) },
                                           { service_listing_group_id: ServiceListingGroup.minimum(:id) + 1, task_date: Date.new(2017, 10, 25) }])
+
+

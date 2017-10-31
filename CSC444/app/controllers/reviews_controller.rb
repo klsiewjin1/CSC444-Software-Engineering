@@ -1,5 +1,7 @@
 # Handles review access
 class ReviewsController < ApplicationController
+  include ReviewsHelper
+  
   def new
   end
 
@@ -16,6 +18,8 @@ class ReviewsController < ApplicationController
   end
 
   def index
+    @user = User.find(session[:user_id])
+    @review_match = get_user_review(@user)
   end
 
   def show

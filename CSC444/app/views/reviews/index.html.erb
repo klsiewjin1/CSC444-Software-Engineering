@@ -1,2 +1,24 @@
-<h1>Reviews#index</h1>
-<p>Find me in app/views/reviews/index.html.erb</p>
+  </br></br>
+  <tr>
+    <td><%= @user.user_type %></td>
+    <td><%= @user.username %></td>
+    <strong>user id: </strong>
+    <td><%= @user.id %></td>
+  </br>
+  <tbody>
+    <% @review_match.each do |review| %>
+      <tr>
+        <strong>Reviewee ID: </strong>
+        <td><%= review.reviewee_id %></td>
+        <strong>Reviewer ID: </strong>
+        <td><%= review.reviewer_id %></td>
+        <strong>Review text: </strong>
+        <td><%= review.review %></td>
+        <strong>Rating</strong>
+        <td><%= review.rating %></td>
+        </br>
+      </tr>
+    <% end %>
+  <td><% @rating %></td>
+  </tbody>  
+  </tr>

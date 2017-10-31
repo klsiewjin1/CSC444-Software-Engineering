@@ -18,4 +18,5 @@ Rails.application.routes.draw do
   resources :teens
   resources :clients
   resources :users
+  resources :reviews
 end

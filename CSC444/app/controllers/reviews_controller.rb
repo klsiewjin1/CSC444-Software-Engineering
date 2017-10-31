@@ -19,7 +19,8 @@ class ReviewsController < ApplicationController
 
   def index
     @user = User.find(session[:user_id])
-    @review_match = get_user_review(@user)
+    @review_match = get_user_reviews(@user.id)
+    @rating = get_avg_rating(@user.id)
   end
 
   def show

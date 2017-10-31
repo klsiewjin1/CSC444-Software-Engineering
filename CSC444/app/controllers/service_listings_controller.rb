@@ -26,10 +26,10 @@ class ServiceListingsController < ApplicationController
 #    redirect_to client_path(@service_listing.client_id)
 	end
 	
-	# TODO: modify service_listing_params and create service_listing_group_params
 	private
 	# The params that a service listing could have. Excludes all other attributes
 	def service_listing_params
+	    # TODO: modify service_listing_params and create service_listing_group_params
     	params.require(:service_listing).permit(:service_listing_group_id, :task_date)
   end
 

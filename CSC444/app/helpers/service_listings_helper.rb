@@ -6,11 +6,7 @@ module ServiceListingsHelper
   
   def get_service_list_client_rating(service_listing)
     client_id = get_service_listing_client(service_listing).id
-    if not Review.where(reviewee_id: client_id).empty?
-      return Review.where(reviewee_id: client_id).average(:rating).round(2)
-    else
-      return -1
-    end
+    get_avg_rating(client_id)
   end
   
   def get_service_listing_service(service_listing)

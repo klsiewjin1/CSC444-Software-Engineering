@@ -4,6 +4,7 @@
     <td><%= @user.username %></td>
     <strong>user id: </strong>
     <td><%= @user.id %></td>
+    <td><%= @rating %></td>
   </br>
   <tbody>
     <% @review_match.each do |review| %>
@@ -19,6 +20,5 @@
         </br>
       </tr>
     <% end %>
-  <td><% @rating %></td>
   </tbody>  
   </tr>

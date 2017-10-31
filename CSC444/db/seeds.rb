@@ -14,12 +14,14 @@ teen1 = User.new(fname: 'AAA', lname: 'XXX', username: 'aaa', user_type: 'teen',
 teen2 = User.new(fname: 'BBB', lname: 'YYY', username: 'bbb', user_type: 'teen', email: 'bbb.yyy@mail.utoronto.ca').save(validate: false)
 teen3 = User.new(fname: 'CCC', lname: 'ZZZ', username: 'ccc', user_type: 'teen', email: 'ccc.zzz@mail.utoronto.ca').save(validate: false)
 
+# service_id not used currently, may use later to specify user ratings among services (e.g. someone could be much better at computer help than
+# shovelling snow)
 Review.delete_all
-reviews = Review.create([{ reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: User.all.where(fname: 'Kanye').first.id, rating: 5 },
-                         { reviewer_id: User.all.where(fname: 'BBB').first.id, reviewee_id: User.all.where(fname: 'Kanye').first.id, rating: 5 },
-                         { reviewer_id: User.all.where(fname: 'CCC').first.id, reviewee_id: User.all.where(fname: 'Kanye').first.id, rating: 4 },
-                         { reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: User.all.where(fname: 'Kendrick').first.id, rating: 5 },
-                         { reviewer_id: User.all.where(fname: 'BBB').first.id, reviewee_id: User.all.where(fname: 'Kendrick').first.id, rating: 4 }])
+reviews = Review.create([{ reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: User.all.where(fname: 'Kanye').first.id, rating: 5, service_id: 1 },
+                         { reviewer_id: User.all.where(fname: 'BBB').first.id, reviewee_id: User.all.where(fname: 'Kanye').first.id, rating: 5, service_id: 1 },
+                         { reviewer_id: User.all.where(fname: 'CCC').first.id, reviewee_id: User.all.where(fname: 'Kanye').first.id, rating: 4, service_id: 1 },
+                         { reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: User.all.where(fname: 'Kendrick').first.id, rating: 5, service_id: 1 },
+                         { reviewer_id: User.all.where(fname: 'BBB').first.id, reviewee_id: User.all.where(fname: 'Kendrick').first.id, rating: 4, service_id: 1 }])
 
 Service.delete_all
 services = Service.create([{ name: 'Babysitting' }, { name: 'Yard Work' }, { name: 'Snow Shovelling' }, { name: 'Furniture Moving' }, { name: 'Simple Cleaning Tasks' }, 

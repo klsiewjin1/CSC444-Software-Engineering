@@ -3,10 +3,9 @@
 
 <table>
   <tr>
-    <th>Client ID</th>
-    <th>ServiceListingGroup ID</th>
     <th>Client first name</th>
     <th>Client last name</th>
+    <th>Client Rating</th>
     <th>Service</th>
     <th>Hourly Rate</th>
     <th>Task Date</th>
@@ -15,10 +14,9 @@
   
   <% @service_listings.each do |service_listing| %>
   <tr>
-    <td><%= User.find(service_listing.service_listing_group.client_id).id %></td>
-    <td><%= ServiceListingGroup.find(service_listing.service_listing_group_id).id %></td>
     <td><%= User.find(service_listing.service_listing_group.client_id).fname %></td>
     <td><%= User.find(service_listing.service_listing_group.client_id).lname %></td>
+    <td><%= Review.where(reviewee_id: User.find(service_listing.service_listing_group.client_id).id).average(:rating).round(2) %></td>
     <td><%= Service.find(service_listing.service_listing_group.service_id).name %></td>
     <td><%= service_listing.service_listing_group.hourly_rate %></td>
     <td><%= service_listing.task_date %></td>

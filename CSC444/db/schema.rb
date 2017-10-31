@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20171027170017) do
     t.datetime "updated_at", null: false
   end
 
-<<<<<<< Updated upstream
+
   create_table "service_listing_approvals", force: :cascade do |t|
     t.integer "service_listing_id"
     t.integer "teen_id"
@@ -60,15 +60,6 @@ ActiveRecord::Schema.define(version: 20171027170017) do
     t.integer "service_id"
     t.float "hourly_rate"
     t.string "description"
-=======
-  create_table "reviews_tables", force: :cascade do |t|
-    t.integer "reviewerID"
-    t.integer "revieweeID"
-    t.text "review"
-    t.integer "rating"
->>>>>>> Stashed changes
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "service_listings", force: :cascade do |t|

@@ -22,4 +22,5 @@ module ReviewsHelper
         created = Review.create(:reviewer_id => reviewer_id, :reviewee_id => reviewer_id, :review => review_text, :rating => rating) 
         return created
     end
+    
 end

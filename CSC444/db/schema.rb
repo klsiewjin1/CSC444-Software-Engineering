@@ -22,11 +22,10 @@ ActiveRecord::Schema.define(version: 20171031142522) do
     t.integer "service_id"
   end
 
-  create_table "service_listing_groups", force: :cascade do |t|
-    t.integer "client_id"
-    t.integer "service_id"
-    t.float "hourly_rate"
-    t.string "description"
+  create_table "service_listing_approvals", force: :cascade do |t|
+    t.integer "service_listing_id"
+    t.integer "teen_id"
+    t.boolean "approved"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

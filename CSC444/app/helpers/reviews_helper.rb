@@ -13,6 +13,15 @@ module ReviewsHelper
             return -1
         end
     end
+
+    def get_user_name_by_id(user_id)
+        user = User.find(user_id)
+        if user.nil?
+            return -1
+        else
+            return user.username
+        end
+    end
     
     def get_all_reviews()
         reviews_all = Review.all

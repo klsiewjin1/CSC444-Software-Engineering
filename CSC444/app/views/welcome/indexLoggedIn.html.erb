@@ -7,7 +7,7 @@
 <%= link_to 'Service Listings', controller: 'service_listings' %>
 <br/>
 
-<% if isclient %>
+<% if current_user_is_client() %>
   <%= link_to 'Add a new service posting!', new_service_listing_path %>
 <% end %>
 

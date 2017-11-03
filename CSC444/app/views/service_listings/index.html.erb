@@ -9,18 +9,21 @@
     <th>Service</th>
     <th>Hourly Rate</th>
     <th>Task Date</th>
+    <th>Approved Teen</th>
     <th>Link</th>
   </tr>
   
   <!-- all get functions in service_listings_helper.rb -->
   <% @service_listings.each do |service_listing| %>
   <tr>
-    <td><%= get_service_listing_client(service_listing).fname %></td>
-    <td><%= get_service_listing_client(service_listing).lname %></td>
+    <% user = get_service_listing_client(service_listing) %>
+    <td><%= user.fname %></td>
+    <td><%= user.lname %></td>
     <td><%= get_service_list_client_rating(service_listing) %></td>
     <td><%= get_service_listing_service(service_listing) %></td>
     <td><%= get_service_listing_hourly_rate(service_listing) %></td>
     <td><%= get_service_listing_task_date(service_listing) %></td>
+    <td><%= get_service_listing_approved_teen_id(service_listing.id) %></td>
     <td><%= link_to 'See details', service_listing_path(service_listing) %></td>
   </tr>
   <% end %>

@@ -1,6 +1,7 @@
 class ServiceListingsController < ApplicationController
   def index
     @service_listings = ServiceListing.all
+    @service_listing_approvals = ServiceListingApproval.all
   end
 
   # don't need now, maybe even never (Elijah)

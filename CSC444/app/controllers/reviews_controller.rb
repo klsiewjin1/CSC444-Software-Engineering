@@ -14,9 +14,12 @@ class ReviewsController < ApplicationController
       if @review.save
         format.html { redirect_to @user, notice: 'Review was successfully created.' }
         format.json { render :show, status: :created, location: @review }
-      else
-        format.html { render :new }
+      elsif @review.errors[:review].any?
+        format.html { redirect_to @user, notice: 'Review text cannot be empty' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
+      elsif @review.errors[:rating].any?
+        format.html { redirect_to @user, notice: 'Not a valid rating. Must be a integer from 1-5' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }  
       end
     end
   end

@@ -15,8 +15,6 @@ Rails.application.routes.draw do
   
   resources :services
   resources :service_listings
-  resources :teens
-  resources :clients
   resources :users
   resources :reviews
 end

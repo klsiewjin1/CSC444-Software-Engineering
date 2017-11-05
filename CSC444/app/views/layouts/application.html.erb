@@ -8,24 +8,14 @@
         <div class="alert alert-<%= message_type %>"><%= message %></div>
     <% end %>
     
-    <!-- Temporary display showing login status -->
-    <% if !current_user.nil? %>
-      <strong>Current logged in user: <%= current_user[:username] %></strong>
-      <br/>
-      <strong>Usertype: <%= current_user[:user_type] %></strong>
-      <br/>
-      <strong><%= link_to("Click here to logout", logout_path, method: :delete) %></strong>
-    <% else %>
-      <strong>No user logged in! <%= link_to "Click here to login", login_path %></strong>
-    <% end %>
-    
+    <%= render 'layouts/navbar' %>
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
     <%= yield %>
+    <%= render 'layouts/footer' %>
   </body>
 </html>

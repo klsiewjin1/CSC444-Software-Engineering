@@ -1,14 +1,22 @@
-<h1>Homepage</h1>
 
-<%= link_to 'See current Users signed up!', controller: 'users' %>
-<br/>
-<%= link_to 'My Profile', @current_user %>
-<br/>
-<%= link_to 'Service Listings', controller: 'service_listings' %>
-<br/>
 
-<% if current_user_is_client() %>
-  <%= link_to 'Add a new service posting!', new_service_listing_path %>
-<% end %>
+<body>
+    <div class="container">
+        <h1>Homepage</h1>
+        <%= link_to 'See current Users signed up!', controller: 'users' %>
+        <br/>
+        <%= link_to 'My Profile', @current_user %>
+        <br/>
+        <%= link_to 'Service Listings', controller: 'service_listings' %>
+        <br/>
+        
+        <% if current_user_is_client() %>
+          <%= link_to 'Add a new service posting!', new_service_listing_path %>
+        <% end %>    
+    </div>
+    
+</body>
+
+
 
 

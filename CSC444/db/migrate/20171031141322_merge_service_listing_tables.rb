@@ -1,7 +1,5 @@
 class MergeServiceListingTables < ActiveRecord::Migration[5.1]
   def change
-    drop_table :service_listing_groups
-    
     add_column :service_listings, :client_id, :integer
     add_column :service_listings, :service_id, :integer
     add_column :service_listings, :hourly_rate, :float

@@ -4,9 +4,9 @@ class ServiceListingsController < ApplicationController
     @service_listing_approvals = ServiceListingApproval.all
   end
 
-  # don't need now, maybe even never (Elijah)
   def new
     @service_listing = ServiceListing.new
+    @services = Service.all # used for services dropdown
   end
 
   def show
@@ -15,6 +15,8 @@ class ServiceListingsController < ApplicationController
   
   def create
     @service_listing = ServiceListing.new(service_listing_params)
+    @service_listing.client_id = session[:user_id]
+    
     if @service_listing.save
       puts "Service listing created!"
       redirect_to controller: 'service_listings', notice: 'Job was successfully added.'
@@ -30,7 +32,7 @@ class ServiceListingsController < ApplicationController
 	# The params that a service listing could have. Excludes all other attributes
 	def service_listing_params
 	    # TODO: modify service_listing_params
-    	params.require(:service_listing).permit(:service_listing_group_id, :task_date)
+    	params.require(:service_listing).permit(:service_id, :task_date, :hourly_rate, :description)
   end
 
 end

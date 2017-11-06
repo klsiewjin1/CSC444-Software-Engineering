@@ -23,7 +23,7 @@ module ServiceListingsHelper
     return service_listing.task_date
   end
   
-  def get_service_listing_approved_teen_id(service_listing_id)
+  def get_service_listing_approved_teen_name(service_listing_id)
     approval = ServiceListingApproval.all.where(:service_listing_id => service_listing_id, :approved => true).first
     if approval
       teen = get_user(approval.teen_id)
@@ -35,17 +35,7 @@ module ServiceListingsHelper
   end
   
   def service_listing_vacant(service_listing_id)
-    return get_service_listing_approved_teen_id(service_listing_id) == NOT_APPLICABLE
-  end
-  
-  # call when teen applies to service listing, NEEDS TO BE TESTED!
-  def add_teen_approval(service_listing_id)
-    if get_service_listing_approved_teen_id(service_listing_id) == NOT_APPLICABLE
-      approval = ServiceListingApproval.new
-      approval.service_listing_id = service_listing_id
-      approval.teen_id = session[:user_id]
-      approval.save
-    end
+    return get_service_listing_approved_teen_name(service_listing_id) == NOT_APPLICABLE
   end
   
 end

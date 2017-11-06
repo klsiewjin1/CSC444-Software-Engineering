@@ -1,3 +1,5 @@
+#this controller is only needed to be able to create ServiceListingApproval entries
+
 class ServiceListingApprovalsController < ApplicationController
   
   def create

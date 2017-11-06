@@ -10,7 +10,7 @@ class ServiceListingsController < ApplicationController
   end
 
   def show
-
+    @service_listing = ServiceListing.find(params[:id])
   end
   
   def create

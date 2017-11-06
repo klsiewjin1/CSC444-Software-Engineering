@@ -3,12 +3,11 @@
 
 <table>
   <tr>
-    <th>Client first name</th>
-    <th>Client last name</th>
+    <th>Client</th>
     <th>Client Rating</th>
     <th>Service</th>
-    <th>Hourly Rate</th>
     <th>Task Date</th>
+    <th>Hourly Rate</th>
     <th>Approved Teen</th>
     <th>Listing Link</th>
   </tr>
@@ -17,13 +16,12 @@
   <% is_teen = current_user_is_teen() %>
   <% @service_listings.each do |service_listing| %>
   <tr>
-    <% user = get_service_listing_client(service_listing) %>
-    <td><%= user.fname %></td>
-    <td><%= user.lname %></td>
+    <% client = get_service_listing_client(service_listing) %>
+    <td><%= client.fname + ' ' + client.lname %></td>
     <td><%= get_service_list_client_rating(service_listing) %></td>
     <td><%= get_service_listing_service(service_listing) %></td>
-    <td><%= get_service_listing_hourly_rate(service_listing) %></td>
     <td><%= get_service_listing_task_date(service_listing) %></td>
+    <td><%= get_service_listing_hourly_rate(service_listing) %></td>
     <td><%= get_service_listing_approved_teen_name(service_listing.id) %></td>
     <td><%= link_to 'See details', service_listing_path(service_listing) %></td>
     

@@ -40,10 +40,7 @@ ActiveRecord::Schema.define(version: 20171103205347) do
   end
 
   create_table "service_listings", force: :cascade do |t|
-    t.integer "serviceListingGroupID"
-    t.date "taskDate"
-    t.time "startTime"
-    t.time "estimatedEndTime"
+    t.date "task_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "client_id"

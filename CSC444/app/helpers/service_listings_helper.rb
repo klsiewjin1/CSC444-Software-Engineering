@@ -34,14 +34,18 @@ module ServiceListingsHelper
     return NOT_APPLICABLE
   end
   
+  def service_listing_vacant(service_listing_id)
+    return get_service_listing_approved_teen_id(service_listing_id) == NOT_APPLICABLE
+  end
+  
   # call when teen applies to service listing, NEEDS TO BE TESTED!
-  # def add_teen_approval(service_listing_id)
-  #   if get_service_listing_approved_teen_id(service_listing_id) == NOT_APPLICABLE
-  #     approval = ServiceListingApproval.new
-  #     approval.service_listing_id = service_listing_id
-  #     approval.teen_id = @current_user.id
-  #     approval.save
-  #   end
-  # end
+  def add_teen_approval(service_listing_id)
+    if get_service_listing_approved_teen_id(service_listing_id) == NOT_APPLICABLE
+      approval = ServiceListingApproval.new
+      approval.service_listing_id = service_listing_id
+      approval.teen_id = session[:user_id]
+      approval.save
+    end
+  end
   
 end

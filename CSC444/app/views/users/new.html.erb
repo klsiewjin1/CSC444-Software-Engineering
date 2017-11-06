@@ -4,32 +4,48 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@user) do |f| %>
+    <%= form_for @user, :html=> {:id => 'registrationForm'} do |f| %>
+      <div class="tab">
       <%= f.label :username %>
       <%= f.text_field :username %>
+      </div>
       
+      <div class="tab" style="display:none">
       <%= f.label :fname, "First name" %>
       <%= f.text_field :fname %>
       
       <%= f.label :lname, "Last name" %>
       <%= f.text_field :lname %>
+      </div>
 
+      <div class="tab" style="display:none">
       <%= f.label :email %>
       <%= f.email_field :email %>
 
       <%= f.label :email_confirmation, "Email Confirmation" %>
       <%= f.email_field :email_confirmation %>
+      </div>
 
+      <div class="tab" style="display:none">
       <%= f.label :password %>
       <%= f.password_field :password %>
 
       <%= f.label :password_confirmation, "Password Confirmation" %>
       <%= f.password_field :password_confirmation %>
+      </div>
       
+      <div class="tab"  style="display:none">
       <%= f.label :user_type %>
       <%= f.select :user_type, [['Client', 'client'], ['Teenager', 'teenager']] %>
+      </div>
 
-      <br><%= f.submit "Create my account", class: "btn btn-primary" %>
+      <div style="overflow:auto;">
+        <div style="float:right;">
+          <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="btn btn-primary">Previous</button>
+          <button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn btn-primary">Next</button>
+          <%= f.submit "Create Account", class: "btn btn-primary", id: "submitBtn", style: "display:none" %>
+        </div>
+      </div>
     <% end %>
   </div>
 </div>

@@ -1,0 +1,27 @@
+<% @user = User.find(params[:id]) %>
+<tbody>
+  <% if current_user_is_client() %>
+  <h1>My Posted Jobs</h1>
+  <% @service_listings = get_service_listings_by_user(@user) %>
+    <% @service_listings.each do |service_listing| %>
+    <tr>
+      <strong>Description text: </strong>
+      <%= service_listing.description %>
+      <br>
+      <strong>Hourly Rate text: </strong>
+      <%= service_listing.hourly_rate %>
+      <br>
+      <br>
+      <% end %>
+    </tr>
+  <% end %>
+
+  <% if current_user_is_teen() %>
+    <h1>Applied Listings</h1>
+  <% end %>
+
+</tbody>
+
+
+<h1> Accepted Listings </h1>
+<!-- check where service_listing_approvals.approved == True -->

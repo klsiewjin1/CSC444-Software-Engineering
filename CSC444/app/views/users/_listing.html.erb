@@ -12,6 +12,18 @@
       <%= service_listing.hourly_rate %>
       <br>
       <br>
+      <% @SL_approvals = get_SL_approvals_from_SL(service_listing) %>
+      <% @SL_approvals.each do |application| %>
+      <strong> Teen:  </strong>
+        <% @teen = get_user(application.teen_id) %>
+        <%= link_to @teen.fname, user_path(@teen) %>
+        <%= form_for(service_listing) do |t| %>
+          <% t.hidden_field :approved, :value => "true" %>
+          <%= t.submit "Approve", class: "btn btn-primary" %> 
+        <% end %> 
+      <% end %>
+
+      <br>
       <% end %>
     </tr>
   <% end %>

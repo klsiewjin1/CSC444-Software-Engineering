@@ -8,6 +8,10 @@ class Geocoder
    # Returns nil if error and no LatLong could be resolved to the address.
    def getLatLong(address)
    		result = nil;
+   		
+   		if not address
+   		   return result
+   		end
 
    		#do api call
    		begin

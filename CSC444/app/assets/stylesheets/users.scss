@@ -1,3 +1,50 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#registrationForm {
+  background-color: #ffffff;
+  margin: 100px auto;
+  padding: 40px;
+  width: 100%;
+  min-width: 300px;
+}
+
+input {
+  padding: 12px;
+  width: 100%;
+  font-size: 17px;
+  font-family: Raleway;
+  border: 1px solid #aaaaaa;
+  margin-bottom: 20px;
+}
+
+
+select {
+  padding: 12px;
+  width: 100%;
+  font-size: 17px;
+  font-family: Raleway;
+  border: 1px solid #aaaaaa;
+  margin-bottom: 20px;
+}
+
+h2 {
+  text-align: left;
+}
+
+// Make invalid inputs highlighted
+input.invalid {
+  background-color: #ffdddd;
+}
+
+// Make valid inputs highlighted
+input.valid {
+  background-color: #e6ffe6;
+}
+
+.btn.btn-primary {
+  width: 200px;
+  height: 50px;
+  border-radius: 12px;
+}

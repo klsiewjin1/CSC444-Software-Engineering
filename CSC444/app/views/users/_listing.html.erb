@@ -18,10 +18,28 @@
 
   <% if current_user_is_teen() %>
     <h1>Applied Listings</h1>
+    <h2> Currently no application process </h2>
+    <% @applied_listings = get_applied_listings_by_teen(@user)%>
+    <% @applied_listings.each do |applied_listing| %>
+      <%= applied_listing.service_listing_id %>
+    <% end %>
   <% end %>
-
 </tbody>
 
 
 <h1> Accepted Listings </h1>
 <!-- check where service_listing_approvals.approved == True -->
+  <% if current_user_is_teen() %>
+
+    <% @approved_listings = get_approved_listings_by_teen(@user)%>
+    <% @approved_listings.each do |approved_listing| %>
+      <strong>ID: </strong> 
+      <%= approved_listing.service_listing_id %>
+      <br>
+      <br>
+    <% end %>
+  <% end %>
+
+
+  <% if current_user_is_client() %>
+  <% end %>

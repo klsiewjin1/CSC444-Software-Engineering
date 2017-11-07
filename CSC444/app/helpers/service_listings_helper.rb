@@ -42,7 +42,11 @@ module ServiceListingsHelper
     return ServiceListing.where(client_id: user_id)
   end
 
-  def get_applied_listings_by_user(user_id)
-    return ServiceListingApproval.where(teen_id: user_id)
+  def get_applied_listings_by_teen(teen_id)
+    return ServiceListingApproval.where(teen_id: teen_id, approved: false)
+  end
+
+  def get_approved_listings_by_teen(teen_id)
+    return ServiceListingApproval.where(teen_id: teen_id, approved: true)
   end
 end

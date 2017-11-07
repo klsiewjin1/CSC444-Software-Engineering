@@ -10,19 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171103205347) do
+ActiveRecord::Schema.define(version: 20171107171706) do
 
-  create_table "clients", force: :cascade do |t|
-    t.string "fname"
-    t.string "lname"
-    t.string "bdate"
-    t.string "state"
-    t.string "strnum"
-    t.string "pcode"
-    t.string "city"
-    t.string "country"
-    t.string "email"
-    t.string "cellphone"
+  create_table "notifications", force: :cascade do |t|
+    t.integer "actor_id"
+    t.integer "reciever_id"
+    t.datetime "read_at"
+    t.string "action"
+    t.string "notification_path_type"
+    t.integer "notification_path_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -45,15 +41,6 @@ ActiveRecord::Schema.define(version: 20171103205347) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "service_listing_groups", force: :cascade do |t|
-    t.integer "client_id"
-    t.integer "service_id"
-    t.float "hourly_rate"
-    t.string "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "service_listings", force: :cascade do |t|
     t.date "task_date"
     t.datetime "created_at", null: false
@@ -66,21 +53,6 @@ ActiveRecord::Schema.define(version: 20171103205347) do
 
   create_table "services", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "teens", force: :cascade do |t|
-    t.string "fname"
-    t.string "lname"
-    t.string "state"
-    t.string "streetnum"
-    t.string "pcode"
-    t.string "city"
-    t.string "country"
-    t.string "email"
-    t.string "cellphone"
-    t.string "bdate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

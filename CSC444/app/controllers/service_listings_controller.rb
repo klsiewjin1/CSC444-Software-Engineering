@@ -24,9 +24,17 @@ class ServiceListingsController < ApplicationController
       flash[:errors] = @service_listing.errors
       redirect_to action: 'new'
     end
-    
 #    redirect_to client_path(@service_listing.client_id)
 	end
+
+  # return 
+  def nearme
+    respond_to do |format|
+      msg = { :status => "Hello"};
+      response.headers["Access-Control-Allow-Origin"] = "*"
+      format.json {render :json => msg}
+    end
+  end
 	
 	private
 	# The params that a service listing could have. Excludes all other attributes

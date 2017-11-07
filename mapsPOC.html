@@ -120,9 +120,13 @@
       }
     });
   
+  var url = 'http://localhost:3000/nearme.json';
   
-  
-  
+  fetch(url, {mode: 'cors'}).then(function(response) {
+  response.text().then(function(text) {
+    console.log(text);
+  });
+});
   
   
       }

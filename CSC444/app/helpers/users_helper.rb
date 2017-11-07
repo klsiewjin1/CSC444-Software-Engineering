@@ -21,4 +21,8 @@ module UsersHelper
     return User.find_by_id(user_id)
   end
   
+  def get_user_full_name(user)
+    return user.fname + ' ' + user.lname
+  end
+  
 end

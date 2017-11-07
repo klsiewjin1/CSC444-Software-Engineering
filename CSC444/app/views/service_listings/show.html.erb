@@ -1,12 +1,12 @@
 <!-- For now, the show page shows the same info as the index page plus the service listing description -->
 
 <p>Service: <%= get_service_name(@service_listing.service_id) %></p>
-<p>Task Date: <%= @service_listing.task_date %></p>
-<p>Hourly Rate: <%= @service_listing.hourly_rate %></p>
+<p>Task Date: <%= get_service_listing_task_date(@service_listing) %></p>
+<p>Hourly Rate: <%= get_service_listing_hourly_rate(@service_listing) %></p>
 <p>Approved Teen: <%= get_service_listing_approved_teen_name(@service_listing.id) %></p>
 
 <% client = get_user(@service_listing.client_id) %>
-<p>Client: <%= client.fname + ' ' + client.lname %></p>
+<p>Client: <%= get_user_full_name(client) %></p>
 <p>Client Rating: <%= get_avg_rating(client.id) %></p>
 
-<p>Description: <%= @service_listing.description %></p>
+<p>Description: <%= get_service_listing_description(@service_listing) %></p>

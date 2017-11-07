@@ -1,5 +1,5 @@
 ServiceListing.delete_all
-service_listings = ServiceListing.create([{ client_id: User.all.where(fname: 'Kanye').first.id, service_id: Service.minimum(:id), hourly_rate: 15.5, description: 'I need babysitting', task_date: Date.new(2017, 10, 7) },
-                                          { client_id: User.all.where(fname: 'Kanye').first.id, service_id: Service.minimum(:id), hourly_rate: 15.5, description: 'I need babysitting', task_date: Date.new(2017, 10, 14) },
-                                          { client_id: User.all.where(fname: 'Kanye').first.id, service_id: Service.minimum(:id), hourly_rate: 15.5, description: 'I need babysitting', task_date: Date.new(2017, 10, 21) },
-                                          { client_id: User.all.where(fname: 'Kendrick').first.id, service_id: Service.minimum(:id) + 1, hourly_rate: 17.5, description: 'I need yard work', task_date: Date.new(2017, 10, 25) }])
+service_listings = ServiceListing.create([{ client_id: User.all.where(fname: 'Kanye').first.id, service_id: Service.minimum(:id), hourly_rate: 15.5, description: 'I need babysitting', taskDate: Date.new(2017, 10, 7) },
+                                          { client_id: User.all.where(fname: 'Kanye').first.id, service_id: Service.minimum(:id), hourly_rate: 15.5, description: 'I need babysitting', taskDate: Date.new(2017, 10, 14) },
+                                          { client_id: User.all.where(fname: 'Kanye').first.id, service_id: Service.minimum(:id), hourly_rate: 15.5, description: 'I need babysitting', taskDate: Date.new(2017, 10, 21) },
+                                          { client_id: User.all.where(fname: 'Kendrick').first.id, service_id: Service.minimum(:id) + 1, hourly_rate: 17.5, description: 'I need yard work', taskDate: Date.new(2017, 10, 25) }])

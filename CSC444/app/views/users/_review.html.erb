@@ -1,10 +1,10 @@
 <tr>
   <% @user = User.find(params[:id]) %>
-  <% @review_match = get_user_reviews(@user) %>
+  <% @review_matches = get_user_reviews(@user) %>
   <% @review = Review.new%>
   
 <tbody>
-  <% @review_match.each do |review| %>
+  <% @review_matches.each do |review| %>
     <tr>
       <strong>Reviewer: </strong>
       <td><%=  @reviewer = get_user_name_by_id(review.reviewer_id) %></td>

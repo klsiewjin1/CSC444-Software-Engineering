@@ -20,4 +20,12 @@ module UsersHelper
   def get_user(user_id)
     return User.find_by_id(user_id)
   end
+  def get_user_name_by_id(user_id)
+      user = User.find(user_id)
+      if user.nil?
+          return -1
+      else
+          return user.username
+      end
+  end
 end

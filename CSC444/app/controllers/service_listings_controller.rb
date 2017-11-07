@@ -1,4 +1,6 @@
 class ServiceListingsController < ApplicationController
+  include NotificationHelper
+  
   def index
     @service_listings = ServiceListing.all
     @service_listing_approvals = ServiceListingApproval.all

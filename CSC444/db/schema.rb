@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 20171107171706) do
 
   create_table "notifications", force: :cascade do |t|
     t.integer "actor_id"
-    t.integer "reciever_id"
+    t.integer "receiver_id"
     t.datetime "read_at"
     t.string "action"
     t.string "notification_path_type"
@@ -42,7 +42,10 @@ ActiveRecord::Schema.define(version: 20171107171706) do
   end
 
   create_table "service_listings", force: :cascade do |t|
-    t.date "task_date"
+    t.integer "serviceListingGroupID"
+    t.date "taskDate"
+    t.time "startTime"
+    t.time "estimatedEndTime"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "client_id"

@@ -1,8 +1,8 @@
 class ServiceListingApproval < ApplicationRecord
   belongs_to :service_listing
-  after_create :initialize_approved
+  before_create :set_approved
   
-  def initialize_approved
+  def set_approved
     self.approved = true # will change to false once we don't immediately approve
   end
   

@@ -14,6 +14,9 @@
       <br>
       <strong>Rating</strong>
       <td><%= review.rating %></td>
+      <br>
+      <strong>When</strong>
+      <td><%= review.created_at %></td>
       <br> <br>
     </tr>
   <% end %>
@@ -22,7 +25,7 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    
+
     <%= form_for(@review) do |f| %>
 
       <%= f.hidden_field :reviewee_id, :value => @user.id %>

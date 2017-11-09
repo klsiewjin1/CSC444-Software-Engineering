@@ -16,7 +16,15 @@ module UsersHelper
     return true if @current_user.user_type == "teenager" 
     return false
   end
-  
+
+  def user_is_teen(id)
+    return true if get_user(id).user_type == "teenager"
+  end
+
+  def user_is_client(id)
+    return true if get_user(id).user_type == "client"
+  end
+
   def get_user(user_id)
     return User.find_by_id(user_id)
   end

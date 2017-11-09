@@ -50,6 +50,11 @@ module ServiceListingsHelper
     return ServiceListingApproval.where(teen_id: teen_id, approved: true)
   end
 
+  def get_approved_listings_by_client(client_id)
+    service_listing = ServiceListing.where(client_id: client_id)
+    return ServiceListingApproval.where(approved: true, service_listing_id: service_listing.ids)
+  end
+
   def get_SL_approvals_from_SL(service_listing_id)
     return ServiceListingApproval.where(service_listing_id: service_listing_id, approved: false)
   end

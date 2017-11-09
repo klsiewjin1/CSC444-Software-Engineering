@@ -13,11 +13,22 @@ class ServiceListingApprovalsController < ApplicationController
     end
     redirect_to controller: 'service_listings'
   end
+
+  def update
+    # find based on service_listing_id and teen_id, set to true
+    @service_listing_approval = ServiceListingApproval.find_by_service_listing_id_and_teen_id(params[:service_listing_id], params[:teen_id])
+    if @service_listing_approval.update(service_listing_approval_params)
+      flash[:success] = "Approved"
+      @user = User.find(params[:id])
+      redirect_to @user
+    else
+      flash[:error] = "Something went wrong"
+    end
+  end
   
   private
 	# The params that a service listing could have. Excludes all other attributes
   def service_listing_approval_params
-    params.permit(:service_listing_id)
+    params.permit(:service_listing_id, :approved)
   end
-    
 end

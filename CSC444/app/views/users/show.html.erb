@@ -44,9 +44,8 @@
   <%= @user.bdate %>
 </p>
 </div>
-<%if(@current_id!=@user.id) %>
-  <%= render "review" %>
-<% end %>  
+<%= render "notification" %>
+<%= render "review" %>
 <%= render "listing" %>
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

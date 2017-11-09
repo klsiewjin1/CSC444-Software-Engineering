@@ -1,6 +1,8 @@
 # Handles review access
 class ReviewsController < ApplicationController
   include ReviewsHelper
+  include NotificationHelper
+  
   def new
     @review = Review.new
   end
@@ -10,8 +12,8 @@ class ReviewsController < ApplicationController
     @review.reviewer_id = session[:user_id]
     @user = User.find_by(id: @review.reviewee_id)
     if @review.save
-      flash[:notice] = 'Review was successfully created'
-      redirect_to @user
+      create_notification(@review.reviewer_id, @review.reviewee_id, 'reviewed', @user)
+      redirect_to @user, notice: 'Review was successfully created'
     elsif @review.errors[:review].any?
       flash[:errors] = "review error"
       redirect_to @user

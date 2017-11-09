@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   patch '/approval', to: 'service_listing_approvals#update'
   # patch '/approval', to: 'users#show'
 
+  get '/nearme', to: 'service_listings#nearme'
+  
   resources :services
   resources :service_listings
   resources :users

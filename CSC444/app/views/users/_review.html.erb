@@ -1,10 +1,10 @@
 <tr>
   <% @user = User.find(params[:id]) %>
-  <% @review_match = get_user_reviews(@user) %>
+  <% @review_matches = get_user_reviews(@user) %>
   <% @review = Review.new%>
   
 <tbody>
-  <% @review_match.each do |review| %>
+  <% @review_matches.each do |review| %>
     <tr>
       <strong>Reviewer: </strong>
       <td><%=  @reviewer = get_user_name_by_id(review.reviewer_id) %></td>
@@ -23,20 +23,23 @@
 </tbody>  
 </tr>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
 
-    <%= form_for(@review) do |f| %>
+<%if(session[:user_id]!=@user.id) %>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+    
+      <%= form_for(@review) do |f| %>
 
-      <%= f.hidden_field :reviewee_id, :value => @user.id %>
+        <%= f.hidden_field :reviewee_id, :value => @user.id %>
 
-      <%= f.label :review %>
-      <%= f.text_field :review %>
+        <%= f.label :review %>
+        <%= f.text_field :review %>
 
-      <%= f.label :rating %>
-      <%= f.text_field :rating %>
+        <%= f.label :rating %>
+        <%= f.text_field :rating %>
 
       <br><%= f.submit "Leave Review", class: "btn btn-primary" %>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
+<% end %>  

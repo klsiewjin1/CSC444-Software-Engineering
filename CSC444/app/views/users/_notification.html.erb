@@ -1,0 +1,18 @@
+<tr>
+  <% @user = User.find(params[:id]) %>
+  <% @notification_match = get_user_notifications(@user) %>
+  
+<head>NOTIFICATIONS</head>  
+<br>
+<tbody>
+  <% @notification_match.each do |notify| %>
+    <tr>
+      <td><%= @action_caused_by = get_user_name_by_id(notify.actor_id) %></td>
+      <td><%= notify.action %></td>
+      <strong>you</strong>
+      <td><%=link_to "Read", notify.notification_path %></td>
+      <br> <br>
+    </tr>
+  <% end %>
+</tbody>  
+</tr>

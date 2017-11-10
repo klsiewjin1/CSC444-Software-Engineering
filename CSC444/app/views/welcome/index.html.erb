@@ -1,15 +1,3 @@
 <h1>Homepage</h1>
 
 <%= link_to 'Sign-Up!', new_user_path %>
-
-<br><br>
-<h1>HOW TO SETUP CLOUD9 ENVIRONMENT LIKE THIS</h1>
-<p>
-  1. Setup a new c9 workspace as a ruby on rails workspace. Use "https://github.com/klsiewjin1/CSC444-Software-Engineering.git" as the git url to clone from in the setup.<br>
-  2. In the c9 console navigate to the csc444 folder and run "gem install rails". Then run "bundle install". Then run "rails db:migrate". <br>
-  3. Run "git config --global user.name "Your Name"" and "git config --global user.email your.email@example.com" to setup git<br>
-  4. Run "cat ~/.ssh/id_rsa.pub" and copy the ssh key which gets printed. Then on github, go to your profile->Edit Profile->ssh keys and add this key<br>
-  5. Run "rails server -b $IP -p $PORT" to start the rails server.<br>
-  6. Click the "Share" button at the top right of the c9 console and the application link is where the rails server should be running. Check public to give public access.<br>
-  NOTE: My antivirus blocked the rails instance for some reason. If it doesn't work at first, try disabling antivirus or adding an exception for that address.
-</p>

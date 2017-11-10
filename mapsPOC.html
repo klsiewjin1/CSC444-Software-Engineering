@@ -120,7 +120,7 @@
       }
     });
   
-  var url = 'http://localhost:3000/nearme.json';
+  var url = 'http://localhost:3000/nearme.json?radius=1';
   
   fetch(url, {mode: 'cors'}).then(function(response) {
   response.text().then(function(text) {

@@ -29,6 +29,11 @@ select {
   margin-bottom: 20px;
 }
 
+option {
+  font-size: 17px;
+  font-family: Raleway;
+}
+
 h2 {
   text-align: left;
 }
@@ -47,8 +52,4 @@ input.valid {
   width: 200px;
   height: 50px;
   border-radius: 12px;
-}
-
-.btn.btn-primary.disabled {
-  background-color: #e7e7e7;
 }

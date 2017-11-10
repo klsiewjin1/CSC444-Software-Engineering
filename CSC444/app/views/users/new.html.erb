@@ -7,33 +7,33 @@
     <%= form_for @user, :html=> {:id => 'registrationForm'} do |f| %>
       <div class="tab">
        <h2>The Basics</h2>
-      <%= f.text_field :username, placeholder: "Username", onfocusout: "validateInput(this)" %>
-      <br><br>
-      <%= f.select :user_type, [['Client', 'client'], ['Teenager', 'teenager']] %>
+        <%= f.text_field :username, placeholder: "Username" %>
+        <%= f.select :user_type, [['Client', 'client'], ['Teenager', 'teenager']] %>
       </div>
       
       <div class="tab" style = "display:none">
-      <h2>Tell us about yourself</h2>
-      <%= f.text_field :fname, placeholder: "First name", onfocusout: "validateInput(this)" %>
-      <br>
-      <%= f.text_field :lname, placeholder: "Last name", onfocusout: "validateInput(this)" %>
+        <h2>Tell us about yourself</h2>
+        <%= f.text_field :fname, placeholder: "First name" %>
+        <%= f.text_field :lname, placeholder: "Last name" %>
       </div>
 
       <div class="tab"  style="display:none">
-      <%= f.email_field :email, placeholder: "Email", onfocusout: "validateInput(this)"%>
-      <%= f.email_field :email_confirmation, placeholder: "Confirm email", onfocusout: "validateInput(this)" %>
+        <h2>Contact details</h2>
+        <%= f.email_field :email, placeholder: "Email" %>
+        <%= f.email_field :email_confirmation, placeholder: "Confirm email" %>
       </div>
 
       <div class="tab"  style="display:none">
-      <%= f.password_field :password, placeholder: "Password", onfocusout: "validateInput(this)" %>
-      <%= f.password_field :password_confirmation, placeholder: "Confirm password", onfocusout: "validateInput(this)" %>
+        <h2>Pick a secure password</h2>
+        <%= f.password_field :password, placeholder: "Password" %>
+        <%= f.password_field :password_confirmation, placeholder: "Confirm password" %>
       </div>
 
       <br>
       <div style="overflow:auto;">
         <div style="float:right;">
           <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="btn btn-primary">Previous</button>
-          <button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn btn-primary disabled">Next</button>
+          <button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn btn-primary">Next</button>
           <%= f.submit "Create Account", class: "btn btn-primary", id: "submitBtn", style: "display:none" %>
         </div>
       </div>

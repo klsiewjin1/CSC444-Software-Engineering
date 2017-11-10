@@ -67,17 +67,37 @@ validateForm = ->
     
 @validateInput = (input) ->
   # Regex codes
-  emailRegex = /// ^ #begin of line
-   ([\w.-]+)         #one or more letters, numbers, _ . or -
-   @                 #followed by an @ sign
-   ([\w.-]+)         #then one or more letters, numbers, _ . or -
-   \.                #followed by a period
-   ([a-zA-Z.]{2,6})  #followed by 2 to 6 letters or periods
-   $ ///i            #end of line and ignore case
+  emailRegex = /// ^
+    ([\w.-]+)         # one or more letters, numbers, _ . or -
+    @                 # @ sign
+    ([\w.-]+)         # one or more letters, numbers, _ . or -
+    \.                # a period
+    ([a-zA-Z.]{2,6})  # 2 to 6 letters or periods
+    $ ///i            
+   
+  phoneRegex = /// ^
+    [0-9]{10,}
+    $ ///i
+    
+  addressRegex = /// ^
+    ([0-9]+)      # One or more number
+    \s            # Followed by whitespace
+    ([a-z\s]+)    # One or more letters and whitespace
+    $ ///i
+    
+  lettersRegex = /// ^
+    [a-z\s.]{3,}   # 3 or more letters, whitespace or .
+    $ ///i
+    
+  pcodeRegex = /// ^
+    [0-9a-z]{3}   # 3 letters or numbers
+    \s?           # Optional whitespace
+    [0-9a-z]{2,3} # 2 to 3 more letters or numbers
+    $ ///i
    
   emptyRegex = ///
-  [-_.a-zA-Z0-9]{3,}
-  ///
+    [-_.a-zA-Z0-9]{3,}
+    ///
   
   match = true
   valid = false
@@ -89,6 +109,14 @@ validateForm = ->
   else if input.type == 'password'
     regex = emptyRegex
     match = matchConfirmations(input, document.getElementById('user_password'), document.getElementById('user_password_confirmation'))
+  else if input.type == 'tel'
+    regex = phoneRegex
+  else if input.id == 'user_address'
+    regex = addressRegex
+  else if input.id == 'user_city' or input.id == 'user_state' or input.id == 'user_country'
+    regex = lettersRegex
+  else if input.id == 'user_pcode'
+    regex = pcodeRegex
   else
     regex = emptyRegex
   

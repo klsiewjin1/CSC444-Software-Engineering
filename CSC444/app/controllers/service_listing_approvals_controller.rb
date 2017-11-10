@@ -1,4 +1,22 @@
-#this controller is only needed to be able to create ServiceListingApproval entries
+# this controller is only needed to be able to create ServiceListingApproval entries
+
+# service listing approvals are applications created when a teen applies for a service listing posted by a client
+# things to consider:
+
+# 1. multiple teens applying
+# in this case, must show the client all the teens who applied and the ability to choose from them
+# when the client approves of a teen to take on a listing, the other applications should disappear from view
+# when an application is approved, the teen who has gotten approval should show up in his accepted listings
+# teens who were not approved should have their applications hidden from view and notified 
+# 
+# 2. cancellations
+# however, if the teen/client decides to cancel the approval/application, the corresponding party must be notified
+# and applications should open up again. therefore, rows in the table should not be deleted
+# 
+# 3. repeatable
+# clients are able to set their listings to be repeatable tasks, such as every 2 weeks or so
+# 
+# 
 
 class ServiceListingApprovalsController < ApplicationController
   

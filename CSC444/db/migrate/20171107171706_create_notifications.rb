@@ -10,7 +10,5 @@ class CreateNotifications < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
-    
-    drop_table :reviews_tables
   end
 end

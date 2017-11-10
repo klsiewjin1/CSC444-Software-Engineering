@@ -6,25 +6,39 @@
   <div class="col-md-8 col-md-offset-2">
     <%= form_for @user, :html=> {:id => 'registrationForm'} do |f| %>
       <div class="tab">
-       <h2>The Basics</h2>
+       <p>Pick a unique username</p>
         <%= f.text_field :username, placeholder: "Username" %>
+        <p>User type</p>
         <%= f.select :user_type, [['Client', 'client'], ['Teenager', 'teenager']] %>
       </div>
       
       <div class="tab" style = "display:none">
-        <h2>Tell us about yourself</h2>
+        <p>Tell us about yourself</p>
         <%= f.text_field :fname, placeholder: "First name" %>
         <%= f.text_field :lname, placeholder: "Last name" %>
+        <p>Date of Birth</p>
+        <%= f.date_field :bdate, placeholder: "Date of Birth" %>
       </div>
 
       <div class="tab"  style="display:none">
-        <h2>Contact details</h2>
+        <p>Address</p>
+        <%= f.text_field :address, placeholder: "Street" %>
+        <%= f.text_field :city, placeholder: "City" %>
+        <%= f.text_field :state, placeholder: "State" %>
+        <%= f.text_field :country, placeholder: "Country" %>
+        <%= f.text_field :pcode, placeholder: "Zip/Post Code" %>
+        <p>Contact phone</p>
+        <%= f.telephone_field :cellphone, placeholder: "Telephone" %>
+      </div>
+
+      <div class="tab"  style="display:none">
+        <p>Enter an account email</p>
         <%= f.email_field :email, placeholder: "Email" %>
         <%= f.email_field :email_confirmation, placeholder: "Confirm email" %>
       </div>
 
       <div class="tab"  style="display:none">
-        <h2>Pick a secure password</h2>
+        <p>Pick a secure password</p>
         <%= f.password_field :password, placeholder: "Password" %>
         <%= f.password_field :password_confirmation, placeholder: "Confirm password" %>
       </div>

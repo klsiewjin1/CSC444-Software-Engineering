@@ -2,6 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
 #registrationForm {
   background-color: #ffffff;
   margin: 100px auto;
@@ -35,7 +38,16 @@ option {
 }
 
 h2 {
+  font-size: 1.2em;
   text-align: left;
+}
+
+p {
+  font-size: 1em;
+  letter-spacing: -1px;
+  text-align: left;
+  font-weight: normal;
+  color: $gray-light;
 }
 
 // Make invalid inputs highlighted

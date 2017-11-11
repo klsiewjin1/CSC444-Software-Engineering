@@ -86,7 +86,7 @@ validateForm = ->
     $ ///i
     
   lettersRegex = /// ^
-    [a-z\s.]{3,}   # 3 or more letters, whitespace or .
+    [a-z\s.]{2,}   # 2 or more letters, whitespace or .
     $ ///i
     
   pcodeRegex = /// ^
@@ -113,7 +113,7 @@ validateForm = ->
     regex = phoneRegex
   else if input.id == 'user_address'
     regex = addressRegex
-  else if input.id == 'user_city' or input.id == 'user_state' or input.id == 'user_country'
+  else if input.id == 'user_city' or input.id == 'user_state' or input.id == 'user_country' or input.id == 'user_fname' or input.id == 'user_lname'
     regex = lettersRegex
   else if input.id == 'user_pcode'
     regex = pcodeRegex
@@ -124,12 +124,18 @@ validateForm = ->
   if input.value.match regex
     valid = true
     
+  # Get the ID of the associated error text field
+  errorText = document.getElementById("error_" + input.id)
+    
   if valid and match
     input.className = 'input valid'
+    errorText.innerHTML = ""
     return true
-  else
-    input.className = 'input invalid'
-    return false
+    
+  
+  input.className = 'input invalid'
+  errorText.innerHTML = errorText.getAttribute('error')
+  return false
     
 matchConfirmations = (input, entry, confirmation) ->
   if input == entry

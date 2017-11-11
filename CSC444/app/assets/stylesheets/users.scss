@@ -19,7 +19,7 @@ input {
   font-size: 17px;
   font-family: Raleway;
   border: 1px solid #aaaaaa;
-  margin-bottom: 20px;
+  margin-bottom: 2px;
 }
 
 
@@ -64,4 +64,9 @@ input.valid {
   width: 200px;
   height: 50px;
   border-radius: 12px;
+}
+
+.errortext {
+  margin-bottom: 30px;
+  color: #FF9999;
 }

@@ -15,12 +15,17 @@ module ServiceListingsHelper
     return get_service_name(service_listing.service_id)
   end
   
-  def get_service_listing_hourly_rate(service_listing)
-    return service_listing.hourly_rate
-  end
+  # def get_service_listing_hourly_rate(service_listing)
+  #   return service_listing.hourly_rate
+  # end
   
-  def get_service_listing_task_date(service_listing)
-    return service_listing.task_date
+  # def get_service_listing_task_date(service_listing)
+  #   return service_listing.task_date
+  # end
+
+  def get_service_listing_description(service_listing_approval)
+    service_listing = ServiceListing.where(id: service_listing_approval.service_listing_id).first
+    return service_listing.description
   end
   
   def get_service_listing_approved_teen_name(service_listing_id)

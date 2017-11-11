@@ -8,10 +8,11 @@
 -->
 
 <% @user = User.find(params[:id]) %>
+<% viewing_own_page = true if params[:id].to_i == session[:user_id] else false %>
 
 <!-- Viewing a client profile -->
 <% if user_is_client(@user) %>
-  <% if (params[:id].to_i == session[:user_id]) %>
+  <% if viewing_own_page %>
     <h1>My Posted Listings</h1>
   <% else %>
     <h1>Posted Listings</h1>
@@ -19,7 +20,6 @@
 
   <% @service_listings = get_service_listings_by_user(@user) %>
   <% @service_listings.each do |service_listing| %>
-    <!-- if service listing is approved do not run below this -->
     <% if !service_listing_is_approved(service_listing.id) %> 
       <br><br>
       <strong>Service Listing ID (temp)</strong>
@@ -31,7 +31,6 @@
       <strong>Hourly Rate text: </strong>
       <%= service_listing.hourly_rate %><br><br>
       
-      
       <% @SL_approvals = get_SL_approvals_from_SL(service_listing) %>
       <strong> Applied Teens:  </strong><br> <!-- Shouldn't show if there aren't any applications -->
 
@@ -39,8 +38,7 @@
         <% @teen = get_user(application.teen_id) %>
         <%= link_to (@teen.fname + " "+ @teen.lname + " " + @teen.id.to_s), user_path(@teen) %><br>
           <!-- For user to approve teens he selects -->
-        <% if (params[:id].to_i == session[:user_id]) %>
-
+        <% if viewing_own_page %>
             <%= form_for (application), url: {controller: "service_listing_approvals", action: "update"} do |t| %>
               <%= hidden_field_tag :teen_id, @teen.id %>
               <%= hidden_field_tag :approved, true %>
@@ -48,7 +46,6 @@
               <%= hidden_field_tag :id, params[:id] %>
               <%= t.submit "Approve", class: "btn btn-primary" %> 
             <% end %> 
-
         <% end %>
       <% end %>
     <% end %>
@@ -59,14 +56,28 @@
     <strong>Service Listing ID: </strong> 
     <%= approved_listing.service_listing_id %>
     <strong>Approved Teenager ID:</strong>
-    <%= approved_listing.teen_id %> <br><br>
+    <%= approved_listing.teen_id %> <br>
+    <strong>Teen Name </strong>
+    <% @teen = get_user(approved_listing.teen_id) %>
+    <%= @teen.fname.to_s + " " + @teen.lname.to_s %> <br>
+
+    <% if viewing_own_page %>
+            <%= form_for (approved_listing), url: {controller: "service_listing_approvals", action: "update"} do |t| %>
+              <%= hidden_field_tag :teen_id, approved_listing.teen_id %>
+              <%= hidden_field_tag :approved, false %>
+              <%= hidden_field_tag :service_listing_id, approved_listing.service_listing_id %>
+              <%= hidden_field_tag :id, params[:id] %>
+              <%= t.submit "Cancel approval", class: "btn btn-primary" %>
+            <% end %>
+    <% end %>
+    <br><br>
   <% end %>
 <% end %>
 
 
 <!-- Viewing a teen profile -->
 <% if user_is_teen(@user) %>
-  <% if (params[:id].to_i == session[:user_id]) %>
+  <% if viewing_own_page %>
     <h1>My Applied Listings</h1>
   <% else %>
     <h1>Applied Listings</h1>
@@ -74,11 +85,11 @@
   <!-- get all pending applications for the teen -->
   <% @applied_listings = get_applied_listings_by_teen(@user) %>
   <% @applied_listings.each do |applied_listing| %>
-<!--   <div>service listing application id:<div>  -->
-<!--   <%= applied_listing.service_listing_id.to_s + " is " + service_listing_is_approved(applied_listing.service_listing_id).to_s %> -->
-  <!-- If service listing is approved for another teen do not list -->
     <% if !service_listing_is_approved(applied_listing.service_listing_id) %> 
+      <strong>Job Listing ID: </strong>
       <%= applied_listing.service_listing_id %><br>
+      <strong>Description: </strong>
+      <%= get_service_listing_description(applied_listing) %><br>
     <% end %>
   <% end %>
 
@@ -89,4 +100,3 @@
     <%= approved_listing.service_listing_id %><br><br>
   <% end %>
 <% end %>
-

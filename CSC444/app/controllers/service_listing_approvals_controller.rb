@@ -16,7 +16,6 @@
 # 3. repeatable
 # clients are able to set their listings to be repeatable tasks, such as every 2 weeks or so
 # 
-# 
 
 class ServiceListingApprovalsController < ApplicationController
   
@@ -36,7 +35,7 @@ class ServiceListingApprovalsController < ApplicationController
     # find based on service_listing_id and teen_id, set to true
     @service_listing_approval = ServiceListingApproval.find_by_service_listing_id_and_teen_id(params[:service_listing_id], params[:teen_id])
     if @service_listing_approval.update(service_listing_approval_params)
-      flash[:success] = "Approved"
+      flash[:success] = "Updated!"
       @user = User.find(params[:id])
       redirect_to @user
     else

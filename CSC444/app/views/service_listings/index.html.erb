@@ -19,8 +19,8 @@
     <td><%= client.fname + ' ' + client.lname %></td>
     <td><%= get_service_list_client_rating(service_listing) %></td>
     <td><%= get_service_listing_service(service_listing) %></td>
-    <td><%= get_service_listing_task_date(service_listing) %></td>
-    <td><%= get_service_listing_hourly_rate(service_listing) %></td>
+    <td><%= service_listing.task_date %></td>
+    <td><%= service_listing.hourly_rate %></td>
     <td><%= get_service_listing_approved_teen_name(service_listing.id) %></td>
     <td><%= link_to 'See details', service_listing_path(service_listing) %></td>
     

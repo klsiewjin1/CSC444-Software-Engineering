@@ -8,5 +8,4 @@ class ServiceListingApproval < ApplicationRecord
   def set_approved
     self.approved = false # will change to false once we don't immediately approve
   end
-  
 end

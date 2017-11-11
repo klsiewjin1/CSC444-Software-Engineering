@@ -58,4 +58,12 @@ module ServiceListingsHelper
   def get_SL_approvals_from_SL(service_listing_id)
     return ServiceListingApproval.where(service_listing_id: service_listing_id, approved: false)
   end
+
+  def service_listing_is_approved(service_listing_id)
+    service_listings = ServiceListingApproval.where(service_listing_id: service_listing_id)
+    # returns true if any service_listing is true
+    return service_listings.any? {
+        |service_listing| service_listing.approved == true
+    }
+  end
 end

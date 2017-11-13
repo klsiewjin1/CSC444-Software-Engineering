@@ -1,20 +1,21 @@
-    <header class="navbar navbar-fixed-top navbar-inverse">
-      <div class="container">
-        <%= link_to "TeenServe", '#', id: "logo" %>
-        <nav>
-          <ul class="nav navbar-nav navbar-right">
-            <li><%= link_to "Home",   welcome_index_url %></li>
-            <li><%= link_to "My Jobs",   '#' %></li>
-            <li><%= link_to "Browse Jobs", '#' %></li>
-             <% if !current_user.nil? %>
-              <li><%= link_to "Profile", @current_user %></li>
-              <font color="white"> Welcome, <%= current_user[:username] %> </font>
-              <!--    <strong>Usertype: <#%= current_user[:user_type] %></strong> -->
-              <li><%= link_to("Logout", logout_path, method: :delete) %></li>
-            <% else %>
-              <%= link_to "Login", login_path %>
-            <% end %>
-          </ul>
-        </nav>
-      </div>
-    </header>
+		<!-- Header -->
+
+			<header id="header">
+				<div class="inner">
+					<%= link_to "TeenServe", root_path, class: "logo" %>
+					<nav id="nav">
+                <a><%= link_to "Home",   welcome_index_url %></a>
+                <a><%= link_to "My Jobs",   '#' %></a>
+                <a><%= link_to "Browse Jobs", '#' %></a>
+                 <% if !current_user.nil? %>
+                  <a><%= link_to "Profile", @current_user %></a>
+                  <font color="white"> Welcome, <%= current_user[:username] %> </font>
+                  <!--    <strong>Usertype: <#%= current_user[:user_type] %></strong> -->
+                  <a><%= link_to("Logout", logout_path, method: :delete) %></a>
+                <% else %>
+                  <%= link_to "Login", login_path %>
+                <% end %>
+  					</nav>
+					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+				</div>
+			</header>

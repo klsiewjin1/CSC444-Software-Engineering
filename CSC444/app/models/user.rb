@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :service_listings, dependent: :destroy
+  
   validates :user_type, presence: true
   validates :username, uniqueness: true
   

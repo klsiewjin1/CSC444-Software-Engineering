@@ -17,7 +17,7 @@
   <tr>
     <% client = get_service_listing_client(service_listing) %>
     <td><%= get_user_full_name(client) %></td>
-    <td><%= get_avg_rating(service_listing.client_id) %></td>
+    <td><%= get_avg_rating(service_listing.user_id) %></td>
     <td><%= get_service_listing_service(service_listing) %></td>
     <td><%= service_listing.task_date %></td>
     <td><%= service_listing.hourly_rate %></td>

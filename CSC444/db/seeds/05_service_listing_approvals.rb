@@ -1,3 +1,7 @@
 ServiceListingApproval.delete_all
-service_listing_approvals = ServiceListingApproval.create([{ service_listing_id: ServiceListing.first.id, teen_id: User.all.where(user_type: 'teen').first.id, approved: true },
-                                                           { service_listing_id: ServiceListing.second.id, teen_id: User.all.where(user_type: 'teen').first.id, approved: true }])
+
+first_listing = ServiceListing.all.first
+second_listing = ServiceListing.all.second
+
+first_listing.service_listing_approvals.create([{ service_listing_id: first_listing.id, teen_id: User.all.where(user_type: 'teenager').first.id }])
+second_listing.service_listing_approvals.create([{ service_listing_id: second_listing.id, teen_id: User.all.where(user_type: 'teenager').first.id }])

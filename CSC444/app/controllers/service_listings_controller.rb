@@ -17,7 +17,7 @@ class ServiceListingsController < ApplicationController
   
   def create
     @service_listing = ServiceListing.new(service_listing_params)
-    @service_listing.client_id = session[:user_id]
+    @service_listing.user_id = session[:user_id]
     
     if @service_listing.save
       puts "Service listing created!"
@@ -26,7 +26,7 @@ class ServiceListingsController < ApplicationController
       flash[:errors] = @service_listing.errors
       redirect_to action: 'new'
     end
-#    redirect_to client_path(@service_listing.client_id)
+#    redirect_to client_path(@service_listing.user_id)
 	end
 
   # return 

@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171103205347) do
+ActiveRecord::Schema.define(version: 20171107171706) do
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer "actor_id"
+    t.integer "receiver_id"
+    t.datetime "read_at"
+    t.string "action"
+    t.string "notification_path_type"
+    t.integer "notification_path_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "reviews", force: :cascade do |t|
     t.integer "reviewer_id"
@@ -47,7 +58,7 @@ ActiveRecord::Schema.define(version: 20171103205347) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "user_type"
+    t.string "user_type" # should be teenager or client 
     t.string "username"
     t.string "fname"
     t.string "lname"

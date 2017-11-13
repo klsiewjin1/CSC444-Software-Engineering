@@ -2,31 +2,76 @@
 
 <h1>Sign up</h1>
 
+
+
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
     <%= form_for @user, :html=> {:id => 'registrationForm'} do |f| %>
+    
+      <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@user.errors.count, "error") %> prohibited signup:</h2>
+    
+          <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+    
+    
       <div class="tab">
-       <h2>The Basics</h2>
-      <%= f.text_field :username, placeholder: "Username", onfocusout: "validateInput(this)" %>
-      <br><br>
-      <%= f.select :user_type, [['Client', 'client'], ['Teenager', 'teenager']] %>
+       <p>Pick a unique username</p>
+        <%= f.text_field :username, placeholder: "Username" %>
+        <p class="errortext" id="error_user_username" error="Please pick a unique username with 3+ characters"></p>
+        <p>User type</p>
+        <%= f.select :user_type, [['Client', 'client'], ['Teenager', 'teenager']] %>
+        <p class="errortext" id="error_user_user_type" ></p>
       </div>
       
-      <div class="tab" style = "display:none">
-      <h2>Tell us about yourself</h2>
-      <%= f.text_field :fname, placeholder: "First name", onfocusout: "validateInput(this)" %>
-      <br>
-      <%= f.text_field :lname, placeholder: "Last name", onfocusout: "validateInput(this)" %>
+      <div class="tab" <% if !@user.errors.any? %> style = "display:none" <% end %>>
+        <p>Tell us about yourself</p>
+        <%= f.text_field :fname, placeholder: "First name" %>
+        <p class="errortext" id="error_user_fname" error="Please enter a valid name"></p>
+        <%= f.text_field :lname, placeholder: "Last name" %>
+        <p class="errortext" id="error_user_lname"error="Please enter a valid name"></p>
+        <p>Date of Birth</p>
+        <%= f.date_field :bdate, placeholder: "Date of Birth" %>
+        <p class="errortext" id="error_user_bdate" error="Please enter a valid birthday"></p>
       </div>
 
-      <div class="tab"  style="display:none">
-      <%= f.email_field :email, placeholder: "Email", onfocusout: "validateInput(this)"%>
-      <%= f.email_field :email_confirmation, placeholder: "Confirm email", onfocusout: "validateInput(this)" %>
+      <div class="tab" <% if !@user.errors.any? %> style = "display:none" <% end %>>
+        <p>Address</p>
+        <%= f.text_field :address, placeholder: "Street" %>
+        <p class="errortext" id="error_user_address" error="Please enter a valid street address"></p>
+        <%= f.text_field :city, placeholder: "City" %>
+        <p class="errortext" id="error_user_city" error="Please enter a valid city name"></p>
+        <%= f.text_field :state, placeholder: "State" %>
+        <p class="errortext" id="error_user_state" error="Please enter a valid state name"></p>
+        <%= f.text_field :country, placeholder: "Country" %>
+        <p class="errortext" id="error_user_country" error="Please enter a valid country name"></p>
+        <%= f.text_field :pcode, placeholder: "Zip/Post Code" %>
+        <p class="errortext" id="error_user_pcode" error="Please enter a valid postal/zip code"></p>
+        <p>Contact phone</p>
+        <%= f.telephone_field :cellphone, placeholder: "Telephone" %>
+        <p class="errortext" id="error_user_cellphone" error="Please enter a valid 10+ digit phone number"></p>
       </div>
 
-      <div class="tab"  style="display:none">
-      <%= f.password_field :password, placeholder: "Password", onfocusout: "validateInput(this)" %>
-      <%= f.password_field :password_confirmation, placeholder: "Confirm password", onfocusout: "validateInput(this)" %>
+      <div class="tab"  <% if !@user.errors.any? %> style = "display:none" <% end %>>
+        <p>Enter an account email</p>
+        <%= f.email_field :email, placeholder: "Email" %>
+        <p class="errortext" id="error_user_email" error="Please enter a valid email"></p>
+        <%= f.email_field :email_confirmation, placeholder: "Confirm email" %>
+        <p class="errortext" id="error_user_email_confirmation" error="Invalid email/emails do not match!"></p>
+      </div>
+
+      <div class="tab" <% if !@user.errors.any? %> style = "display:none" <% end %>>
+        <p>Pick a secure password</p>
+        <%= f.password_field :password, placeholder: "Password" %>
+        <p class="errortext" id="error_user_password" error="Please enter a 3+ character password"></p>
+        <%= f.password_field :password_confirmation, placeholder: "Confirm password" %>
+        <p class="errortext" id="error_user_password_confirmation" error="Invalid password/passwords do not match!"></p>
       </div>
 
       <br>

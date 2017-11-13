@@ -11,10 +11,16 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show  
+    @user = User.find(params[:id])
+    @current_id = session[:user_id]
   end
 
   # GET /users/new
   def new
+    if logged_in?
+      redirect_to @current_user
+    end
+    
     @user = User.new
   end
 

@@ -2,6 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
 #registrationForm {
   background-color: #ffffff;
   margin: 100px auto;
@@ -16,7 +19,7 @@ input {
   font-size: 17px;
   font-family: Raleway;
   border: 1px solid #aaaaaa;
-  margin-bottom: 20px;
+  margin-bottom: 2px;
 }
 
 
@@ -29,8 +32,22 @@ select {
   margin-bottom: 20px;
 }
 
+option {
+  font-size: 17px;
+  font-family: Raleway;
+}
+
 h2 {
+  font-size: 1.2em;
   text-align: left;
+}
+
+p {
+  font-size: 1em;
+  letter-spacing: -1px;
+  text-align: left;
+  font-weight: normal;
+  color: $gray-light;
 }
 
 // Make invalid inputs highlighted
@@ -47,4 +64,39 @@ input.valid {
   width: 200px;
   height: 50px;
   border-radius: 12px;
+}
+
+.errortext {
+  margin-bottom: 30px;
+  color: #FF9999;
+}
+
+#error_explanation {
+  width: 100%;
+  border: 2px solid red;
+  padding: 7px 7px 0;
+  margin-bottom: 20px;
+  background-color: #ffdddd;
+
+  h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 5px 5px 15px;
+    font-size: 17px;
+    font-family: Raleway;
+    margin: -7px -7px 0;
+    color: #fff;
+  }
+
+  ul li {
+    margin-top: 2px;
+    font-size: 17px;
+    font-family: Raleway;
+    list-style: square;
+  }
+}
+
+.field_with_errors {
+  background-color: #ffdddd;
+  width: 100%;
 }

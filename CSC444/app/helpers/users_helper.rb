@@ -1,5 +1,9 @@
 module UsersHelper
   
+  include Math
+  
+  EARTH_RADIUS = 6371 # in km
+  
   # Returns a Gravatar for a given user
   def gravatar_for(user)
     gravatar_id = Digest::MD5::hexdigest(user.email.downcase)
@@ -52,6 +56,39 @@ module UsersHelper
     else
       return nil
     end
+  end
+  
+  def get_distance_between_users(user1, user2)
+    # only using this while testing lat/long, in the future all users will always have lat/long so it won't be necessary to check here
+    if !user1.lat or !user1.long or !user2.lat or !user2.long
+      return 1000000 # 1 million km is way bigger than any legitimate radius for Earth
+    end
+    
+    lat1_radians = user1.lat * PI / 180
+    lat2_radians = user2.lat * PI / 180
+    long1_radians = user1.long * PI / 180
+    long2_radians = user2.long * PI / 180
+    
+    dlat = lat2_radians - lat1_radians 
+    dlong = long2_radians - long1_radians
+    a = (sin(dlat/2) ** 2) + cos(lat1_radians) * cos(lat2_radians) * (sin(dlong/2) ** 2) 
+    c = 2 * atan2( sqrt(a), sqrt(1-a) ) 
+    d = EARTH_RADIUS * c
+    
+    return d
+  end
+  
+  # temporary version, actual version will use SQL query which will make the performance significantly better
+  def get_clients_within_radius(teen, radius)
+    clients = []
+    
+    User.all.where(user_type: 'client').each do |client|
+      if get_distance_between_users(teen, client) <= radius
+        clients.push(client)
+      end
+    end
+    
+    return clients
   end
   
 end

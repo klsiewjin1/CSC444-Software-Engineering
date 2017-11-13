@@ -2,9 +2,25 @@
 
 <h1>Sign up</h1>
 
+
+
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
     <%= form_for @user, :html=> {:id => 'registrationForm'} do |f| %>
+    
+      <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@user.errors.count, "error") %> prohibited signup:</h2>
+    
+          <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+    
+    
       <div class="tab">
        <p>Pick a unique username</p>
         <%= f.text_field :username, placeholder: "Username" %>
@@ -14,7 +30,7 @@
         <p class="errortext" id="error_user_user_type" ></p>
       </div>
       
-      <div class="tab" style = "display:none">
+      <div class="tab" <% if !@user.errors.any? %> style = "display:none" <% end %>>
         <p>Tell us about yourself</p>
         <%= f.text_field :fname, placeholder: "First name" %>
         <p class="errortext" id="error_user_fname" error="Please enter a valid name"></p>
@@ -25,7 +41,7 @@
         <p class="errortext" id="error_user_bdate" error="Please enter a valid birthday"></p>
       </div>
 
-      <div class="tab"  style="display:none">
+      <div class="tab" <% if !@user.errors.any? %> style = "display:none" <% end %>>
         <p>Address</p>
         <%= f.text_field :address, placeholder: "Street" %>
         <p class="errortext" id="error_user_address" error="Please enter a valid street address"></p>
@@ -42,7 +58,7 @@
         <p class="errortext" id="error_user_cellphone" error="Please enter a valid 10+ digit phone number"></p>
       </div>
 
-      <div class="tab"  style="display:none">
+      <div class="tab"  <% if !@user.errors.any? %> style = "display:none" <% end %>>
         <p>Enter an account email</p>
         <%= f.email_field :email, placeholder: "Email" %>
         <p class="errortext" id="error_user_email" error="Please enter a valid email"></p>
@@ -50,7 +66,7 @@
         <p class="errortext" id="error_user_email_confirmation" error="Invalid email/emails do not match!"></p>
       </div>
 
-      <div class="tab"  style="display:none">
+      <div class="tab" <% if !@user.errors.any? %> style = "display:none" <% end %>>
         <p>Pick a secure password</p>
         <%= f.password_field :password, placeholder: "Password" %>
         <p class="errortext" id="error_user_password" error="Please enter a 3+ character password"></p>

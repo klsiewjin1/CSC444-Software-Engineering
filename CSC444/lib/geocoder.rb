@@ -6,17 +6,17 @@ class Geocoder
    # Returns a LatLong object with the coordinates of the address supplied. Address is just a string
    # which will trigger an external API call each time to find the LatLong of the address
    # Returns nil if error and no LatLong could be resolved to the address.
-   def getLatLong(address)
+   def getLatLong(full_address)
    		result = nil;
    		
-   		if not address
+   		if not full_address
    		   return result
    		end
 
    		#do api call
    		begin
    		response = RestClient.get('https://maps.googleapis.com/maps/api/geocode/json', 
-   			{params: {address: address, key: 'AIzaSyAP_IzvS1mpKPgcs6meWzc6hu9PB0CVJFs'}});
+   			{params: {address: full_address, key: 'AIzaSyAP_IzvS1mpKPgcs6meWzc6hu9PB0CVJFs'}});
    		rescue RestClient::ExceptionWithResponse => err
    			puts err.response;
    			return result;

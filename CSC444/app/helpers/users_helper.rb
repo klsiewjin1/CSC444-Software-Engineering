@@ -10,13 +10,15 @@ module UsersHelper
   def current_user_is_client()
     # return true if @current_user.user_type == "client" 
     # return false
-    return true if user_is_client(session[:user_id]) == "client" else return false
+    return true if user_is_client(session[:user_id]) == "client" # got "else without rescue is useless" when all in one line
+    return false
   end
   
   def current_user_is_teen()
     # return true if @current_user.user_type == "teenager" 
     # return false
-    return true if user_is_teen(session[:user_id]) == "teenager" else return false
+    return true if user_is_teen(session[:user_id]) == "teenager" # got "else without rescue is useless" when all in one line
+    return false
   end
 
   def user_is_teen(id)
@@ -42,6 +44,14 @@ module UsersHelper
       else
           return user.username
       end
+  end
+  
+  def get_full_address(user)
+    if user.address and user.city and user.country
+      return user.address + ', ' + user.city + ', ' + user.country
+    else
+      return nil
+    end
   end
   
 end

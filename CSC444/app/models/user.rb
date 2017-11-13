@@ -34,9 +34,20 @@ class User < ApplicationRecord
   validates :email_confirmation, presence: true
   validates_format_of :email, with: /([\w.-]+)@([\w.-]+)\.([a-zA-Z.]{2,6})/i , on: :create
   
+  before_save :store_lat_long
   before_save :downcase_email
   before_save :downcase_username
   has_secure_password
+
+  def store_lat_long
+    full_address = UsersController.helpers.get_full_address(self)
+    if full_address
+      geocoder = Geocoder.new
+      lat_long = geocoder.getLatLong(full_address)
+      self.lat = lat_long.lat
+      self.long = lat_long.long
+    end
+  end
 
   def downcase_email
     self.email.downcase!

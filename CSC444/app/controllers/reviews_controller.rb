@@ -1,7 +1,7 @@
 # Handles review access
 class ReviewsController < ApplicationController
   include ReviewsHelper
-  include NotificationHelper
+  include NotificationsHelper
   
   def new
     @review = Review.new

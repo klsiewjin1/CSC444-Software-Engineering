@@ -20,6 +20,12 @@ Rails.application.routes.draw do
 
   get '/nearme', to: 'service_listings#nearme'
   
+  resources :notifications do
+    collection do
+      post :mark_as_read
+    end
+  end
+  
   resources :services
   resources :service_listings
   resources :users

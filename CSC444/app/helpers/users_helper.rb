@@ -13,15 +13,16 @@ module UsersHelper
 
   def user_is_teen(user)
     # return true if get_user(id).user_type == "teenager" -> doesn't work when get_user returns nil
-    return (user and user.user_type == "teenager")
+    return (user != nil && user.user_type == "teenager")
   end
 
   def user_is_client(user)
     # return true if get_user(id).user_type == "client" -> doesn't work when get_user returns nil
-    return (user and user.user_type == "client")
+    return (user != nil && user.user_type == "client")
   end
   
   def current_user_is_teen()
+    # return @current_user.user_type
     return user_is_teen(@current_user)
   end
   

@@ -9,11 +9,11 @@ class ApplicationController < ActionController::Base
   private
  
   def require_login
-    # if !(logged_in?)
-    #   flash[:error] = "You must be logged in to access this section!"
-    #   session[:return_to] = request.url;
-    #   redirect_to login_path
-    # end
+    if !(logged_in?)
+      flash[:error] = "You must be logged in to access this section!"
+      session[:return_to] = request.url;
+      redirect_to login_path
+    end
   end
 
 end

@@ -1,0 +1,13 @@
+<tbody>
+  <% @notifications.each do |notice| %>
+    <tr>
+      <strong>actor ID: </strong>
+      <td><%= notice.actor_id %></td>
+      <br>
+      <strong>action: </strong>
+      <td><%= notice.action %></td>
+      <br> <br>
+    </tr>
+  <% end %>
+</tbody>  
+</tr>

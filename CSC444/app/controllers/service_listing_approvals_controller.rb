@@ -18,6 +18,7 @@
 # 
 
 class ServiceListingApprovalsController < ApplicationController
+  include NotificationsHelper 
   
   def create
     @service_listing_approval = ServiceListingApproval.new(service_listing_approval_params)
@@ -36,7 +37,9 @@ class ServiceListingApprovalsController < ApplicationController
     @service_listing_approval = ServiceListingApproval.find_by_service_listing_id_and_teen_id(params[:service_listing_id], params[:teen_id])
     if @service_listing_approval.update(service_listing_approval_params)
       flash[:success] = "Updated!"
+      #@current_user = User.find(session[:user_id])
       @user = User.find(params[:id])
+      #create_notification(receiver_id: @user.id, actor_id: @current_user.id, action: 'approved your job offer', @user)
       redirect_to @user
     else
       flash[:error] = "Something went wrong"

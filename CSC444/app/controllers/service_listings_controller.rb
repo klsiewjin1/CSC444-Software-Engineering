@@ -1,5 +1,5 @@
 class ServiceListingsController < ApplicationController
-  include NotificationHelper
+  include NotificationsHelper
   
   def index
     @service_listings = ServiceListing.all

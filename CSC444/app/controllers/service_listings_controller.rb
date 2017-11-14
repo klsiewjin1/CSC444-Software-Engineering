@@ -45,11 +45,16 @@ class ServiceListingsController < ApplicationController
 
     respond_to do |format|
       if !msg
-        msg = { :radius => "#{params[:radius]}", :userId => current_user.id, :myLat => current_user.lat, :myLon => current_user.long};
+        msg = { :radius => "#{params[:radius]}", :userId => current_user.id, 
+        :myLat => current_user.lat, :myLon => current_user.long, :listings => [{:lat => 43.6472812, :lon => -79.4050966}]};
       end
       response.headers["Access-Control-Allow-Origin"] = "*"
       format.json {render :json => msg, :status => status}
     end
+  end
+
+  def mapView
+    @current_user = current_user;
   end
 	
 	private

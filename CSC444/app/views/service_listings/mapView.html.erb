@@ -20,9 +20,10 @@
 	  var geocoder;
     var map;
     var address = "75 Portland Street, Toronto, Canada";
-       
+	
+      function initMap() {
         geocoder = new google.maps.Geocoder();
-        var latlng = new google.maps.LatLng(-34.397, 150.644);
+        var latlng = new google.maps.LatLng(<%=@current_user.lat %>, <%=@current_user.long%>);
         var myOptions = {
 		zoom: 15,
 		center: latlng,
@@ -40,7 +41,7 @@
     }, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
-          map.setCenter(results[0].geometry.location);
+          map.setCenter(latlng);
 
           var infowindow = new google.maps.InfoWindow({
             content: '<b>' + address + '</b>',
@@ -49,7 +50,7 @@
 
 		  var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
           var marker = new google.maps.Marker({
-            position: results[0].geometry.location,
+            position: latlng,
             map: map,
             title: address,
 			animation: google.maps.Animation.DROP,
@@ -63,7 +64,7 @@
 		radius = 1;
         radius = (radius / 6378.1) * 6378100;
 		circle = new google.maps.Circle({
-            center: results[0].geometry.location,
+            center: latlng,
             clickable: false,
             draggable: false,
             editable: false,
@@ -116,6 +117,7 @@
         alert("Geocode was not successful for the following reason: " + status);
       }
     });
+  
 }
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAP_IzvS1mpKPgcs6meWzc6hu9PB0CVJFs&callback=initMap"

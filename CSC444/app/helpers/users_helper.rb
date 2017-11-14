@@ -10,27 +10,23 @@ module UsersHelper
     gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}"
     image_tag(gravatar_url, alt: user.username, class: "gravatar")
   end
-  
-  def current_user_is_client()
-    # return true if @current_user.user_type == "client" 
-    # return false
-    return true if user_is_client(session[:user_id]) == "client" # got "else without rescue is useless" when all in one line
-    return false
+
+  def user_is_teen(user)
+    # return true if get_user(id).user_type == "teenager" -> doesn't work when get_user returns nil
+    return (user and user.user_type == "teenager")
+  end
+
+  def user_is_client(user)
+    # return true if get_user(id).user_type == "client" -> doesn't work when get_user returns nil
+    return (user and user.user_type == "client")
   end
   
   def current_user_is_teen()
-    # return true if @current_user.user_type == "teenager" 
-    # return false
-    return true if user_is_teen(session[:user_id]) == "teenager" # got "else without rescue is useless" when all in one line
-    return false
+    return user_is_teen(@current_user)
   end
-
-  def user_is_teen(id)
-    return true if get_user(id).user_type == "teenager"
-  end
-
-  def user_is_client(id)
-    return true if get_user(id).user_type == "client"
+  
+  def current_user_is_client()
+    return user_is_client(@current_user)
   end
 
   def get_user(user_id)

@@ -1,22 +1,42 @@
 
 
+
+
 <body>
     <div class="container">
-        <h1>Homepage</h1>
-        <%= link_to 'See current Users signed up!', controller: 'users' %>
-        <br/>
-        <%= link_to 'My Profile', @current_user %>
-        <br/>
-        <%= link_to 'Service Listings', controller: 'service_listings' %>
-        <br/>
-        
-        <% if current_user_is_client() %>
-          <%= link_to 'Add a new service posting!', new_service_listing_path %>
-        <% end %>    
-    </div>
-    
+        <h1>Welcome to your Homepage!</h1>
+		<!-- Three -->
+			<section id="three" class="wrapper align-center">
+				<div class="inner">
+					<div class="flex flex-2">
+						<article>
+							<div class="image round">
+								<%= image_tag("lawn-mower.jpg", alt: "Rails logo")%>
+							</div>
+							<header>
+								<h3>Post a service listing!</h3>
+								<h5>Click below to post a job listing</h5>
+							</header>
+							
+							<footer>
+								<%= link_to 'Add a new service posting!', new_service_listing_path, :class => "button" %>
+							</footer>
+						</article>
+						
+						<article>
+							<div class="image round">
+								<%= image_tag("smiling.jpg", alt: "Rails logo")%>
+							</div>
+							<header>
+								<h3>See the list of users signed up!</h3>
+								<h5>Click below to see a list of users.</h5>
+							</header>
+							<footer>
+								<%= link_to 'See current Users signed up!', {:controller => 'users'}, :class => "button" %>
+							</footer>
+						</article>
+					</div>
+				</div>
+			</section>
+
 </body>
-
-
-
-

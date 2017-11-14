@@ -33,15 +33,6 @@ ActiveRecord::Schema.define(version: 20171113023016) do
     t.integer "service_id"
   end
 
-  create_table "reviews_tables", force: :cascade do |t|
-    t.integer "reviewerID"
-    t.integer "revieweeID"
-    t.text "review"
-    t.integer "rating"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "service_listing_approvals", force: :cascade do |t|
     t.integer "service_listing_id"
     t.integer "teen_id"

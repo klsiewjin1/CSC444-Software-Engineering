@@ -6,7 +6,7 @@
 					<nav id="nav">
                 <a><%= link_to "Home",   welcome_index_url %></a>
                 <a><%= link_to "My Jobs",   '#' %></a>
-                <a><%= link_to "Browse Jobs", '#' %></a>
+                <a><%= link_to "Browse Jobs", controller: 'service_listings' %></a>
                  <% if !current_user.nil? %>
                   <a><%= link_to "Profile", @current_user %></a>
                   <font color="white"> Welcome, <%= current_user[:username] %> </font>
@@ -19,3 +19,6 @@
 					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
 				</div>
 			</header>
+
+
+

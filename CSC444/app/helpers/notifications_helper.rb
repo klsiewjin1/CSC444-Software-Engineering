@@ -1,4 +1,4 @@
-module NotificationHelper
+module NotificationsHelper
     def create_notification(actor_id, receiver_id, action, uri)
         # for given parameters, create a new entry in notification, returns create notification (nil if failed)
         created = Notification.create(:actor_id => actor_id, :receiver_id => receiver_id, :action => action, :notification_path => uri) 

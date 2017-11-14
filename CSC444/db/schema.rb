@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171113023016) do
+ActiveRecord::Schema.define(version: 20171114155332) do
 
   create_table "notifications", force: :cascade do |t|
     t.integer "actor_id"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20171113023016) do
   end
 
   create_table "service_listings", force: :cascade do |t|
+    t.integer "service_listing_group_id"
     t.date "task_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

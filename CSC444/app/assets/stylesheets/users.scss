@@ -17,9 +17,10 @@ input {
   padding: 12px;
   width: 100%;
   font-size: 17px;
-  font-family: Raleway;
+  font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
+  font-weight: bold;
   border: 1px solid #aaaaaa;
-  margin-bottom: 2px;
+  margin-bottom: 2
 }
 
 
@@ -27,14 +28,14 @@ select {
   padding: 12px;
   width: 100%;
   font-size: 17px;
-  font-family: Raleway;
+  font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
   border: 1px solid #aaaaaa;
   margin-bottom: 20px;
 }
 
 option {
   font-size: 17px;
-  font-family: Raleway;
+  font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
 }
 
 h2 {
@@ -52,15 +53,15 @@ p {
 
 // Make invalid inputs highlighted
 input.invalid {
-  background-color: #ffdddd;
+  background-color: #ef5350;
 }
 
 // Make valid inputs highlighted
 input.valid {
-  background-color: #e6ffe6;
+  background-color: #1b5e20;
 }
 
-.btn.btn-primary {
+button {
   width: 200px;
   height: 50px;
   border-radius: 12px;
@@ -83,7 +84,7 @@ input.valid {
     font-weight: bold;
     padding: 5px 5px 5px 15px;
     font-size: 17px;
-    font-family: Raleway;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
     margin: -7px -7px 0;
     color: #fff;
   }
@@ -91,7 +92,7 @@ input.valid {
   ul li {
     margin-top: 2px;
     font-size: 17px;
-    font-family: Raleway;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
     list-style: square;
   }
 }

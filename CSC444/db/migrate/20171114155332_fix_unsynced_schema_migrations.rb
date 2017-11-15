@@ -1,7 +1,5 @@
 class FixUnsyncedSchemaMigrations < ActiveRecord::Migration[5.1]
   def change
-    # reviews_tables should not exist
-    drop_table :reviews_tables
     
     # use underscores instead of camel case
     rename_column :service_listings, :serviceListingGroupID, :service_listing_group_id

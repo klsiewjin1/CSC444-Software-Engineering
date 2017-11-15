@@ -26,7 +26,7 @@ showTab = (tab) ->
   # Submit/next button conditional display
   if tab == tabs.length - 1
     document.getElementById('nextBtn').style.display = 'none'
-    document.getElementById('submitBtn').style.display = 'inline'
+    toggleSubmit()
   else
     document.getElementById('submitBtn').style.display = 'none'
     document.getElementById('nextBtn').style.display = 'inline'
@@ -130,12 +130,17 @@ validateForm = ->
   if valid and match
     input.className = 'input valid'
     errorText.innerHTML = ""
-    return true
-    
+    valid = true
+  else
+    input.className = 'input invalid'
+    errorText.innerHTML = errorText.getAttribute('error')
+    valid = false
   
-  input.className = 'input invalid'
-  errorText.innerHTML = errorText.getAttribute('error')
-  return false
+  if (currentTab == (document.getElementsByClassName('tab').length-1))
+    toggleSubmit()
+    
+  return valid
+  
     
 matchConfirmations = (input, entry, confirmation) ->
   if input == entry
@@ -144,3 +149,11 @@ matchConfirmations = (input, entry, confirmation) ->
     return validateInput(entry) and input.value.match entry.value
   else
     return false
+    
+@toggleSubmit = ->
+  if ((document.getElementById('user_password').className == 'input valid') and (document.getElementById('user_password_confirmation').className == 'input valid'))
+    document.getElementById('submitBtnFake').style.display = 'none'
+    document.getElementById('submitBtn').style.display = 'inline'
+  else
+    document.getElementById('submitBtn').style.display = 'none'
+    document.getElementById('submitBtnFake').style.display = 'inline'

@@ -46,7 +46,8 @@ class ServiceListingsController < ApplicationController
     respond_to do |format|
       if !msg
         msg = { :radius => "#{params[:radius]}", :userId => current_user.id, 
-        :myLat => current_user.lat, :myLon => current_user.long, :listings => [{:lat => 43.6472812, :lon => -79.4050966}]};
+        :myLat => current_user.lat, :myLon => current_user.long, 
+        :listings => get_listings_near_me(params[:radius])};
       end
       response.headers["Access-Control-Allow-Origin"] = "*"
       format.json {render :json => msg, :status => status}
@@ -65,6 +66,39 @@ class ServiceListingsController < ApplicationController
     end
 
     return 0;
+  end
+
+  #dummy
+  def get_listings_near_me_d(radius)
+    res = []
+
+    clients = [1]
+    clients.each do |client|
+      listing = {}
+      listing[:lat] = 43.430136
+      listing[:lon] = -79.7470835
+      listing[:serviceListingIds] = [1,2,3]
+      listing[:clientId] = 1
+      res.push(listing)
+    end
+
+    return res
+  end
+
+  # assume we are a teen if we get here and that radius is valid. Returns an array to return in the response with
+  # client listings near you within the radius provided.
+  def get_listings_near_me(radius)
+    res = []
+    clients = get_clients_within_radius(current_user, radius);
+    clients.each do |client|
+      listing = {}
+      listing[:lat] = client.lat
+      listing[:lat] = client.long
+      listing[:serviceListingIds] = client.service_listings.ids
+      res.push(listing)
+    end
+
+    return res
   end
 
 	# The params that a service listing could have. Excludes all other attributes

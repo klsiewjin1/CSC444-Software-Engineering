@@ -25,15 +25,17 @@
         geocoder = new google.maps.Geocoder();
         var latlng = new google.maps.LatLng(<%=@current_user.lat %>, <%=@current_user.long%>);
         var myOptions = {
-		zoom: 15,
-		center: latlng,
-		mapTypeControl: true,
-		mapTypeControlOptions: {
-			style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
-		},
-		navigationControl: true,
-		mapTypeId: google.maps.MapTypeId.ROADMAP
-	};
+        		  zoom: 15,
+        		  center: latlng, // init position
+        		  mapTypeControl: true,
+        		  mapTypeControlOptions: {
+        			style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+		          },
+          		navigationControl: true,
+          		mapTypeId: google.maps.MapTypeId.ROADMAP,
+              gestureHandling: 'greedy' // makes the map scroll by click+drag and arrow buttons, need to use scrollbar on side if you want to actually scroll the page down
+        };
+
 	map = new google.maps.Map(document.getElementById("map"), myOptions);
 	if (geocoder) {
     geocoder.geocode({
@@ -53,8 +55,8 @@
             position: latlng,
             map: map,
             title: address,
-			animation: google.maps.Animation.DROP,
-			icon: image
+			      animation: google.maps.Animation.DROP,
+			      icon: image
           });
 		  
           google.maps.event.addListener(marker, 'click', function() {
@@ -86,38 +88,44 @@
     });
   }
   
-  var clientAddress = "619 Queen St W, Toronto, ON M5V 2B7, Canada";
-  geocoder.geocode({
-      'address': clientAddress
-    }, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
-
-          var infowindow = new google.maps.InfoWindow({
-            content: '<b>' + clientAddress + '</b>',
-            size: new google.maps.Size(150, 50)
-          });
-          
-		  var marker = new google.maps.Marker({
-            position: results[0].geometry.location,
-            map: map,
-            title: clientAddress,
-			animation: google.maps.Animation.DROP,
-		
-          });
-		  
-          google.maps.event.addListener(marker, 'click', function() {
-            infowindow.open(map, marker);
-          });
-
-        } else {
-          alert("No results found");
-        }
-      } else {
-        alert("Geocode was not successful for the following reason: " + status);
+      console.log("Fetching listings near you...");
+      var xmlhttp = new XMLHttpRequest();
+      var jsonResp = null;
+      xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              jsonResp = JSON.parse(this.responseText);
+              console.log(jsonResp);
+          };
       }
-    });
-  
+
+
+      xmlhttp.open("GET", "http://localhost:3000/nearme.json?radius=1", false);
+      xmlhttp.send();
+
+      // draw all client markers around the user
+      for (var i = 0; i < jsonResp.listings.length; i++) {
+        listing = jsonResp.listings[i];
+        console.log('Plotting client: ' + listing);
+        var clientPos = new google.maps.LatLng(listing.lat, listing.lon);
+
+        var clientMarker = new google.maps.Marker({
+            position: clientPos,
+            map: map,
+            title: listing.serviceListingIds.toString(),
+            animation: google.maps.Animation.DROP
+          });
+
+        var clientInfoWindow = new google.maps.InfoWindow({
+            content: '<b>Client ID is: ' + listing.clientId + ' with Lat: ' + listing.lat + ' Lon: ' + listing.lon + '</b>',
+            size: new google.maps.Size(150, 50)
+        });
+      
+        google.maps.event.addListener(clientMarker, 'click', function() {
+                clientInfoWindow.open(map, clientMarker);
+        });
+      }
+      
+          
 }
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAP_IzvS1mpKPgcs6meWzc6hu9PB0CVJFs&callback=initMap"

@@ -6,6 +6,8 @@ class ServiceListingApproval < ApplicationRecord
   # self.primary_key = :teen_id, :service_listing_id
 
   def set_approved
-    self.approved = false # will change to false once we don't immediately approve
+    if not self.approved # don't want to run with seed file
+      self.approved = false
+    end
   end
 end

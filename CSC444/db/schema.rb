@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171119190658) do
+ActiveRecord::Schema.define(version: 20171120025223) do
 
   create_table "notifications", force: :cascade do |t|
     t.integer "actor_id"
@@ -49,6 +49,8 @@ ActiveRecord::Schema.define(version: 20171119190658) do
     t.integer "service_id"
     t.float "hourly_rate"
     t.string "description"
+    t.integer "start_time"
+    t.integer "end_time"
   end
 
   create_table "services", force: :cascade do |t|

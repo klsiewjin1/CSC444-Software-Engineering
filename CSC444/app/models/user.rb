@@ -39,13 +39,16 @@ class User < ApplicationRecord
   before_save :downcase_username
   has_secure_password
 
+  # get lat/long from Google Maps API (but don't do this with seed file because it already has lat/long and there is a limit of 2500 free Geocoder API daily requests)
   def store_lat_long
-    full_address = UsersController.helpers.get_full_address(self)
-    if full_address
-      geocoder = Geocoder.new
-      lat_long = geocoder.getLatLong(full_address)
-      self.lat = lat_long.lat
-      self.long = lat_long.long
+    if self.lat == nil or self.long == nil
+      full_address = UsersController.helpers.get_full_address(self)
+      if full_address
+        geocoder = Geocoder.new
+        lat_long = geocoder.getLatLong(full_address)
+        self.lat = lat_long.lat
+        self.long = lat_long.long
+      end
     end
   end
 

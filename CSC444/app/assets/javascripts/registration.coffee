@@ -1,4 +1,5 @@
 currentTab = 0
+init = 0
 
 $(".users.new").ready ->
   # Get list of inputs
@@ -7,13 +8,14 @@ $(".users.new").ready ->
   
   # Assign validation checks to all inputs
   while i < inputs.length
-    inputs[i].setAttribute("onfocusout", "validateInput(this)")
+    inputs[i].setAttribute("onblur", "validateInput(this)")
     i++
   
   # Show the currentTab, i.e. the first tab
   showTab currentTab
   
 showTab = (tab) ->
+  
   tabs = document.getElementsByClassName('tab')
   tabs[tab].style.display = 'block'
   

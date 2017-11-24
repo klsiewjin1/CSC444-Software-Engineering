@@ -5,9 +5,7 @@
   
 <tbody>
   <h1> Reviews </h1>
-  <% if @review_matches.none %>
-    <h2> You don't have any reviews at the moment </h2>
-  <% else %>
+  <% if @review_matches.exists? %>
     <% @review_matches.each do |review| %>
       <tr>
         <strong>Reviewer: </strong>
@@ -25,6 +23,8 @@
         <br> <br>
       </tr>
     <% end %>
+  <% else %>
+    <h3> No reviews at the moment </h3>
   <% end %>
 </tbody>  
 </tr>

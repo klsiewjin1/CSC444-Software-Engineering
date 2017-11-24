@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171120025223) do
+ActiveRecord::Schema.define(version: 20171123172546) do
 
   create_table "notifications", force: :cascade do |t|
     t.integer "actor_id"

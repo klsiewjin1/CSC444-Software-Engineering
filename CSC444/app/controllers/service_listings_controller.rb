@@ -61,7 +61,7 @@ class ServiceListingsController < ApplicationController
 	private
 
   def validateNearMeParams(radius)
-    if radius.to_i < 1 || radius.to_i > 10
+    if radius.to_i < 1 || radius.to_i > 100
       return -1;
     end
 
@@ -89,11 +89,11 @@ class ServiceListingsController < ApplicationController
   # client listings near you within the radius provided.
   def get_listings_near_me(radius)
     res = []
-    clients = get_clients_within_radius(current_user, radius);
+    clients = get_clients_within_radius(current_user, radius.to_f);
     clients.each do |client|
       listing = {}
       listing[:lat] = client.lat
-      listing[:lat] = client.long
+      listing[:lon] = client.long
       listing[:serviceListingIds] = client.service_listings.ids
       res.push(listing)
     end

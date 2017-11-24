@@ -4,27 +4,25 @@ min_service_id = Service.minimum(:id)
 num_services = Service.count()
 base_date = Date.new(2017, 7, 1)
 
-# listings = []
+listings = []
 clients = User.where(user_type: 'client')
 services = Service.all.map{ |s| [s.id, s.name] }.to_h
 
 clients.each do |client|
-  client_listings = []
-  num_client_listings = rand(3) # change to rand(10) once MySQL and bulk inserting is implemented
+  num_client_listings = rand(10)
   
   num_client_listings.times do |num|
-    listing_hash = { user_id: client.id, service_id: min_service_id + rand(num_services), task_date: base_date + rand(183).days, 
+    listing_hash = { client_id: client.id, service_id: min_service_id + rand(num_services), task_date: base_date + rand(183).days, 
                      hourly_rate: (rand(21) / 2.0) + 10, start_time: (rand(25) * 30) + 480 }
-    listing_hash[:end_time] = listing_hash[:start_time] + ((rand(8) + 1) * 30)
+    listing_hash[:duration] = listing_hash[:start_time] + ((rand(8) + 1) * 30) # tasks are randomly between 30 min and 4 hours (30 minute intervals)
     listing_hash[:description] = 'I need ' + services[listing_hash[:service_id]].downcase
-    # listings.push(listing_hash)
-    client_listings.push(listing_hash)
+    listings.push(listing_hash)
   end
-  client.service_listings.create([client_listings])
 end
 
-# values = listings.map{ |l| "(#{l[:client_id]}, #{l[:service_id]}, #{l[:task_date]}, #{l[:hourly_rate]}, #{l[:start_time]}, #{l[:end_time]}, #{l[:description]})" }.join(',')
-# ActiveRecord::Base.connection.execute("INSERT INTO service_listings (user_id, service_id, task_date, hourly_rate, start_time, end_time, description) VALUES #{values}")
+created_at = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
+values = listings.map{ |l| "(#{l[:client_id]}, #{l[:service_id]}, \'#{l[:task_date]}\', #{l[:hourly_rate]}, #{l[:start_time]}, #{l[:duration]}, \'#{l[:description]}\', \'#{created_at}\', \'#{created_at}\')" }.join(',')
+ActiveRecord::Base.connection.execute("INSERT INTO service_listings (`user_id`, `service_id`, `task_date`, `hourly_rate`, `start_time`, `duration`, `description`, `created_at`, `updated_at`) VALUES #{values}")
 
 # kanye = User.all.where(fname: 'Kanye').first
 # kendrick = User.all.where(fname: 'Kendrick').first

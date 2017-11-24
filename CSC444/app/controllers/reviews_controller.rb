@@ -12,7 +12,7 @@ class ReviewsController < ApplicationController
     @review.reviewer_id = session[:user_id]
     @user = User.find_by(id: @review.reviewee_id)
     if @review.save
-      create_notification(@review.reviewer_id, @review.reviewee_id, 'reviewed', @user)
+      create_notification(@review.reviewer_id, @review.reviewee_id, 'reviewed you', @user)
       redirect_to @user, notice: 'Review was successfully created'
     elsif @review.errors[:review].any?
       flash[:errors] = "review error"

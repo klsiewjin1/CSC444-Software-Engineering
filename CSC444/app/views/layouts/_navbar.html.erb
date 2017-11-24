@@ -1,8 +1,10 @@
 		<!-- Header -->
-
-			<header id="header">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+			
+      <header id="header">
 				<div class="inner">
-					<%= link_to "TeenServe", root_path, class: "logo" %>
+					<%= link_to "Teender", root_path, class: "logo" %>
 					<nav id="nav">
                 <a><%= link_to "Home",   welcome_index_url %></a>
                 <a><%= link_to "My Jobs",   '#' %></a>
@@ -12,6 +14,19 @@
                   <font color="white"> Welcome, <%= current_user[:username] %> </font>
                   <!--    <strong>Usertype: <#%= current_user[:user_type] %></strong> -->
                   <a><%= link_to("Logout", logout_path, method: :delete) %></a>
+                  <% @notifications = get_user_notifications(@current_user.id) %>
+                    <div class="container">
+                      <div class="dropdown btn-group">
+                        <button class="btn btn-notification dropdown-toggle" id="menu1" type="button"  data-toggle="dropdown">Notification<span class="caret"></span></button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                          <% @notifications.each do |notice| %>
+                            
+                            <li role="presentation"><a role="notices" tabindex="-1" ><strong><%=link_to "#{get_user_name_by_id(notice.actor_id)} #{notice.action}", notice.notification_path %><strong></a></li>
+                            <li role="presentation" class="divider"></li>
+                          <% end %>
+                        </ul> 
+                      </div>
+                    </div>
                 <% else %>
                   <%= link_to "Login", login_path %>
                 <% end %>
@@ -20,5 +35,11 @@
 				</div>
 			</header>
 
-
+      <script>
+        $(document).ready(function(){
+          $(".dropdown-toggle").dropdown();
+        });
+      </script>
+      
+      
 

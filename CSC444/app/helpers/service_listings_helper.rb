@@ -4,6 +4,10 @@ module ServiceListingsHelper
     return get_user(service_listing.user_id)
   end
   
+  def get_service_listing_by_id(service_listing_id)
+    return service_listing =  ServiceListing.find_by(id: service_listing_id)  
+  end
+  
   def get_service_listing_service(service_listing)
     return get_service_name(service_listing.service_id)
   end

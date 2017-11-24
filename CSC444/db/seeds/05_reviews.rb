@@ -13,7 +13,7 @@ rating_reviews = { 1 => ['Horrible, stay far away from them!', 'They do not belo
                    2 => ['Pretty unhappy with their effort', 'Not impressed with their work', 'Did not meet my expectations'], 
                    3 => ['Not too bad', 'They did alright', 'Neutral opinion on them'], 
                    4 => ['Pretty happy with what they did', 'Quite impressed with their work', 'Did a good job'],
-                   5 => ['Couldn\'t have done a better job!', 'Very highly recommend this person!', 'Very outstanding!'] }
+                   5 => ['Could not have done a better job!', 'Very highly recommend this person!', 'Very outstanding!'] }
 
 reviews = []
 
@@ -26,7 +26,7 @@ completed_listings.each do |listing|
   teen_id = listing.teen_id
   service_id = listing.service_listing.service_id
   
-  # client reviewing teen (set to happen about 75% of the time)
+  # client reviewing teen (setting this to happen about 75% of the time)
   if rand(4) > 0
     rating1 = [rand(5) + 1, rand(5) + 1].max # bigger of two random values, biases towards more 4 or 5 star ratings
     review1 = rating_reviews[rating1][rand(3)]
@@ -41,10 +41,9 @@ completed_listings.each do |listing|
   end
 end
 
-Review.create(reviews)
-
-# values = reviews.map{ |r| "(#{r[:reviewer_id]}, #{r[:reviewee_id]}, #rl[:service_id]}, #rl[:rating]}, #rl[:review]})" }.join(',')
-# ActiveRecord::Base.connection.execute("INSERT INTO reviews (reviewer_id, reviewee_id, service_id, rating, review) VALUES #{values}")
+created_at = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
+values = reviews.map{ |r| "(#{r[:reviewer_id]}, #{r[:reviewee_id]}, #{r[:service_id]}, #{r[:rating]}, \'#{r[:review]}\', \'#{created_at}\', \'#{created_at}\')" }.join(',')
+ActiveRecord::Base.connection.execute("INSERT INTO reviews (`reviewer_id`, `reviewee_id`, `service_id`, `rating`, `review`, `created_at`, `updated_at`) VALUES #{values}")
 
 # reviews = Review.create([{ reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: 1, rating: 5, review: 'his name is jeff and he was great', service_id: 1 },
 #                         { reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: 1, rating: 5, review: 'this jeff guy is greaet', service_id: 1 },

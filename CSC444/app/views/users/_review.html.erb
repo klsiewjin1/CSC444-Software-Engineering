@@ -4,21 +4,27 @@
   <% @review = Review.new%>
   
 <tbody>
-  <% @review_matches.each do |review| %>
-    <tr>
-      <strong>Reviewer: </strong>
-      <td><%=  @reviewer = get_user_name_by_id(review.reviewer_id) %></td>
-      <br>
-      <strong>Review text: </strong>
-      <td><%= review.review %></td>
-      <br>
-      <strong>Rating</strong>
-      <td><%= review.rating %></td>
-      <br>
-      <strong>When</strong>
-      <td><%= review.created_at %></td>
-      <br> <br>
-    </tr>
+  <h1> Reviews </h1>
+  <% if @review_matches.none %>
+    <h2> You don't have any reviews at the moment </h2>
+  <% else %>
+    <% @review_matches.each do |review| %>
+      <tr>
+        <strong>Reviewer: </strong>
+        <td><% @reviewer = get_user(review.reviewer_id) %></td>
+        <%= link_to (@reviewer.fname + " " + @reviewer.lname + " " + @reviewer.id.to_s), user_path(@reviewer) %>
+        <br>
+        <strong>Review text: </strong>
+        <td><%= review.review %></td>
+        <br>
+        <strong>Rating</strong>
+        <td><%= review.rating %></td>
+        <br>
+        <strong>When</strong>
+        <td><%= review.created_at %></td>
+        <br> <br>
+      </tr>
+    <% end %>
   <% end %>
 </tbody>  
 </tr>

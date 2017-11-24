@@ -2,7 +2,7 @@
   <% @user = User.find(params[:id]) %>
   <% @notification_match = get_user_notifications(@user) %>
   
-<head>NOTIFICATIONS</head>  
+
 <br>
 <tbody>
   <% @notification_match.each do |notify| %>

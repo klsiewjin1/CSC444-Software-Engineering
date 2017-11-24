@@ -59,7 +59,7 @@
     <%= approved_listing.teen_id %> <br>
     <strong>Teen Name </strong>
     <% @teen = get_user(approved_listing.teen_id) %>
-    <%= @teen.fname.to_s + " " + @teen.lname.to_s %> <br>
+    <%= link_to (@teen.fname + " " + @teen.lname + " " + @teen.id.to_s), user_path(@teen) %>
 
     <% if viewing_own_page %>
             <%= form_for (approved_listing), url: {controller: "service_listing_approvals", action: "update"} do |t| %>

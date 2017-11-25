@@ -19,13 +19,17 @@
 
 class ServiceListingApprovalsController < ApplicationController
   include NotificationsHelper 
+  include ServiceListingsHelper 
   
   def create
     @service_listing_approval = ServiceListingApproval.new(service_listing_approval_params)
     @service_listing_approval.teen_id = session[:user_id] # model does not have access to session variable
     
+    
     if @service_listing_approval.save
       puts "Service listing approval created!"
+      @service_listing = get_service_listing_by_id(@service_listing_approval.service_listing_id)
+      create_notification(@service_listing_approval.teen_id, @service_listing.user_id, "applied for your job", get_user(@service_listing.user_id))
     else
       flash[:errors] = @service_listing.errors
     end
@@ -39,6 +43,7 @@ class ServiceListingApprovalsController < ApplicationController
       flash[:success] = "Updated!"
       #@current_user = User.find(session[:user_id])
       @user = User.find(params[:id])
+      create_notification(@user.id, @service_listing_approval.teen_id, "approved your application", get_user(@service_listing_approval.teen_id))
       #create_notification(receiver_id: @user.id, actor_id: @current_user.id, action: 'approved your job offer', @user)
       redirect_to @user
     else

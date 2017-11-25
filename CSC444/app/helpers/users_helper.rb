@@ -75,22 +75,38 @@ module UsersHelper
     return d
   end
   
-  # temporary version, actual version will use SQL query which will make the performance significantly better
+  # using SQL query instead of O(n) search, but does not make much difference in performance
   def get_clients_within_radius(teen, radius)
-    clients = []
+    # convert latitude and longitude of teen to radians
+    lat_rad = teen.lat * PI / 180
+    long_rad = teen.long * PI / 180
     
-    User.all.where(user_type: 'client').each do |client|
-      if get_distance_between_users(teen, client) <= radius
-        clients.push(client)
-      end
-    end
-    
-    return clients
+    # calculate sin and cos of teen latitude to prevent calculating it for every table row during the query
+    sin_lat_rad = sin(lat_rad)
+    cos_lat_rad = cos(lat_rad)
+    return User.all.where(user_type: 'client').where('acos((? * sin(lat * ?)) + (? * cos(lat * ?) * cos((`long` * ?) - ?))) * ? < ?', sin_lat_rad, PI / 180, cos_lat_rad, PI / 180, PI / 180, long_rad, EARTH_RADIUS, radius).to_a
   end
+<<<<<<< HEAD
 
   def viewing_own_profile()
     return true if params[:id] == session[:user_id]
     else return false
     
   end
+=======
+  
+  # temporary version, actual version will use SQL query which will make the performance significantly better
+  # def get_clients_within_radius(teen, radius)
+  #   clients = []
+    
+  #   User.all.where(user_type: 'client').each do |client|
+  #     if get_distance_between_users(teen, client) <= radius
+  #       clients.push(client)
+  #     end
+  #   end
+    
+  #   return clients
+  # end
+  
+>>>>>>> 352968b6036bbeb8f160a2469c38aa095bd8d4fd
 end

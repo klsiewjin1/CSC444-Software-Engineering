@@ -87,5 +87,10 @@ module UsersHelper
     
     return clients
   end
-  
+
+  def viewing_own_profile()
+    return true if params[:id] == session[:user_id]
+    else return false
+    
+  end
 end

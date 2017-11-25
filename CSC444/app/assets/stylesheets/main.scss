@@ -1990,11 +1990,12 @@ h2 {
 		-webkit-appearance: none;
 		-ms-appearance: none;
 		appearance: none;
-		background: #6cc091;
+//		background: #6cc091;
+		background: #EEEEFF;
 		border-radius: 10px;
 		border: none;
 		border: solid 2px #8dcca9;
-		color: #fff;
+		color: black;
 		display: block;
 		outline: 0;
 		padding: 0 1em;
@@ -2143,7 +2144,8 @@ h2 {
 	}
 
 	::-webkit-input-placeholder {
-		color: #c4e5d3 !important;
+		color: #9ca09b !important;
+	//	color: #c4e5d3 !important;
 		opacity: 1.0;
 	}
 

@@ -4,7 +4,7 @@
 			
       <header id="header">
 				<div class="inner">
-					<%= link_to "TeenServe", root_path, class: "logo" %>
+					<%= link_to "Teender", root_path, class: "logo" %>
 					<nav id="nav">
                 <a><%= link_to "Home",   welcome_index_url %></a>
                 <a><%= link_to "My Jobs",   '#' %></a>
@@ -16,11 +16,12 @@
                   <a><%= link_to("Logout", logout_path, method: :delete) %></a>
                   <% @notifications = get_user_notifications(@current_user.id) %>
                     <div class="container">
-                      <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" id="menu1" type="button"  data-toggle="dropdown">Notification<span class="caret"></span></button>
+                      <div class="dropdown btn-group">
+                        <button class="btn btn-notification dropdown-toggle" id="menu1" type="button"  data-toggle="dropdown">Notification<span class="caret"></span></button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                           <% @notifications.each do |notice| %>
-                            <li role="presentation"><a role="notices" tabindex="-1" ><strong><%=link_to "#{get_user_name_by_id(notice.actor_id)} #{notice.action} you", notice.notification_path %><strong></a></li>
+                            
+                            <li role="presentation"><a role="notices" tabindex="-1" ><strong><%=link_to "#{get_user_name_by_id(notice.actor_id)} #{notice.action}", notice.notification_path %><strong></a></li>
                             <li role="presentation" class="divider"></li>
                           <% end %>
                         </ul> 
@@ -39,5 +40,6 @@
           $(".dropdown-toggle").dropdown();
         });
       </script>
-
+      
+      
 

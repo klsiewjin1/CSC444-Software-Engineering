@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171124184720) do
+ActiveRecord::Schema.define(version: 20171124195316) do
 
   create_table "notifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "actor_id"
@@ -75,8 +75,8 @@ ActiveRecord::Schema.define(version: 20171124184720) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "lat", precision: 10
-    t.decimal "long", precision: 10
+    t.float "lat", limit: 24
+    t.float "long", limit: 24
   end
 
 end

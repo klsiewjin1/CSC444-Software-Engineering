@@ -1,51 +1,67 @@
 <p id="notice"><%= notice %></p>
 
 <% provide(:title, @user.username) %>
-<div class="siderow">
-  <aside class="col-md-4">
-    <section class="user_info">
-      <h1>
-      <%= gravatar_for @user %>
-      <%= @user.username %>
-      </h1>
-    </section>
-  </aside>
+
+
+<center>
+<div class="container">
+    <div class="row profile">
+		<div class="col-md-3">
+			<div class="profile-sidebar">
+				<!-- SIDEBAR USERPIC -->
+				<div class="profile-userpic">
+					<%= gravatar_for @user %>
+				</div>
+				<!-- END SIDEBAR USERPIC -->
+				<!-- SIDEBAR USER TITLE -->
+				<div class="profile-usertitle">
+					<div class="profile-usertitle-name">
+						  <%= @user.fname %>
+              <%= @user.lname %>
+					</div>
+					<div class="profile-usertitle-job">
+						<%= @user.user_type %>
+					</div>
+				</div>
+				<!-- END SIDEBAR USER TITLE -->
+				<!-- SIDEBAR BUTTONS -->
+
+					<button type="button">Post a listing</button>
+					<button type="button">See listings</button>
+				<!-- END SIDEBAR BUTTONS -->
+				<!-- SIDEBAR MENU -->
+				<div class="profile-usermenu">
+					<ul class="nav">
+						<li class="active">
+							<i class="glyphicon glyphicon-phone"></i>
+							<%= @user.cellphone %>
+						</li>
+
+						<li>
+							<a href="#">
+							<i class="glyphicon glyphicon-user"></i>
+							Account Settings </a>
+						</li>
+						<li>
+							<a href="#" target="_blank">
+							<i class="glyphicon glyphicon-ok"></i>
+							See your listings </a>
+						</li>
+						<li>
+							<a href="#">
+							<i class="glyphicon glyphicon-flag"></i>
+							See your reviews </a>
+						</li>
+					</ul>
+				</div>
+				<!-- END MENU -->
+			</div>
+		</div>
+	</div>
 </div>
 
-<div class="user_details">
-<p>
-  <strong>Type:</strong>
-  <%= @user.user_type %>
-</p>
+</center>
 
-<p>
-  <strong>Full Name:</strong>
-  <%= @user.fname %>
-  <%= @user.lname %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @user.address%>, <%=@user.city %>, <%= @user.state %>, <%= @user.country%> <%=@user.pcode %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<p>
-  <strong>Cellphone:</strong>
-  <%= @user.cellphone %>
-</p>
-
-<p>
-  <strong>Bdate:</strong>
-  <%= @user.bdate %>
-</p>
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
 </div>
-<%= render "notification" %>
-<%= render "review" %>
-<%= render "listing" %>

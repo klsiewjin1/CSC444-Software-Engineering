@@ -6,13 +6,30 @@
        * element that contains the map. */
       #map {
         height: 100%;
+        width: 75%;
+        float: right;
       }
+      
+      #panel{
+        height: 100%;
+        width: 25%;
+        float: left;
+      }
+      
+      #serviceList{
+        height: 100%;
+        width: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+      }
+      
       /* Optional: Makes the sample page fill the window. */
       html, body {
         height: 100%;
         margin: 0;
         padding: 0;
       }
+    
     </style>
   </head>
   
@@ -20,6 +37,9 @@
 	  var geocoder;
     var map;
     var address = "75 Portland Street, Toronto, Canada";
+    var markers = [];
+    var infowindows = [];
+    var lastInfoWindow = null;
 	
       function initMap() {
         geocoder = new google.maps.Geocoder();
@@ -50,7 +70,7 @@
             size: new google.maps.Size(150, 50)
           });
 
-		  var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+		      var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
           var marker = new google.maps.Marker({
             position: latlng,
             map: map,
@@ -58,14 +78,14 @@
 			      animation: google.maps.Animation.DROP,
 			      icon: image
           });
-		  
-          google.maps.event.addListener(marker, 'click', function() {
-            infowindow.open(map, marker);
+          
+          marker.addListener('click', function() {
+           infowindow.open(map, marker);
           });
 		
-		radius = 1;
+		    radius = 1;
         radius = (radius / 6378.1) * 6378100;
-		circle = new google.maps.Circle({
+		        circle = new google.maps.Circle({
             center: latlng,
             clickable: false,
             draggable: false,
@@ -106,32 +126,84 @@
       for (var i = 0; i < jsonResp.listings.length; i++) {
         listing = jsonResp.listings[i];
         console.log('Plotting client: ' + listing);
+        
         var clientPos = new google.maps.LatLng(listing.lat, listing.lon);
 
-        var clientMarker = new google.maps.Marker({
+        markers[i] = new google.maps.Marker({
             position: clientPos,
             map: map,
             title: listing.serviceListingIds.toString(),
             animation: google.maps.Animation.DROP
           });
 
-        var clientInfoWindow = new google.maps.InfoWindow({
-            content: '<b>Client ID is: ' + listing.clientId + ' with Lat: ' + listing.lat + ' Lon: ' + listing.lon + '</b>',
+        infowindows[i] = new google.maps.InfoWindow({
+            content: '<b>Client is with Lat: ' + listing.lat + ' Lon: ' + listing.lon + '</b>',
             size: new google.maps.Size(150, 50)
         });
-      
-        google.maps.event.addListener(clientMarker, 'click', function() {
-                clientInfoWindow.open(map, clientMarker);
-        });
+        
+        
+      listenMarker(markers[i], i);
+    
+        // clientMarker.addListener('click', function() {
+        //   clientInfoWindow.open(map, clientMarker);
+        // });
       }
       
-          
+      setupList(jsonResp);
+}
+
+function setupList(jsonData) {
+    var options = {
+    valueNames: [ 'lat', 'lon' ],
+    // Since there are no elements in the list, this will be used as template.
+    item: '<li>'+
+    '<h3 class="lat"></h3><p class="lon"></p>' 
+    + '</li>'
+  };
+  
+  var userList = new List('panel', options);
+  userList.clear();
+  for (var i = 0; i < jsonData.listings.length; i++) {
+    listing = jsonData.listings[i];
+    userList.add({
+      lat: listing.lat,
+      lon: listing.lon
+    });
+  }
+}
+
+
+function listenMarker (marker, i)
+{
+    markers[i].addListener('click', function() {
+         infowindows[i].open(map, markers[i]);
+         if(lastInfoWindow != null){
+           lastInfoWindow.close();
+         }
+         lastInfoWindow = infowindows[i];
+    });
 }
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAP_IzvS1mpKPgcs6meWzc6hu9PB0CVJFs&callback=initMap"
   type="text/javascript"></script>
   
+  <!-- http://listjs.com/ -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  
   <body>
+    
     <div id="map"></div>
+    
+    <div id="panel">
+      
+        <input class="search" placeholder="Search" />
+        <button class="sort" data-sort="lat">
+          Sort by name
+        </button>
+      <div id="serviceList">
+        <ul class="list"></ul>
+      </div>
+      
+    </div>
   </body>
 </html>

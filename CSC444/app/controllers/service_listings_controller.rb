@@ -1,5 +1,8 @@
 class ServiceListingsController < ApplicationController
   include NotificationsHelper
+  include ReviewsHelper
+  include ServicesHelper
+  include ServiceListingsHelper
   
   def index
     @service_listings = ServiceListing.all
@@ -50,7 +53,7 @@ class ServiceListingsController < ApplicationController
         :listings => get_listings_near_me(params[:radius])};
       end
       response.headers["Access-Control-Allow-Origin"] = "*"
-      format.json {render :json => msg, :status => status}
+      format.json {render :json => JSON.pretty_generate(msg) , :status => status}
     end
   end
 
@@ -95,6 +98,18 @@ class ServiceListingsController < ApplicationController
       listing[:lat] = client.lat
       listing[:lon] = client.long
       listing[:serviceListingIds] = client.service_listings.ids
+      listing[:address] = get_full_address(client)
+      listing[:rating] = get_avg_rating(client.id)
+      listing[:services] = []
+      client.service_listings.each do |clientListing|
+        if(!service_listing_is_approved(clientListing.id))
+          service = {}
+          service[:serviceName] = get_service_listing_service(clientListing)
+          service[:rate] = clientListing.hourly_rate
+          service[:link] = service_listing_path(clientListing.id)
+          listing[:services].push(service)
+        end
+      end
       res.push(listing)
     end
 

@@ -157,7 +157,7 @@ function setupList(jsonData) {
     valueNames: [ 'address', 'rating' ],
     // Since there are no elements in the list, this will be used as template.
     item: '<li>'+
-    '<h3 class="address"></h3><p class="rating"></p>' 
+    '<h2 class="address"></h2><p class="rating"></p>' 
     + '</li>'
   };
   
@@ -165,13 +165,13 @@ function setupList(jsonData) {
   userList.clear();
   for (var i = 0; i < jsonData.listings.length; i++) {
     listing = jsonData.listings[i];
+    
     userList.add({
       address: listing.address,
       rating: listing.rating
     });
   }
 }
-
 
 function listenMarker (marker, i)
 {

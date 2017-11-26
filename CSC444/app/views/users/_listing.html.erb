@@ -62,13 +62,13 @@
     <%= link_to (@teen.fname + " " + @teen.lname + " " + @teen.id.to_s), user_path(@teen) %>
 
     <% if viewing_own_page %>
-            <%= form_for (approved_listing), url: {controller: "service_listing_approvals", action: "update"} do |t| %>
-              <%= hidden_field_tag :teen_id, approved_listing.teen_id %>
-              <%= hidden_field_tag :approved, false %>
-              <%= hidden_field_tag :service_listing_id, approved_listing.service_listing_id %>
-              <%= hidden_field_tag :id, params[:id] %>
-              <%= t.submit "Cancel approval", class: "btn btn-primary" %>
-            <% end %>
+      <%= form_for (approved_listing), url: {controller: "service_listing_approvals", action: "update"} do |t| %>
+        <%= hidden_field_tag :teen_id, approved_listing.teen_id %>
+        <%= hidden_field_tag :approved, false %>
+        <%= hidden_field_tag :service_listing_id, approved_listing.service_listing_id %>
+        <%= hidden_field_tag :id, params[:id] %>
+        <%= t.submit "Cancel approval", class: "btn btn-primary" %>
+      <% end %>
     <% end %>
     <br><br>
   <% end %>

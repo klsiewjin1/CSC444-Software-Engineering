@@ -24,6 +24,13 @@ class ReviewsController < ApplicationController
   end
 
   def update
+    @review = Review.find(params[:id])
+    if @review.update(review_params)
+      flash[:success] = "Updated!"
+      redirect_to User.find((@review.reviewee_id))
+    else 
+      flash[:error] = "Couldn't save"
+    end
   end
 
   def edit

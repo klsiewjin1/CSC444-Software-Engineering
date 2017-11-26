@@ -1,2 +1,23 @@
-<h1>Reviews#edit</h1>
-<p>Find me in app/views/reviews/edit.html.erb</p>
+<h1>Editing your review</h1>
+<% @review = Review.find_by(params[:id]) %>
+<%= form_for (@review), url: {controller: "reviews", action: "update"} do |form| %>
+  <div class="field">
+    <%= form.label :rating %>
+    <%= form.text_field :rating, id: :rating %>
+  </div>
+
+  <div class="field">
+    <%= form.label :review %>
+    <%= form.text_field :review, id: :review %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %> 
+
+
+
+
+<%= link_to 'Show', @user %> |
+<%= link_to 'Back', users_path %>

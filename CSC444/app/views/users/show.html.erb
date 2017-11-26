@@ -1,66 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <% provide(:title, @user.username) %>
-
-
-<center>
-<div class="container">
-    <div class="row profile">
-		<div class="col-md-3">
-			<div class="profile-sidebar">
-				<!-- SIDEBAR USERPIC -->
-				<div class="profile-userpic">
-					<%= gravatar_for @user %>
-				</div>
-				<!-- END SIDEBAR USERPIC -->
-				<!-- SIDEBAR USER TITLE -->
-				<div class="profile-usertitle">
-					<div class="profile-usertitle-name">
-						  <%= @user.fname %>
-              <%= @user.lname %>
-					</div>
-					<div class="profile-usertitle-job">
-						<%= @user.user_type %>
-					</div>
-				</div>
-				<!-- END SIDEBAR USER TITLE -->
-				<!-- SIDEBAR BUTTONS -->
-
-					<button type="button">Post a listing</button>
-					<button type="button">See listings</button>
-				<!-- END SIDEBAR BUTTONS -->
-				<!-- SIDEBAR MENU -->
-				<div class="profile-usermenu">
-					<ul class="nav">
-						<li class="active">
-							<i class="glyphicon glyphicon-phone"></i>
-							<%= @user.cellphone %>
-						</li>
-
-						<li>
-							<a href="#">
-							<i class="glyphicon glyphicon-user"></i>
-							Account Settings </a>
-						</li>
-						<li>
-							<a href="#" target="_blank">
-							<i class="glyphicon glyphicon-ok"></i>
-							See your listings </a>
-						</li>
-						<li>
-							<a href="#">
-							<i class="glyphicon glyphicon-flag"></i>
-							See your reviews </a>
-						</li>
-					</ul>
-				</div>
-				<!-- END MENU -->
-			</div>
-		</div>
-	</div>
-</div>
-
-</center>
+<%= render "layouts/profile" %>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

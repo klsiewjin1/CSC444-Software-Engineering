@@ -154,10 +154,10 @@
 
 function setupList(jsonData) {
     var options = {
-    valueNames: [ 'lat', 'lon' ],
+    valueNames: [ 'address', 'rating' ],
     // Since there are no elements in the list, this will be used as template.
     item: '<li>'+
-    '<h3 class="lat"></h3><p class="lon"></p>' 
+    '<h3 class="address"></h3><p class="rating"></p>' 
     + '</li>'
   };
   
@@ -166,8 +166,8 @@ function setupList(jsonData) {
   for (var i = 0; i < jsonData.listings.length; i++) {
     listing = jsonData.listings[i];
     userList.add({
-      lat: listing.lat,
-      lon: listing.lon
+      address: listing.address,
+      rating: listing.rating
     });
   }
 }
@@ -197,8 +197,8 @@ function listenMarker (marker, i)
     <div id="panel">
       
         <input class="search" placeholder="Search" />
-        <button class="sort" data-sort="lat">
-          Sort by name
+        <button class="sort" data-sort="rating">
+          Sort by rating
         </button>
       <div id="serviceList">
         <ul class="list"></ul>

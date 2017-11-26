@@ -7,8 +7,8 @@
 6. client viewing another client's page
 -->
 
-<% @user = User.find(params[:id]) %>
-<% viewing_own_page = true if params[:id].to_i == session[:user_id] else false %>
+<%# @user = User.find(params[:id]) %>
+<% viewing_own_page = true if @user.id.to_i == session[:user_id] else false %>
 
 <!-- Viewing a client profile -->
 <% if user_is_client(@user) %>
@@ -43,7 +43,7 @@
               <%= hidden_field_tag :teen_id, @teen.id %>
               <%= hidden_field_tag :approved, true %>
               <%= hidden_field_tag :service_listing_id, application.service_listing_id %>
-              <%= hidden_field_tag :id, params[:id] %>
+              <%= hidden_field_tag :id, @user.id %>
               <%= t.submit "Approve", class: "btn btn-primary" %> 
             <% end %> 
         <% end %>
@@ -66,7 +66,7 @@
         <%= hidden_field_tag :teen_id, approved_listing.teen_id %>
         <%= hidden_field_tag :approved, false %>
         <%= hidden_field_tag :service_listing_id, approved_listing.service_listing_id %>
-        <%= hidden_field_tag :id, params[:id] %>
+        <%= hidden_field_tag :id, @user.id %>
         <%= t.submit "Cancel approval", class: "btn btn-primary" %>
       <% end %>
     <% end %>

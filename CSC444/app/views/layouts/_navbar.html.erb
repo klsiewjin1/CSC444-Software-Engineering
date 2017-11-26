@@ -7,7 +7,7 @@
 					<%= link_to "Teender", root_path, class: "logo" %>
 					<nav id="nav">
                 <a><%= link_to "Home",   welcome_index_url %></a>
-                <a><%= link_to "My Jobs",   '#' %></a>
+                <a><%= link_to "My Jobs", listing_users_path %></a>
                 <a><%= link_to "Browse Jobs", controller: 'service_listings' %></a>
                  <% if !current_user.nil? %>
                   <a><%= link_to "Profile", @current_user %></a>

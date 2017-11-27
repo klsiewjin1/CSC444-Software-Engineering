@@ -95,11 +95,7 @@ class ServiceListingsController < ApplicationController
     clients = get_clients_within_radius(current_user, radius.to_f);
     clients.each do |client|
       listing = {}
-      listing[:lat] = client.lat
-      listing[:lon] = client.long
-      listing[:serviceListingIds] = client.service_listings.ids
-      listing[:address] = get_full_address(client)
-      listing[:rating] = get_avg_rating(client.id)
+      
       listing[:services] = []
       client.service_listings.each do |clientListing|
         if(!service_listing_is_approved(clientListing.id))
@@ -110,6 +106,16 @@ class ServiceListingsController < ApplicationController
           listing[:services].push(service)
         end
       end
+      next if listing[:services].size == 0
+      
+      listing[:lat] = client.lat
+      listing[:lon] = client.long
+      listing[:serviceListingIds] = client.service_listings.ids
+      
+      listing[:clientPage] = user_path(client.id);
+      listing[:address] = get_full_address(client)
+      listing[:rating] = get_avg_rating(client.id)
+      
       res.push(listing)
     end
 

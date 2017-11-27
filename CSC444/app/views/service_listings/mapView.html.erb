@@ -14,9 +14,10 @@
         height: 100%;
         width: 25%;
         float: left;
+       
       }
       
-      #serviceList{
+      #list{
         height: 100%;
         width: 100%;
         overflow-y: scroll;
@@ -163,7 +164,7 @@ function setupList(jsonData) {
      var items = [];
      var address = createListItem("h2", listing.address);
      items.push(address);
-     var rating = createListItem("p", "Client Rating: " + listing.rating + " / 5");
+     var rating = getRatingElement(listing.rating);
      items.push(rating);
      
      for (var j = 0; j < listing.services.length; j++) {
@@ -180,12 +181,25 @@ function setupList(jsonData) {
        items.push(serviceItem);
      }
      
+     var clientLinkP = createListItem("p", "");
+     var clientlink = createListItem("a", "View Client Profile");
+     clientlink.href = listing.clientPage;
+     clientLinkP.appendChild(clientlink);
+     items.push(clientLinkP);
+     
      for (var x = 0; x < items.length; x++) {
        li.appendChild(items[x]);
      }
      
      ul.appendChild(li);
   }
+}
+
+function getRatingElement(rating) {
+  if (rating == -1) {
+    return createListItem("p", "Client Not Yet Rated");
+  }
+  return createListItem("p", "Client Rating: " + rating + " / 5");
 }
 
 function createListItem(htmlElemName, innerText){

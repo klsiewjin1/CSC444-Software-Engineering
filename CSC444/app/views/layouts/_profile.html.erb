@@ -1,0 +1,50 @@
+<div class="profile-sidebar">
+				<center>
+				<!-- SIDEBAR USERPIC -->
+				<div class="profile-userpic">
+					<%= gravatar_for @user %>
+				</div>
+				<!-- END SIDEBAR USERPIC -->
+				<!-- SIDEBAR USER TITLE -->
+				<div class="profile-usertitle">
+					<div class="profile-usertitle-name">
+							<%= @user.fname %>
+							<%= @user.lname %>
+					</div>
+					<div class="profile-usertitle-job">
+						<%= @user.user_type %>
+					</div>
+				</div>
+				<!-- END SIDEBAR USER TITLE -->
+				
+				<!-- SIDEBAR BUTTONS -->
+					<button type="button" class="profile-userbuttons">Post a listing</button>
+					<button type="button" class="profile-userbuttons">See listings</button>
+				<!-- END SIDEBAR BUTTONS -->
+				
+				<!-- SIDEBAR MENU -->
+				<div class="profile-usermenu">
+					<ul class="nav">
+						<li><a href="tel:<%= @user.cellphone %>">
+							<i class="glyphicon glyphicon-phone"></i><%= @user.cellphone %></a>
+						</li>
+						<li>
+							<%= link_to edit_user_path(@user) do %>
+							<i class="glyphicon glyphicon-user"></i>Account Settings<% end %>
+						</li>
+						<li>
+							<a href="#" target="_blank">
+							<i class="glyphicon glyphicon-ok"></i>
+							See your listings </a>
+						</li>
+						<li>
+							<a href="#">
+							<i class="glyphicon glyphicon-flag"></i>
+							See your reviews </a>
+						</li>
+					</ul>
+				</div>
+				<!-- END MENU -->
+			
+			</center>	
+			</div>

@@ -1,51 +1,23 @@
 <p id="notice"><%= notice %></p>
 
 <% provide(:title, @user.username) %>
-<div class="siderow">
-  <aside class="col-md-4">
-    <section class="user_info">
-      <h1>
-      <%= gravatar_for @user %>
-      <%= @user.username %>
-      </h1>
-    </section>
-  </aside>
+<div class="container">
+  
+  <div class="row profile">
+		<div class="col-md-3">
+      <%= render "layouts/profile" %>
+    </div>
+    
+    <div class="col-md-2">
+      <!-- padding -->
+    </div>
+    
+    <div class="col-md-3">
+      <%= render "review" %>
+    </div>
+  </div>
 </div>
 
-<div class="user_details">
-<p>
-  <strong>Type:</strong>
-  <%= @user.user_type %>
-</p>
+<%#= render "notification" %>
 
-<p>
-  <strong>Full Name:</strong>
-  <%= @user.fname %>
-  <%= @user.lname %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @user.address%>, <%=@user.city %>, <%= @user.state %>, <%= @user.country%> <%=@user.pcode %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<p>
-  <strong>Cellphone:</strong>
-  <%= @user.cellphone %>
-</p>
-
-<p>
-  <strong>Bdate:</strong>
-  <%= @user.bdate %>
-</p>
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
-</div>
-<%= render "notification" %>
-<%= render "review" %>
-<%= render "listing" %>
+<%#= render "listing" %>

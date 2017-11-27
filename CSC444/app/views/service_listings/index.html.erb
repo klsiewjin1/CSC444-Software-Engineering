@@ -12,7 +12,6 @@
   </tr>
   
   <!-- all get functions in service_listings_helper.rb -->
-  <% is_teen = current_user_is_teen() %>
   <% @service_listings.each do |service_listing| %>
   <tr>
     <% client = get_service_listing_client(service_listing) %>
@@ -24,9 +23,6 @@
     <td><%= get_service_listing_approved_teen_name(service_listing.id) %></td>
     <td><%= link_to 'See details', service_listing_path(service_listing) %></td>
     
-    <% if is_teen && is_service_listing_vacant(service_listing.id) %>
-      <td><%= button_to 'Apply for job', { controller: 'service_listing_approvals', action: 'create', service_listing_id: service_listing.id } %></td>
-    <% end %>
   </tr>
   <% end %>
 </table>

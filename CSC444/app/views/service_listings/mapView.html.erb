@@ -153,24 +153,45 @@
 }
 
 function setupList(jsonData) {
-    var options = {
-    valueNames: [ 'address', 'rating' ],
-    // Since there are no elements in the list, this will be used as template.
-    item: '<li>'+
-    '<h2 class="address"></h2><p class="rating"></p>' 
-    + '</li>'
-  };
+  var ul = document.getElementById("list");
+  ul.innerHTML = '';
   
-  var userList = new List('panel', options);
-  userList.clear();
   for (var i = 0; i < jsonData.listings.length; i++) {
-    listing = jsonData.listings[i];
-    
-    userList.add({
-      address: listing.address,
-      rating: listing.rating
-    });
+     listing = jsonData.listings[i];
+     var li = document.createElement("li");
+     
+     var items = [];
+     var address = createListItem("h2", listing.address);
+     items.push(address);
+     var rating = createListItem("p", "Client Rating: " + listing.rating + " / 5");
+     items.push(rating);
+     
+     for (var j = 0; j < listing.services.length; j++) {
+       var service = listing.services[j];
+       
+       var serviceItem = createListItem("p", "");
+       var link = createListItem("a", service.serviceName);
+       link.href = service.link;
+       serviceItem.appendChild(link);
+       
+       var serviceRate = createListItem("p", "$" + service.rate + "/hr");
+       serviceItem.appendChild(serviceRate);
+       
+       items.push(serviceItem);
+     }
+     
+     for (var x = 0; x < items.length; x++) {
+       li.appendChild(items[x]);
+     }
+     
+     ul.appendChild(li);
   }
+}
+
+function createListItem(htmlElemName, innerText){
+     var element = document.createElement(htmlElemName);
+     element.innerHTML = innerText;
+     return element;
 }
 
 function listenMarker (marker, i)
@@ -186,9 +207,7 @@ function listenMarker (marker, i)
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAP_IzvS1mpKPgcs6meWzc6hu9PB0CVJFs&callback=initMap"
   type="text/javascript"></script>
-  
-  <!-- http://listjs.com/ -->
-  <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
   
   <body>
     
@@ -200,10 +219,8 @@ function listenMarker (marker, i)
         <button class="sort" data-sort="rating">
           Sort by rating
         </button>
-      <div id="serviceList">
-        <ul class="list"></ul>
-      </div>
       
+        <ul id="list"></ul>
     </div>
   </body>
 </html>

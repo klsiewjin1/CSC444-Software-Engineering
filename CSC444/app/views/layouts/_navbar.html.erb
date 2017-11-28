@@ -6,12 +6,12 @@
 				<div class="inner">
 					<%= link_to "Teender", root_path, class: "logo" %>
 					<nav id="nav">
-                <a><%= link_to "Home",   welcome_index_url %></a>
+                <%= link_to "Home",   welcome_index_url %>
                 <a><%= link_to "My Jobs", listing_users_path %></a>
                 <a><%= link_to "Browse Jobs", controller: 'service_listings' %></a>
                  <% if !current_user.nil? %>
                   <a><%= link_to "Profile", @current_user %></a>
-                  <font color="white"> Welcome, <%= current_user[:username] %> </font>
+
                   <!--    <strong>Usertype: <#%= current_user[:user_type] %></strong> -->
                   <a><%= link_to("Logout", logout_path, method: :delete) %></a>
                   <% @notifications = get_user_notifications(@current_user.id) %>

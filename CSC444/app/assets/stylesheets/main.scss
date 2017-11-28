@@ -2561,7 +2561,8 @@ h2 {
 		text-align: center;
 		text-decoration: none;
 		text-transform: uppercase;
-		white-space: nowrap;
+		white-space:wrap;
+		overflow:hidden
 	}
 
 		input[type="submit"]:hover,

@@ -1,12 +1,21 @@
 <p id="notice"><%= notice %></p>
 
 <% provide(:title, @user.username) %>
-<%= render "layouts/profile" %>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<div class="container">
+  
+  <div class="row profile">
+		<div class="col-md-3">
+      <%= render "layouts/profile" %>
+    </div>
+    
+    <div class="col-md-2">
+      <!-- padding -->
+    </div>
+    
+    <div class="col-md-3">
+      <%= render "review" %>
+    </div>
+  </div>
 </div>
 
 <%#= render "notification" %>
-<%= render "review" %>
-<%#= render "listing" %>

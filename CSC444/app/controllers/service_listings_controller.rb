@@ -5,8 +5,9 @@ class ServiceListingsController < ApplicationController
   include ServiceListingsHelper
   
   def index
-    @service_listings = ServiceListing.all
-    @service_listing_approvals = ServiceListingApproval.all
+    # @service_listings = ServiceListing.all
+    # @service_listing_approvals = ServiceListingApproval.all
+    @service_listings = ServiceListing.page(params[:page]).per(25)    
   end
 
   def new
@@ -31,6 +32,17 @@ class ServiceListingsController < ApplicationController
     end
 #    redirect_to client_path(@service_listing.user_id)
 	end
+
+  def update
+    @service_listing = ServiceListing.find(params[:id])
+    if @service_listing.update(service_listing_params)
+      flash[:success] = "Updated!"
+      render "show"
+    else 
+      flash[:errors] = @service_listing.errors
+    end
+  end
+
 
   # return 
   def nearme
@@ -95,11 +107,7 @@ class ServiceListingsController < ApplicationController
     clients = get_clients_within_radius(current_user, radius.to_f);
     clients.each do |client|
       listing = {}
-      listing[:lat] = client.lat
-      listing[:lon] = client.long
-      listing[:serviceListingIds] = client.service_listings.ids
-      listing[:address] = get_full_address(client)
-      listing[:rating] = get_avg_rating(client.id)
+      
       listing[:services] = []
       client.service_listings.each do |clientListing|
         if(!service_listing_is_approved(clientListing.id))
@@ -110,6 +118,16 @@ class ServiceListingsController < ApplicationController
           listing[:services].push(service)
         end
       end
+      next if listing[:services].size == 0
+      
+      listing[:lat] = client.lat
+      listing[:lon] = client.long
+      listing[:serviceListingIds] = client.service_listings.ids
+      
+      listing[:clientPage] = user_path(client.id);
+      listing[:address] = get_full_address(client)
+      listing[:rating] = get_avg_rating(client.id)
+      
       res.push(listing)
     end
 

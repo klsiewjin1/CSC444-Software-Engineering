@@ -50,6 +50,8 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
+      @user.email_confirmation = @user.email
+      
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
@@ -69,6 +71,10 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def listing 
+    @user = @current_user
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -79,5 +85,5 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:user_type, :username, :fname, :lname, :state, :address, :pcode, :city, :country, :email, :cellphone, :bdate, :password, :password_confirmation, :email_confirmation)
-    end
+    end 
 end

@@ -45,7 +45,7 @@ class ServiceListingApprovalsController < ApplicationController
       @user = User.find(params[:id])
       create_notification(@user.id, @service_listing_approval.teen_id, "approved your application", get_user(@service_listing_approval.teen_id))
       #create_notification(receiver_id: @user.id, actor_id: @current_user.id, action: 'approved your job offer', @user)
-      redirect_to @user
+      redirect_to listing_users_path
     else
       flash[:error] = "Something went wrong"
     end

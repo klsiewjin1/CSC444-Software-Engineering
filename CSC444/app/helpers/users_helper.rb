@@ -88,6 +88,11 @@ module UsersHelper
   end
 
 
+  def viewing_own_profile()
+    return true if params[:id] == session[:user_id]
+    else return false
+    
+  end
   # temporary version, actual version will use SQL query which will make the performance significantly better
   # def get_clients_within_radius(teen, radius)
   #   clients = []
@@ -100,6 +105,5 @@ module UsersHelper
     
   #   return clients
   # end
-  
 
 end

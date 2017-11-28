@@ -6,20 +6,41 @@
        * element that contains the map. */
       #map {
         height: 100%;
+        width: 75%;
+        float: right;
       }
+      
+      #panel{
+        height: 100%;
+        width: 25%;
+        float: left;
+       
+      }
+      
+      #list{
+        height: 100%;
+        width: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+      }
+      
       /* Optional: Makes the sample page fill the window. */
       html, body {
         height: 100%;
         margin: 0;
         padding: 0;
       }
+    
     </style>
   </head>
   
     <script>
 	  var geocoder;
     var map;
-    var address = "75 Portland Street, Toronto, Canada";
+    var address = "<%= get_full_address(@current_user) %>";
+    var markers = [];
+    var infowindows = [];
+    var lastInfoWindow = null;
 	
       function initMap() {
         geocoder = new google.maps.Geocoder();
@@ -36,21 +57,16 @@
               gestureHandling: 'greedy' // makes the map scroll by click+drag and arrow buttons, need to use scrollbar on side if you want to actually scroll the page down
         };
 
-	map = new google.maps.Map(document.getElementById("map"), myOptions);
-	if (geocoder) {
-    geocoder.geocode({
-      'address': address
-    }, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+	        map = new google.maps.Map(document.getElementById("map"), myOptions);
+
           map.setCenter(latlng);
 
           var infowindow = new google.maps.InfoWindow({
-            content: '<b>' + address + '</b>',
+            content: '<b>Your Address: ' + address + '</b>',
             size: new google.maps.Size(150, 50)
           });
 
-		  var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+		      var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
           var marker = new google.maps.Marker({
             position: latlng,
             map: map,
@@ -58,14 +74,15 @@
 			      animation: google.maps.Animation.DROP,
 			      icon: image
           });
-		  
-          google.maps.event.addListener(marker, 'click', function() {
-            infowindow.open(map, marker);
+          
+          marker.addListener('click', function() {
+           infowindow.open(map, marker);
+           handleInfoWinClose(infowindow);
           });
 		
-		radius = 1;
+		    radius = 1;
         radius = (radius / 6378.1) * 6378100;
-		circle = new google.maps.Circle({
+		        circle = new google.maps.Circle({
             center: latlng,
             clickable: false,
             draggable: false,
@@ -79,14 +96,6 @@
             strokeWeight: 1,
         })
 
-        } else {
-          alert("No results found");
-        }
-      } else {
-        alert("Geocode was not successful for the following reason: " + status);
-      }
-    });
-  }
   
       console.log("Fetching listings near you...");
       var xmlhttp = new XMLHttpRequest();
@@ -106,32 +115,152 @@
       for (var i = 0; i < jsonResp.listings.length; i++) {
         listing = jsonResp.listings[i];
         console.log('Plotting client: ' + listing);
+        
         var clientPos = new google.maps.LatLng(listing.lat, listing.lon);
+        
+        markers[i] = new google.maps.Marker({
+              position: clientPos,
+              title: listing.address,
+              animation: google.maps.Animation.DROP
+            });
 
-        var clientMarker = new google.maps.Marker({
-            position: clientPos,
-            map: map,
-            title: listing.serviceListingIds.toString(),
-            animation: google.maps.Animation.DROP
-          });
-
-        var clientInfoWindow = new google.maps.InfoWindow({
-            content: '<b>Client ID is: ' + listing.clientId + ' with Lat: ' + listing.lat + ' Lon: ' + listing.lon + '</b>',
+        infowindows[i] = new google.maps.InfoWindow({
+            content: appendAllElemToNode(document.createElement("div"), getListingElements(listing)),
             size: new google.maps.Size(150, 50)
         });
-      
-        google.maps.event.addListener(clientMarker, 'click', function() {
-                clientInfoWindow.open(map, clientMarker);
-        });
+        
+        
+      listenMarker(markers[i], i);
+    
+        // clientMarker.addListener('click', function() {
+        //   clientInfoWindow.open(map, clientMarker);
+        // });
       }
       
-          
+      setupList(jsonResp);
 }
+
+function appendAllElemToNode(node, elems){
+  for (var x = 0; x < elems.length; x++) {
+       node.appendChild(elems[x]);
+  }
+  
+  return node;
+}
+
+function listItemClick(i) {
+  map.setCenter(markers[i].getPosition());
+  new google.maps.event.trigger( markers[i], 'click' );
+}
+
+function setupList(jsonData) {
+  var ul = document.getElementById("list");
+  ul.innerHTML = '';
+  
+  for (var i = 0; i < jsonData.listings.length; i++) {
+     listing = jsonData.listings[i];
+     var li = document.createElement("li");
+     (function (i)
+        {
+         li.addEventListener("click", function() {
+           listItemClick(i);
+         });
+     })(i);
+     
+     var items = getListingElements(listing);
+     
+     appendAllElemToNode(li, items);
+     
+     ul.appendChild(li);
+  }
+}
+
+
+
+function getListingElements(listing) {
+     var items = [];
+     var addr = createListItem("h2", listing.address);
+     items.push(addr);
+     
+     for (var j = 0; j < listing.services.length; j++) {
+       var service = listing.services[j];
+       
+       var serviceItem = getNewTabLink(service.link, service.serviceName);
+       
+       var serviceRate = createListItem("p", "$" + service.rate + "/hr");
+       serviceItem.appendChild(serviceRate);
+       
+       items.push(serviceItem);
+     }
+     
+     var rating = getRatingElement(listing.rating);
+     items.push(rating);
+    
+     items.push(getNewTabLink(listing.clientPage, "View Client Profile"));
+     var directionLink = "https://www.google.com/maps/dir/?api=1&origin=" + encodeURI(address) + "&destination=" + encodeURI(listing.address) + "&travelmode=walking";
+     items.push(getNewTabLink(directionLink, "Directions"));
+     return items;
+}
+
+function getNewTabLink(url, text) {
+     var linkP = createListItem("p", "");
+     var link = createListItem("a", text);
+     link.href = url;
+     link.target="_blank"
+     linkP.appendChild(link);
+     return linkP;
+}
+
+function getRatingElement(rating) {
+  if (rating == -1) {
+    return createListItem("p", "Client Not Yet Rated");
+  }
+  return createListItem("p", "Client Rating: " + rating + " / 5");
+}
+
+function createListItem(htmlElemName, innerText){
+     var element = document.createElement(htmlElemName);
+     element.innerHTML = innerText;
+     return element;
+}
+
+function listenMarker (marker, i)
+{
+    markers[i].addListener('click', function() {
+         infowindows[i].open(map, markers[i]);
+         handleInfoWinClose(infowindows[i]);
+    });
+    
+    window.setTimeout(function() {
+      markers[i].setMap(map);
+    }, i * 20);
+}
+
+function handleInfoWinClose(iwindow) {
+  if(lastInfoWindow != null & lastInfoWindow != iwindow){
+    lastInfoWindow.close();
+  }
+  lastInfoWindow = iwindow;
+}
+
+
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAP_IzvS1mpKPgcs6meWzc6hu9PB0CVJFs&callback=initMap"
   type="text/javascript"></script>
+
   
   <body>
+    
     <div id="map"></div>
+    
+    <div id="panel">
+      
+        <input class="search" placeholder="Search" />
+        <button class="sort" data-sort="rating">
+          Sort by rating
+        </button>
+      
+        <ul id="list"></ul>
+    </div>
   </body>
 </html>

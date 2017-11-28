@@ -32,13 +32,14 @@
       <%= service_listing.hourly_rate %><br><br>
       
       <% @SL_approvals = get_SL_approvals_from_SL(service_listing) %>
+      
       <strong> Applied Teens:  </strong><br> <!-- Shouldn't show if there aren't any applications -->
-
-      <% @SL_approvals.each do |application| %>
-        <% @teen = get_user(application.teen_id) %>
-        <%= link_to (@teen.fname + " "+ @teen.lname + " " + @teen.id.to_s), user_path(@teen) %><br>
-          <!-- For user to approve teens he selects -->
-        <% if viewing_own_page %>
+      <% if @SL_approvals.exists? %>
+        <% @SL_approvals.each do |application| %>
+          <% @teen = get_user(application.teen_id) %>
+          <%= link_to (@teen.fname + " "+ @teen.lname + " " + @teen.id.to_s), user_path(@teen) %><br>
+            <!-- For user to approve teens he selects -->
+          <% if viewing_own_page %>
             <%= form_for (application), url: {controller: "service_listing_approvals", action: "update"} do |t| %>
               <%= hidden_field_tag :teen_id, @teen.id %>
               <%= hidden_field_tag :approved, true %>
@@ -46,8 +47,11 @@
               <%= hidden_field_tag :id, params[:id] %>
               <%= t.submit "Approve", class: "btn btn-primary" %> 
             <% end %> 
+          <% end %>
         <% end %>
-      <% end %>
+      <% else %>
+        <p>No applications at the moment</p>
+      <% end %>  
     <% end %>
   <% end %>
   <h1>Accepted Listings</h1>

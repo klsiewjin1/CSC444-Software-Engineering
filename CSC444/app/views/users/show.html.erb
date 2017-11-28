@@ -43,9 +43,10 @@
   <strong>Bdate:</strong>
   <%= @user.bdate %>
 </p>
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+
 </div>
 <%= render "notification" %>
 <%= render "review" %>
 <%= render "listing" %>
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

@@ -29,6 +29,17 @@ class ServiceListingsController < ApplicationController
 #    redirect_to client_path(@service_listing.user_id)
 	end
 
+  def update
+    @service_listing = ServiceListing.find(params[:id])
+    if @service_listing.update(service_listing_params)
+      flash[:success] = "Updated!"
+      render "show"
+    else 
+      flash[:errors] = @service_listing.errors
+    end
+  end
+
+
   # return 
   def nearme
     msg = nil

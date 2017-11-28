@@ -5,8 +5,9 @@ class ServiceListingsController < ApplicationController
   include ServiceListingsHelper
   
   def index
-    @service_listings = ServiceListing.all
-    @service_listing_approvals = ServiceListingApproval.all
+    # @service_listings = ServiceListing.all
+    # @service_listing_approvals = ServiceListingApproval.all
+    @service_listings = ServiceListing.page(params[:page]).per(25)    
   end
 
   def new

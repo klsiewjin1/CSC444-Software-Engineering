@@ -14,7 +14,7 @@ clients.each do |client|
   num_client_listings.times do |num|
     listing_hash = { client_id: client.id, service_id: min_service_id + rand(num_services), task_date: base_date + rand(183).days, 
                      hourly_rate: (rand(21) / 2.0) + 10, start_time: (rand(25) * 30) + 480 }
-    listing_hash[:duration] = listing_hash[:start_time] + ((rand(8) + 1) * 30) # tasks are randomly between 30 min and 4 hours (30 minute intervals)
+    listing_hash[:duration] = ((rand(8) + 1) * 30) # tasks are randomly between 30 min and 4 hours (30 minute intervals)
     listing_hash[:description] = 'I need ' + services[listing_hash[:service_id]].downcase
     listings.push(listing_hash)
   end

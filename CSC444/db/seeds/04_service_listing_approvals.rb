@@ -11,7 +11,7 @@ listings = ServiceListing.all
 listings.each do |l|
   if not teens_close_to_clients.key?(l.user_id)
     if client_latlongs[l.user_id][:lat] != nil and client_latlongs[l.user_id][:long] != nil
-      teens_close_to_clients[l.user_id] = teens.select{ |teen| teen.lat == nil or teen.long == nil or (teen.lat - client_latlongs[l.user_id][:lat]).abs + (teen.long - client_latlongs[l.user_id][:long]).abs < 0.01 }
+      teens_close_to_clients[l.user_id] = teens.select{ |teen| teen.lat == nil or teen.long == nil or (teen.lat - client_latlongs[l.user_id][:lat]).abs + (teen.long - client_latlongs[l.user_id][:long]).abs < 0.005 }
     else
       teens_close_to_clients[l.user_id] = teens
     end

@@ -10,7 +10,13 @@
       
       <!-- year range is only current year to next year to avoid having listings way in the future -->
       <%= f.label :task_date, "Task Date" %>
-      <%= f.date_select :task_date, start_year: Date.today.year, end_year: Date.today.year + 1, order: [:month, :day, :year] %>
+      <%= f.date_select :task_date, start_year: Date.today.year, end_year: Date.today.year + 2, order: [:month, :day, :year] %>
+      
+      <%= f.label :start_time, "Start Time" %>
+      <%= f.time_select :start_time, minute_step: 15, ampm: true, default: { hour: '18', minute: '0' } %>
+      
+      <%= f.label :end_time, "End Time" %>
+      <%= f.time_select :duration, minute_step: 15, ampm: true, default: { hour: '20', minute: '0' } %>
       
       <%= f.label :hourly_rate, "Hourly Rate" %>
       <%= f.number_field :hourly_rate, min: 0, max: 100.00, step: 0.01, value: number_to_currency(f.object.hourly_rate.to_f, delimiter: '') %>

@@ -6,6 +6,8 @@
     <th>Client Rating</th>
     <th>Service</th>
     <th>Task Date</th>
+    <th>Start Time</th>
+    <th>End Time</th>
     <th>Hourly Rate</th>
     <th>Approved Teen</th>
     <th>Listing Link</th>
@@ -19,6 +21,8 @@
     <td><%= get_avg_rating(service_listing.user_id) %></td>
     <td><%= get_service_listing_service(service_listing) %></td>
     <td><%= service_listing.task_date %></td>
+    <td><%= get_service_listing_start_time_string(service_listing) %></td>
+    <td><%= get_service_listing_end_time_string(service_listing) %></td>
     <td><%= service_listing.hourly_rate %></td>
     <td><%= get_service_listing_approved_teen_name(service_listing.id) %></td>
     <td><%= link_to 'See details', service_listing_path(service_listing) %></td>

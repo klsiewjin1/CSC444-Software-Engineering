@@ -43,7 +43,6 @@ class ServiceListingsController < ApplicationController
     end
   end
 
-
   # return 
   def nearme
     msg = nil
@@ -137,7 +136,7 @@ class ServiceListingsController < ApplicationController
 	# The params that a service listing could have. Excludes all other attributes
 	def service_listing_params
 	    # TODO: modify service_listing_params
-    	params.require(:service_listing).permit(:service_id, :task_date, :hourly_rate, :description)
+    	params.require(:service_listing).permit(:service_id, :task_date, :start_time, :duration, :hourly_rate, :description)
   end
 
 end

@@ -1,5 +1,7 @@
 module ServiceListingsHelper
   
+  MINUTES_FROM_12AM_TO_12PM = 720 # minutes between 12am and 12pm
+  
   def get_service_listing_client(service_listing)
     return get_user(service_listing.user_id)
   end
@@ -10,6 +12,38 @@ module ServiceListingsHelper
   
   def get_service_listing_service(service_listing)
     return get_service_name(service_listing.service_id)
+  end
+  
+  def get_string_for_time(total_minutes)
+    ampm = 'AM'
+    if total_minutes >= MINUTES_FROM_12AM_TO_12PM
+      total_minutes -= MINUTES_FROM_12AM_TO_12PM
+      ampm = 'PM'
+    end
+    
+    hour = total_minutes >= 60 ? total_minutes / 60 : 12
+    minute = total_minutes % 60
+    
+    hour_string = hour.to_s
+    minute_string = minute >= 10 ? minute.to_s : '0' + minute.to_s
+    
+    return hour_string + ':' + minute_string + ' ' + ampm
+  end
+  
+  def get_service_listing_start_time_string(service_listing)
+    if service_listing.start_time.nil?
+      return 'N/A'
+    end
+    
+    return get_string_for_time(service_listing.start_time)
+  end
+  
+  def get_service_listing_end_time_string(service_listing)
+    if service_listing.start_time.nil?
+      return 'N/A'
+    end
+    
+    return get_string_for_time(service_listing.start_time + service_listing.duration)
   end
   
   def get_service_listing_hourly_rate(service_listing)

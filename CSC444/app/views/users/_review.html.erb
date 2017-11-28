@@ -10,7 +10,7 @@
         <!-- To be removed -->
         <strong>Review ID: </strong>
         <%= review.id %> <br>
-        <!-- To be removed -->
+        
         <strong>Reviewer: </strong>
         <td><% @reviewer = get_user(review.reviewer_id) %></td>
         <%= link_to (@reviewer.fname + " " + @reviewer.lname + " " + @reviewer.id.to_s), user_path(@reviewer) %>
@@ -35,6 +35,8 @@
   <% end %>
 </tbody>  
 </tr>
+<%= paginate @review_matches %>
+<%= page_entries_info @review_matches %>
 
 
 <%if(session[:user_id]!=@user.id) %>

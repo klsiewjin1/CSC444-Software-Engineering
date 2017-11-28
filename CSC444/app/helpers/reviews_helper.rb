@@ -2,7 +2,7 @@ module ReviewsHelper
     # for a given user object, compare the user_id of this table to the reviewee of the reviews table
     # return a new collection with the filtered results. 
     def get_user_reviews(user_id)
-        review_matches = Review.where(reviewee_id: user_id)
+        review_matches = Review.page(params[:page]).per(10).where(reviewee_id: user_id)
         return review_matches
     end
     # for a given user, returns float? average of his/her rating

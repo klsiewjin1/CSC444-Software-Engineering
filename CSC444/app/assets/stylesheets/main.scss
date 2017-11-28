@@ -2532,6 +2532,7 @@ h2 {
 
 /* Button */
 
+
 	input[type="submit"],
 	input[type="reset"],
 	input[type="button"],
@@ -2709,6 +2710,18 @@ h2 {
 				width: 100%;
 			}
 
+		}
+		
+		.button__badge {
+			  line-height: 10px;
+			  background-color: red;
+			  border-radius: 2px;
+			  color: white;
+			  padding: 1px 3px;
+			  font-size: 10px;
+			  position: absolute; /* Position the badge within the relatively positioned button */
+			  bottom: 0;
+			  right: 0;
 		}
 
 
@@ -2935,7 +2948,7 @@ h2 {
 				color: inherit;
 			}
 
-
+			
 
 
 /* Banner */

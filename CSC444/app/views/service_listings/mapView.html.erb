@@ -30,6 +30,44 @@
         margin: 0;
         padding: 0;
       }
+      
+      #slidecontainer {
+      width: 100%;
+    }
+
+  .slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 15px;
+      border-radius: 5px;
+      background: #d3d3d3;
+      outline: none;
+      opacity: 0.7;
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+  }
+  
+  .slider:hover {
+      opacity: 1;
+  }
+  
+  .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #4CAF50;
+      cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #4CAF50;
+      cursor: pointer;
+  }
     
     </style>
   </head>
@@ -41,10 +79,12 @@
     var markers = [];
     var infowindows = [];
     var lastInfoWindow = null;
+    var latlng = null;
+    var circle = null;
 	
       function initMap() {
         geocoder = new google.maps.Geocoder();
-        var latlng = new google.maps.LatLng(<%=@current_user.lat %>, <%=@current_user.long%>);
+        latlng = new google.maps.LatLng(<%=@current_user.lat %>, <%=@current_user.long%>);
         var myOptions = {
         		  zoom: 15,
         		  center: latlng, // init position
@@ -79,25 +119,32 @@
            infowindow.open(map, marker);
            handleInfoWinClose(infowindow);
           });
-		
-		    radius = 1;
-        radius = (radius / 6378.1) * 6378100;
-		        circle = new google.maps.Circle({
+
+      setupDataForMap(1);
+}
+
+function setupDataForMap(radius) {
+        resetMap();
+  
+        var radiuscircle = (radius / 6378.1) * 6378100;
+        if(circle != null) {
+          circle.setMap(null);
+        }
+		    circle = new google.maps.Circle({
             center: latlng,
-            clickable: false,
+            clickable: false,  
             draggable: false,
             editable: false,
             fillColor: '#004de8',
             fillOpacity: 0.27,
             map: map,
-            radius: radius,
+            radius: radiuscircle,
             strokeColor: '#004de8',
             strokeOpacity: 0.62,
             strokeWeight: 1,
         })
-
   
-      console.log("Fetching listings near you...");
+  console.log("Fetching listings near you...");
       var xmlhttp = new XMLHttpRequest();
       var jsonResp = null;
       xmlhttp.onreadystatechange = function() {
@@ -106,10 +153,9 @@
               console.log(jsonResp);
           };
       }
-
-
-      xmlhttp.open("GET", "/nearme.json?radius=1", false);
-      xmlhttp.send();
+      
+  xmlhttp.open("GET", "/nearme.json?radius=" + radius, false);
+  xmlhttp.send();
 
       // draw all client markers around the user
       for (var i = 0; i < jsonResp.listings.length; i++) {
@@ -138,6 +184,17 @@
       }
       
       setupList(jsonResp);
+}
+
+function resetMap() { 
+  for(var i = 0; i < markers.length; i++){
+    markers[i].setMap(null);
+    infowindows[i].setMap(null);
+  }
+  markers = [];
+  infowindows = [];
+  lastInfoWindow = null;
+  map.setCenter(latlng);
 }
 
 function appendAllElemToNode(node, elems){
@@ -259,8 +316,26 @@ function handleInfoWinClose(iwindow) {
         <button class="sort" data-sort="rating">
           Sort by rating
         </button>
+        <div id="slidecontainer">
+          <input type="range" min="1" max="3" value="1" class="slider" id="myRange">
+          <p>Search Radius: <span id="demo"></span></p>
+        </div>
+        <button onclick="searchClicked()">Search</button>
       
         <ul id="list"></ul>
     </div>
   </body>
+  <script>
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("demo");
+    output.innerHTML = slider.value;
+    
+    slider.oninput = function() {
+      output.innerHTML = this.value;
+    }
+    
+    function searchClicked() {
+      setupDataForMap(slider.value);
+    }
+  </script>
 </html>

@@ -2532,7 +2532,17 @@ h2 {
 
 /* Button */
 
-
+	.unread{
+      font-weight:bold;
+      font-size: 14px;
+    }
+        
+    .read{
+      font-weight:lighter;
+      font-size: 14px;
+    }
+      
+      
 	input[type="submit"],
 	input[type="reset"],
 	input[type="button"],

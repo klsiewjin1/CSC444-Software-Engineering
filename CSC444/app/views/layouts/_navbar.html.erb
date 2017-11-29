@@ -13,15 +13,28 @@
                   <a><%= link_to "Profile", @current_user %></a>
                   <a><%= link_to("Logout", logout_path, method: :delete) %></a>
                   <% @notifications = get_user_notifications(@current_user.id) %>
-                    <div class ="dropdown btn-group">
+                    <div class ="dropdown btn-group" data-behavior="notifications">
                       <span class="btn dropdown-toggle fa fa-bell" id="menu1" data-toggle="dropdown"></span>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                           <% @notifications.each do |notice| %>
-                            <li role="presentation"><a role="notices" tabindex="-1" ><strong><%=link_to "#{get_user_name_by_id(notice.actor_id)} #{notice.action}", notice.notification_path %><strong></a></li>
-                            <li role="presentation" class="divider"></li>
+                            <% if notice.action == "approved your application" %>
+                              <% path = 'link_to_my_listings' %>
+                            <% elsif notice.action == "reviewed you" %> 
+                              <% path = 'link_to_profile' %>
+                            <% end %>
+                            <li role="presentation">
+                              <a role="notices" tabindex="-1" >
+                                <% if notice.read_at == nil %>
+                                  <strong class="unread"><%=link_to "#{get_user_name_by_id(notice.actor_id)} #{notice.action}", { :controller => 'notifications', :action => path, :id => notice.id} %></strong>
+                                <% elsif notice.read_at != nil %>
+                                  <strong class="read"><%=link_to "#{get_user_name_by_id(notice.actor_id)} #{notice.action}", { :controller => 'notifications', :action => path, :id => notice.id} %></strong>
+                                <% end %>
+                              </a>
+                            </li>
                           <% end %>
+                          <li role="presentation" class="divider"></li>
                         </ul>
-                       <span class="button__badge"><%= @notifications.count %></span>
+                       <span class="button__badge"><%= @notifications.unread.count %></span>
                     </div>
                 <% else %>
                   <%= link_to "Login", login_path %>
@@ -30,12 +43,11 @@
 					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
 				</div>
 			</header>
-
-      <script>
-        $(document).ready(function(){
-          $(".dropdown-toggle").dropdown();
-        });
+			
+			<script>
+      $(document).ready(function(){
+        $(".dropdown-toggle").dropdown();
+      });
       </script>
-      
-      
+
 

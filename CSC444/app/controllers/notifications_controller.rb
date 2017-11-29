@@ -10,14 +10,19 @@ class NotificationsController < ApplicationController
     end 
     def index
         @user = User.find(session[:user_id])
-        @notifications = Notification.where(receiver_id: @user.id).unread
+        @notifications = Notification.where(receiver_id: @user.id)
     end
     
-    def mark_as_read 
-        @user = User.find(session[:user_id])
-        @notifications = Notification.where(receiver_id: @user.id).unread
-        @notifications.update_all(read_at: Time.zone.now)
-        render json: {success: true} 
+    def link_to_profile
+        @notice = Notification.find(params[:id])
+        @notice.update(:read_at => Time.zone.now)
+        redirect_to @current_user
+    end
+    
+    def link_to_my_listings
+        @notice = Notification.find(params[:id])
+        @notice.update(:read_at => Time.zone.now)
+        redirect_to listing_users_path
     end
     
     private

@@ -25,11 +25,10 @@ class ServiceListingApprovalsController < ApplicationController
     @service_listing_approval = ServiceListingApproval.new(service_listing_approval_params)
     @service_listing_approval.teen_id = session[:user_id] # model does not have access to session variable
     
-    
     if @service_listing_approval.save
-      puts "Service listing approval created!"
+      flash[:success] = "Service listing approval created!"
       @service_listing = get_service_listing_by_id(@service_listing_approval.service_listing_id)
-      create_notification(@service_listing_approval.teen_id, @service_listing.user_id, "applied for your job", get_user(@service_listing.user_id))
+      create_notification(@service_listing_approval.teen_id, @service_listing.user_id, "applied for your job")
     else
       flash[:errors] = @service_listing.errors
     end
@@ -41,10 +40,8 @@ class ServiceListingApprovalsController < ApplicationController
     @service_listing_approval = ServiceListingApproval.find_by_service_listing_id_and_teen_id(params[:service_listing_id], params[:teen_id])
     if @service_listing_approval.update(service_listing_approval_params)
       flash[:success] = "Updated!"
-      #@current_user = User.find(session[:user_id])
       @user = User.find(params[:id])
-      create_notification(@user.id, @service_listing_approval.teen_id, "approved your application", get_user(@service_listing_approval.teen_id))
-      #create_notification(receiver_id: @user.id, actor_id: @current_user.id, action: 'approved your job offer', @user)
+      create_notification(@user.id, @service_listing_approval.teen_id, "approved your application")
       redirect_to listing_users_path
     else
       flash[:error] = "Something went wrong"

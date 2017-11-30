@@ -10,15 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171129150431) do
+ActiveRecord::Schema.define(version: 20171129164956) do
 
   create_table "notifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "actor_id"
     t.integer "receiver_id"
     t.datetime "read_at"
     t.string "action"
-    t.string "notification_path_type"
-    t.integer "notification_path_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171124195316) do
+ActiveRecord::Schema.define(version: 20171129150431) do
 
   create_table "notifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "actor_id"
@@ -77,6 +77,9 @@ ActiveRecord::Schema.define(version: 20171124195316) do
     t.datetime "updated_at", null: false
     t.float "lat", limit: 24
     t.float "long", limit: 24
+    t.string "activation_digest"
+    t.boolean "activated", default: false
+    t.datetime "activated_at"
   end
 
 end

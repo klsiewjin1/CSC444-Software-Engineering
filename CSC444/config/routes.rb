@@ -38,4 +38,6 @@ Rails.application.routes.draw do
   resources :service_listings
   resources :users
   resources :reviews
+  
+  resources :account_activations, only: [:edit]
 end

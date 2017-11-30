@@ -35,10 +35,16 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        # login user after they sign up so they can use the site right away
+        
+        # Send the activation email
+        UserMailer.account_activation(@user).deliver_now
+        
+        # Login user after they sign up so they can use the site right away
         login(@user)
+        
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
+        
       else
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }

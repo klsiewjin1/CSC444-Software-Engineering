@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   get '/nearme', to: 'service_listings#nearme'
   get '/map', to: 'service_listings#mapView'
+  get '/service_listings', to: 'service_listings#mapView'
   
   resources :users do
     collection do 

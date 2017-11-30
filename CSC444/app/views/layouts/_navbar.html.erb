@@ -34,7 +34,9 @@
                           <% end %>
                           <li role="presentation" class="divider"></li>
                         </ul>
-                       <span class="button__badge"><%= @notifications.unread.count %></span>
+                        <% if @notifications.unread.count > 0 %>
+                          <span class="button__badge"><%= @notifications.unread.count %></span>
+                       <% end %>
                     </div>
                 <% else %>
                   <%= link_to "Login", login_path %>

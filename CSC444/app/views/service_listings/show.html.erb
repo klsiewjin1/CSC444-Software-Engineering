@@ -27,5 +27,5 @@
 
 <% is_teen = current_user_is_teen() %>
 <% if is_teen && is_service_listing_vacant(@service_listing.id) %>
-    <td><%= button_to 'Apply for job', { controller: 'service_listing_approvals', action: 'create', :service_listing_id => @service_listing.id, :approved => true } %></td>
+    <td><%= button_to 'Apply for job', { controller: 'service_listing_approvals', action: 'create', :service_listing_id => @service_listing.id} %></td>
 <% end %>

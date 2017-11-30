@@ -27,6 +27,6 @@ class NotificationsController < ApplicationController
     
     private
         def notification_params
-            params.require(:notification).permit(:actor_id, :receiver_id, :action, :notification_path)
+            params.require(:notification).permit(:actor_id, :receiver_id, :action)
         end
 end         

@@ -21,6 +21,11 @@ module UsersHelper
     return (user != nil && user.user_type == "client")
   end
   
+  def user_is_admin(user)
+    # return true if get_user(id).user_type == "admin" -> doesn't work when get_user returns nil
+    return (user != nil && user.user_type == "admin")
+  end
+  
   def current_user_is_teen()
     # return @current_user.user_type
     return user_is_teen(@current_user)
@@ -28,6 +33,10 @@ module UsersHelper
   
   def current_user_is_client()
     return user_is_client(@current_user)
+  end
+  
+  def current_user_is_admin()
+    return user_is_admin(@current_user)
   end
 
   def get_user(user_id)

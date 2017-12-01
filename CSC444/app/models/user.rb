@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_many :service_listings, dependent: :destroy
   
+  attr_accessor :activation_token
+  
   validates :user_type, presence: true
   validates :username, uniqueness: true
   
@@ -34,9 +36,14 @@ class User < ApplicationRecord
   validates :email_confirmation, presence: true
   validates_format_of :email, with: /([\w.-]+)@([\w.-]+)\.([a-zA-Z.]{2,6})/i , on: :create
   
+  # Before save callbacks
   before_save :store_lat_long
   before_save :downcase_email
   before_save :downcase_username
+  
+  # Before create callbacks
+  before_create :create_activation_digest
+  
   has_secure_password
 
   # get lat/long from Google Maps API (but don't do this with seed file because it already has lat/long and there is a limit of 2500 free Geocoder API daily requests)
@@ -51,12 +58,39 @@ class User < ApplicationRecord
     #   end
     # end
   end
-
-  def downcase_email
-    self.email.downcase!
+  
+  def authenticated?(att, token)
+    digest = send("#{att}_digest")
+    
+    if digest.nil?
+      return false
+    end
+      
+    return BCrypt::Password.new(digest).is_password?(token)
   end
   
   def downcase_username
     self.username.downcase!
   end
+  
+  # Make a random token
+  def User.new_token
+    SecureRandom.urlsafe_base64
+  end
+  
+  # Digest a string into a hash
+  def User.digest(string)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
+    BCrypt::Password.create(string, cost: cost)
+  end
+  
+  private
+    def downcase_email
+      self.email.downcase!
+    end
+    
+    def create_activation_digest
+      self.activation_token = User.new_token
+      self.activation_digest = User.digest(activation_token)
+    end
 end

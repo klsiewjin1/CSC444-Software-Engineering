@@ -75,6 +75,9 @@ ActiveRecord::Schema.define(version: 20171129164956) do
     t.datetime "updated_at", null: false
     t.float "lat", limit: 24
     t.float "long", limit: 24
+    t.string "activation_digest"
+    t.boolean "activated", default: false
+    t.datetime "activated_at"
   end
 
 end

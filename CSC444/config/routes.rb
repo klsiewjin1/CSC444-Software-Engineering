@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'welcome#index'
   get 'welcome/index'
+  get '/contact', to: 'welcome#contact'
   
   # Signup page
   get 'signup', to: 'users#new'
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
 
   get '/nearme', to: 'service_listings#nearme'
   get '/map', to: 'service_listings#mapView'
+  get '/service_listings', to: 'service_listings#mapView'
   
   resources :users do
     collection do 
@@ -39,4 +41,6 @@ Rails.application.routes.draw do
   resources :service_listings
   resources :users
   resources :reviews
+  
+  resources :account_activations, only: [:edit]
 end

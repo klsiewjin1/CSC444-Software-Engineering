@@ -81,12 +81,16 @@
     var lastInfoWindow = null;
     var latlng = null;
     var circle = null;
+    
+    const ONE_KM_ZOOM = 15;
+    const TWO_KM_ZOOM = 14;
+    const THREE_KM_ZOOM = 14;
 	
       function initMap() {
         geocoder = new google.maps.Geocoder();
         latlng = new google.maps.LatLng(<%=@current_user.lat %>, <%=@current_user.long%>);
         var myOptions = {
-        		  zoom: 15,
+        		  zoom: ONE_KM_ZOOM,
         		  center: latlng, // init position
         		  mapTypeControl: true,
         		  mapTypeControlOptions: {
@@ -98,29 +102,35 @@
         };
 
 	        map = new google.maps.Map(document.getElementById("map"), myOptions);
+	        // Limit the zoom level
+	        var minZoomLevel = THREE_KM_ZOOM;
+          google.maps.event.addListener(map, 'zoom_changed', function() {
+             if (map.getZoom() < minZoomLevel) map.setZoom(minZoomLevel);
+          });
+	        google.maps.event.addListenerOnce(map, 'idle', function(){
+              var infowindow = new google.maps.InfoWindow({
+                content: '<b>Your Address: ' + address + '</b>',
+                size: new google.maps.Size(150, 50)
+              });
+    
+    		      var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+              var marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                title: address,
+    			      animation: google.maps.Animation.DROP,
+    			      icon: image
+              });
+              
+              marker.addListener('click', function() {
+               infowindow.open(map, marker);
+               handleInfoWinClose(infowindow);
+              });
+    
+              setupDataForMap(1);
+          });
 
           map.setCenter(latlng);
-
-          var infowindow = new google.maps.InfoWindow({
-            content: '<b>Your Address: ' + address + '</b>',
-            size: new google.maps.Size(150, 50)
-          });
-
-		      var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-          var marker = new google.maps.Marker({
-            position: latlng,
-            map: map,
-            title: address,
-			      animation: google.maps.Animation.DROP,
-			      icon: image
-          });
-          
-          marker.addListener('click', function() {
-           infowindow.open(map, marker);
-           handleInfoWinClose(infowindow);
-          });
-
-      setupDataForMap(1);
 }
 
 function setupDataForMap(radius) {
@@ -142,9 +152,11 @@ function setupDataForMap(radius) {
             strokeColor: '#004de8',
             strokeOpacity: 0.62,
             strokeWeight: 1,
-        })
+        });
+      
+      setZoom(radius);
   
-  console.log("Fetching listings near you...");
+      console.log("Fetching listings near you...");
       var xmlhttp = new XMLHttpRequest();
       var jsonResp = null;
       xmlhttp.onreadystatechange = function() {
@@ -154,8 +166,8 @@ function setupDataForMap(radius) {
           };
       }
       
-  xmlhttp.open("GET", "/nearme.json?radius=" + radius, false);
-  xmlhttp.send();
+      xmlhttp.open("GET", "/nearme.json?radius=" + radius, false);
+      xmlhttp.send();
 
       // draw all client markers around the user
       for (var i = 0; i < jsonResp.listings.length; i++) {
@@ -186,6 +198,21 @@ function setupDataForMap(radius) {
       setupList(jsonResp);
 }
 
+function setZoom(rad){
+  if(rad == 1){
+     map.setZoom(ONE_KM_ZOOM); 
+     return;
+  }
+  if(rad == 2){
+     map.setZoom(TWO_KM_ZOOM); 
+     return;
+  }
+  if(rad == 3){
+     map.setZoom(THREE_KM_ZOOM); 
+     return;
+  }
+}
+
 function resetMap() { 
   for(var i = 0; i < markers.length; i++){
     markers[i].setMap(null);
@@ -197,7 +224,7 @@ function resetMap() {
   map.setCenter(latlng);
 }
 
-function appendAllElemToNode(node, elems){
+function appendAllElemToNode(node, elems) {
   for (var x = 0; x < elems.length; x++) {
        node.appendChild(elems[x]);
   }
@@ -230,6 +257,12 @@ function setupList(jsonData) {
      
      ul.appendChild(li);
   }
+  
+  // window.setTimeout(function() {
+  //   for (var i = 0; i < jsonData.listings.length; i++) {
+  //       markers[i].setAnimation(null);
+  //   }
+  // }, 3000);
 }
 
 
@@ -290,7 +323,7 @@ function listenMarker (marker, i)
     
     window.setTimeout(function() {
       markers[i].setMap(map);
-    }, i * 20);
+    }, i * 25);
 }
 
 function handleInfoWinClose(iwindow) {
@@ -308,13 +341,17 @@ function handleInfoWinClose(iwindow) {
   
   <body>
     
-    <div id="map"></div>
+    <div id="map"><div class="loader"></div></div>
     
     <div id="panel">
-      
-        <input class="search" placeholder="Search" />
-        <button class="sort" data-sort="rating">
-          Sort by rating
+        <button>
+          Rating
+        </button>
+         <button>
+          Hourly Rate
+        </button>
+         <button>
+          Service Drop down
         </button>
         <div id="slidecontainer">
           <input type="range" min="1" max="3" value="1" class="slider" id="myRange">

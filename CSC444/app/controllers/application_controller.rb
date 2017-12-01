@@ -6,6 +6,9 @@ class ApplicationController < ActionController::Base
   # by default should be logged in, use "skip_before_action :require_login"
   # to avoid this in certain controllers
   before_action :require_login
+  
+  
+  before_action :check_activated
  
   private
  
@@ -16,5 +19,10 @@ class ApplicationController < ActionController::Base
       redirect_to login_path
     end
   end
-
+  
+  def check_activated
+    if logged_in? and !current_user.activated?
+      flash[:warning] = "Account not activated!"
+    end
+  end
 end

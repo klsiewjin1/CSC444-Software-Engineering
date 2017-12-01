@@ -42,9 +42,19 @@
         <td><%= user.cellphone %></td>
         <td><%= user.bdate %></td>
         <td><%= user.password_digest %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        
+        <!-- don't show admin profiles, but still need blank value in Show column to preserve row colour in column -->
+        <td>
+          <% if not user_is_admin(user) %>
+            <%= link_to 'Show', user %>
+          <% end %>
+        </td>
+        
+        <!-- only allow admins to edit/destroy users -->
+        <% if current_user_is_admin() %>
+          <td><%= link_to 'Edit', edit_user_path(user) %></td>
+          <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -52,5 +62,8 @@
 
 <br>
 
-<%= link_to 'New User', signup_url %>
-<%= link_to 'Home page', welcome_index_url %>
+<%= paginate @users %>
+<%= page_entries_info @users %>
+
+<%#= link_to 'New User', signup_url %>
+<%#= link_to 'Home page', welcome_index_url %>

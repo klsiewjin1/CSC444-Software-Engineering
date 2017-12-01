@@ -6,7 +6,7 @@
 <p>Approved Teen: <%= get_service_listing_approved_teen_name(@service_listing.id) %></p>
 
 <% client = get_user(@service_listing.user_id) %>
-<p>Client: <%= get_user_full_name(client) %></p>
+<p>Client: <%= link_to (get_user_full_name(client)), user_path(client)%></p>
 <p>Client Rating: <%= get_avg_rating(client.id) %></p>
 
 <p>Description: <%= get_service_listing_description(@service_listing) %></p>

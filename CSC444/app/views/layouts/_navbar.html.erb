@@ -3,15 +3,15 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 			
       <header id="header">
-				<div class="inner">
-					<%= link_to "Teender", root_path, class: "logo" %>
+				<div class="">
+					<div class= "logo"><%= link_to "TEENDER", root_path %></div>
 					<nav id="nav">
                 <%= link_to "Home",   welcome_index_url %>
-                <a><%= link_to "My Jobs", listing_users_path %></a>
-                <a><%= link_to "Browse Jobs", controller: 'service_listings' %></a>
+                <%= link_to "My Jobs", listing_users_path %>
+                <%= link_to "Browse Jobs", controller: 'service_listings' %>
                  <% if !current_user.nil? %>
-                  <a><%= link_to "Profile", @current_user %></a>
-                  <a><%= link_to("Logout", logout_path, method: :delete) %></a>
+                  <%= link_to "Profile", @current_user %>
+                  <%= link_to("Logout", logout_path, method: :delete) %>
                   <% @notifications = get_user_notifications(@current_user.id) %>
                     <div class ="dropdown btn-group" data-behavior="notifications">
                       <span class="btn dropdown-toggle fa fa-bell" id="menu1" data-toggle="dropdown"></span>

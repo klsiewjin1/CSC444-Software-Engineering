@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-  <head>
     <title><%= yield(:title) %></title>
     
     <!-- Display flashes at the top of every page -->
@@ -12,7 +11,8 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag "application.js" %>    
     <%= render 'layouts/navbar' %>
-  </head>
+
+
 
   <body class="subpage">
     <%= yield %>

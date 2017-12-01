@@ -11,6 +11,7 @@
                 <%= link_to "Browse Jobs", controller: 'service_listings' %>
                  <% if !current_user.nil? %>
                   <%= link_to "Profile", @current_user %>
+                  <%= link_to "Contact Us",   '/contact' %>
                   <%= link_to("Logout", logout_path, method: :delete) %>
                   <% @notifications = get_user_notifications(@current_user.id) %>
                     <div class ="dropdown btn-group" data-behavior="notifications">

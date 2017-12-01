@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'welcome#index'
   get 'welcome/index'
+  get '/contact', to: 'welcome#contact'
   
   # Signup page
   get 'signup', to: 'users#new'

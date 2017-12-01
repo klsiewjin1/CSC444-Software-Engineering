@@ -1638,8 +1638,19 @@
 		text-decoration: underline;
 	}
 
+
+		a:link {
+
+		}
+		
+		a:visited {
+			color: purple !important ;
+
+		}
 		a:hover {
-			text-decoration: none;
+
+			background-color: transparent ;
+			color: black !important;
 		}
 
 	strong, b {
@@ -2473,6 +2484,7 @@ h2 {
 		margin: 0 0 2em 0;
 		width: 100%;
 	}
+	
 
 		table tbody tr {
 			border: solid 1px #dbdbdb;
@@ -2778,7 +2790,7 @@ h2 {
 			padding: 0;
 			position: absolute;
 			top: 0;
-			font-size: 1em;
+			font-size: 2em;
 		}
 
 			#header .logo strong {
@@ -2794,12 +2806,19 @@ h2 {
 			display: inline-block;
 			padding: 0 0.75em;
 			color: inherit;
+			background-color: inherit;
 			text-decoration: none;
 			font-size: 1em;
 		}
 
+			
+			
 			#header a:hover {
-				color: #ffffff;
+				color: #ffffff !important;
+			}
+			
+			#header a:visited {
+				color: white !important ;
 			}
 
 			#header a:last-child {
@@ -2965,7 +2984,7 @@ h2 {
 
 	#banner {
 		padding: 8em 0 9em 0;
-		background-image: url(banner.jpg);
+		background-image: url(chores.jpg);
 		background-size: cover;
 		background-position: bottom;
 		background-attachment: fixed;
@@ -3187,3 +3206,4 @@ footer ul li {
   float: left;
   margin-left: 15px;
 }
+

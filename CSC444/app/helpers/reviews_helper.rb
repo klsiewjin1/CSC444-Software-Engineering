@@ -13,6 +13,16 @@ module ReviewsHelper
             return -1
         end
     end
+    
+    def get_avg_rating_text(user_id)
+        rating = get_avg_rating(user_id)
+        if not rating.nil? and rating >= 0
+            return rating.to_s + '/5'
+        else
+            return 'N/A'
+        end
+    end
+    
     def get_all_reviews()
         reviews_all = Review.all
         return reviews_all

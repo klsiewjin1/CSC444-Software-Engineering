@@ -26,7 +26,7 @@ class ServiceListingApprovalsController < ApplicationController
     @service_listing_approval.teen_id = session[:user_id] # model does not have access to session variable
     
     if @service_listing_approval.save
-      flash[:success] = "Service listing approval created!"
+      flash[:success] = "Applied!"
       @service_listing = get_service_listing_by_id(@service_listing_approval.service_listing_id)
       create_notification(@service_listing_approval.teen_id, @service_listing.user_id, "applied for your job")
     else
@@ -46,6 +46,12 @@ class ServiceListingApprovalsController < ApplicationController
     else
       flash[:error] = "Something went wrong"
     end
+  end
+
+  def destroy
+    @listing_approval = ServiceListingApproval.find_by(id: params[:format]).destroy
+    flash[:success] = "Job cancelled"
+    redirect_to listing_users_path
   end
   
   private

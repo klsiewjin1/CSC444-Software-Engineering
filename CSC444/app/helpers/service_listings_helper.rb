@@ -5,7 +5,7 @@ module ServiceListingsHelper
   def get_service_listing_client(service_listing)
     return get_user(service_listing.user_id)
   end
-  
+
   def get_service_listing_by_id(service_listing_id)
     return service_listing =  ServiceListing.find_by(id: service_listing_id)  
   end
@@ -13,7 +13,7 @@ module ServiceListingsHelper
   def get_service_listing_service(service_listing)
     return get_service_name(service_listing.service_id)
   end
-  
+
   def get_string_for_time(total_minutes)
     ampm = 'AM'
     if total_minutes >= MINUTES_FROM_12AM_TO_12PM
@@ -46,6 +46,10 @@ module ServiceListingsHelper
     return get_string_for_time(service_listing.start_time + service_listing.duration)
   end
   
+  def get_duration_in_hours(service_listing)
+    return service_listing.duration / 60.0
+  end
+  
   def get_service_listing_hourly_rate(service_listing)
     return service_listing.hourly_rate
   end
@@ -75,22 +79,24 @@ module ServiceListingsHelper
     return ServiceListingApproval.where(teen_id: teen_id, approved: false)
   end
 
-  def get_approved_listings_by_teen(teen_id)
-    return ServiceListingApproval.where(teen_id: teen_id, approved: true)
+  # returns applications that have been approved by the client, given a user_id
+  def get_approved_listings_by_user(user_id)
+    if user_is_teen(@current_user)
+      return ServiceListingApproval.where(teen_id: user_id, approved: true)
+    elsif user_is_client(@current_user)
+      service_listing = ServiceListing.where(user_id: user_id)
+      return ServiceListingApproval.where(approved: true, service_listing_id: service_listing.ids)
+    end
   end
 
-  def get_approved_listings_by_client(client_id)
-    service_listing = ServiceListing.where(user_id: client_id)
-    return ServiceListingApproval.where(approved: true, service_listing_id: service_listing.ids)
-  end
-
+  # returns all applications for a Service Listing
   def get_SL_approvals_from_SL(service_listing_id)
     return ServiceListingApproval.where(service_listing_id: service_listing_id, approved: false)
   end
 
+  # returns true if the service listing has been approved
   def service_listing_is_approved(service_listing_id)
     service_listings = ServiceListingApproval.where(service_listing_id: service_listing_id)
-    # returns true if any service_listing is true
     return service_listings.any? {
         |service_listing| service_listing.approved == true
     }

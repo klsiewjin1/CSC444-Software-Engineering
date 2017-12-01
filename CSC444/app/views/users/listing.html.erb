@@ -1,1 +1,7 @@
-<%= render "listing" %>
+<% if user_is_teen(@current_user) %>
+	<%= render "applications" %>
+	<%= render "approved" %>
+<% elsif user_is_client(@current_user) %>
+	<%= render "posted" %>
+	<%= render "approved" %>
+<% end %>

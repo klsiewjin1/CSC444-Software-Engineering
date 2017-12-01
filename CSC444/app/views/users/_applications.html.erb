@@ -1,0 +1,18 @@
+<h1>My Applied Jobs</h1>
+<!-- Fetch applications by user then check if the service has already been taken by someone else -->
+<% @applied_listings = get_applied_listings_by_teen(@current_user) %>
+<% @applied_listings.each do |applied_listing| %>
+  <% if !service_listing_is_approved(applied_listing.service_listing_id) %> 
+    <% @client = get_user((get_service_listing_by_id(applied_listing.service_listing_id).user_id)) %>
+    <strong>Client Name: </strong>
+    <%= link_to (@client.fname + " " + @client.lname), user_path(@client) %> <br>
+    <strong>Job Listing ID: </strong>
+    <%= link_to (applied_listing.service_listing_id), service_listing_path(applied_listing.service_listing_id) %> <br>
+    <strong>Description: </strong>
+    <%= get_service_listing_description(applied_listing.service_listing) %><br>
+
+    <%= link_to "Cancel application", approval_path(applied_listing), :confirm => "Are you sure?", method: :delete %>
+
+    <br><br>
+  <% end %>
+<% end %>

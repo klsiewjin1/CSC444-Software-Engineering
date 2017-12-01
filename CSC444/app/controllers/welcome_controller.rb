@@ -6,4 +6,9 @@ class WelcomeController < ApplicationController
   		render 'indexLoggedIn'
   	end
   end
+  
+  def contact
+      render 'contact'
+  end
+  
 end

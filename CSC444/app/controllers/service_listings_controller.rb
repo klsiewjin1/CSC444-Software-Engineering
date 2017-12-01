@@ -43,6 +43,16 @@ class ServiceListingsController < ApplicationController
     end
   end
 
+  def destroy
+    if ServiceListing.find(params[:id]).destroy
+      flash[:success] = "Removed job"
+      redirect_to listing_users_path
+    else
+      flash[:errors] = "Failed"
+      redirect_to listing_users_path
+    end
+  end
+
   # return 
   def nearme
     msg = nil

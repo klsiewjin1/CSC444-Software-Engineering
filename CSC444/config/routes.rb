@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   # Approval create page not accessible for user, this route is needed for the approval button in service listings
   post '/approval', to: 'service_listing_approvals#create'
   patch '/approval', to: 'service_listing_approvals#update'
+  delete '/approval', to: 'service_listing_approvals#destroy'
   # patch '/approval', to: 'users#show'
 
   get '/nearme', to: 'service_listings#nearme'

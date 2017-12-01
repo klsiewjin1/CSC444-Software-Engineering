@@ -47,6 +47,12 @@ class ServiceListingApprovalsController < ApplicationController
       flash[:error] = "Something went wrong"
     end
   end
+
+  def destroy
+    @listing_approval = ServiceListingApproval.find_by(id: params[:format]).destroy
+    flash[:success] = "Job cancelled"
+    redirect_to listing_users_path
+  end
   
   private
 	# The params that a service listing could have. Excludes all other attributes

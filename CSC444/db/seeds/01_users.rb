@@ -1,6 +1,13 @@
 # only delete users created through seeds.rb (password for seeded users is 'password')
 User.where(password_digest: '$2a$10$2pliEw8A2SGBsJPGrdLAcuqIkLRZ3AZclr/hUVEdHAT3EdR0dRHuK').delete_all
 
+User.new({ user_type: 'admin', fname: 'Alexei', lname: 'Zenin', username: 'alexei_zenin', email: 'alexei.zenin@mail.utoronto.ca', password_digest: '$2a$10$2pliEw8A2SGBsJPGrdLAcuqIkLRZ3AZclr/hUVEdHAT3EdR0dRHuK' }).save(validate: false)
+User.new({ user_type: 'admin', fname: 'Amir', lname: 'Kharazmi', username: 'amir_kharazmi', email: 'amir.kharazmi@mail.utoronto.ca', password_digest: '$2a$10$2pliEw8A2SGBsJPGrdLAcuqIkLRZ3AZclr/hUVEdHAT3EdR0dRHuK' }).save(validate: false)
+User.new({ user_type: 'admin', fname: 'Andrew', lname: 'Allen', username: 'andrew_allen', email: 'andrewj.allen@mail.utoronto.ca', password_digest: '$2a$10$2pliEw8A2SGBsJPGrdLAcuqIkLRZ3AZclr/hUVEdHAT3EdR0dRHuK' }).save(validate: false)
+User.new({ user_type: 'admin', fname: 'Elijah', lname: 'Wigmore', username: 'elijah_wigmore', email: 'elijah.wigmore@mail.utoronto.ca', password_digest: '$2a$10$2pliEw8A2SGBsJPGrdLAcuqIkLRZ3AZclr/hUVEdHAT3EdR0dRHuK' }).save(validate: false)
+User.new({ user_type: 'admin', fname: 'Jeff', lname: 'Feng', username: 'jeff_feng', email: 'jefff.feng@mail.utoronto.ca', password_digest: '$2a$10$2pliEw8A2SGBsJPGrdLAcuqIkLRZ3AZclr/hUVEdHAT3EdR0dRHuK' }).save(validate: false)
+User.new({ user_type: 'admin', fname: 'Siew Jin', lname: 'Kung Lim', username: 'siewjin_kunglim', email: 'siewjin.kunglim@mail.utoronto.ca', password_digest: '$2a$10$2pliEw8A2SGBsJPGrdLAcuqIkLRZ3AZclr/hUVEdHAT3EdR0dRHuK' }).save(validate: false)
+
 users = [
 { user_type: 'teenager', fname: 'James', lname: 'Smith', username: 'james_smith', email: 'james.smith@gmail.com', cellphone: '6479418152', bdate: Date.new(1998, 1, 26), address: '105 Melville Ave', city: 'Toronto', state: 'ON', pcode: 'M6G 1Y3', country: 'Canada', lat: 43.669803, long: -79.425298, password_digest: '$2a$10$2pliEw8A2SGBsJPGrdLAcuqIkLRZ3AZclr/hUVEdHAT3EdR0dRHuK' },
 { user_type: 'client', fname: 'John', lname: 'Smith', username: 'john_smith', email: 'john.smith@gmail.com', cellphone: '4161363003', bdate: Date.new(1956, 2, 25), address: '86 Highfield Rd', city: 'Toronto', state: 'ON', pcode: 'M4L 1A1', country: 'Canada', lat: 43.66925, long: -79.324502, password_digest: '$2a$10$2pliEw8A2SGBsJPGrdLAcuqIkLRZ3AZclr/hUVEdHAT3EdR0dRHuK' },

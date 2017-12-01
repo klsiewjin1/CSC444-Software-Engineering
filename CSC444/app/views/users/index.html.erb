@@ -52,5 +52,8 @@
 
 <br>
 
-<%= link_to 'New User', signup_url %>
-<%= link_to 'Home page', welcome_index_url %>
+<%= paginate @users %>
+<%= page_entries_info @users %>
+
+<%#= link_to 'New User', signup_url %>
+<%#= link_to 'Home page', welcome_index_url %>

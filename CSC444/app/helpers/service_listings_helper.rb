@@ -46,6 +46,10 @@ module ServiceListingsHelper
     return get_string_for_time(service_listing.start_time + service_listing.duration)
   end
   
+  def get_duration_in_hours(service_listing)
+    return service_listing.duration / 60.0
+  end
+  
   def get_service_listing_hourly_rate(service_listing)
     return service_listing.hourly_rate
   end

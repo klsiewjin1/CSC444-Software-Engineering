@@ -1,17 +1,63 @@
 <!-- For now, the show page shows the same info as the index page plus the service listing description -->
 
-<p>Service: <%= get_service_name(@service_listing.service_id) %></p>
-<p>Task Date: <%= get_service_listing_task_date(@service_listing) %></p>
-<p>Hourly Rate: <%= get_service_listing_hourly_rate(@service_listing) %></p>
-<p>Approved Teen: <%= get_service_listing_approved_teen_name(@service_listing.id) %></p>
+<div class="col-md-2">
 
+<p><strong>Service:</strong></p>
+<p></p><%= get_service_name(@service_listing.service_id) %></p><br>
+	
 <% client = get_user(@service_listing.user_id) %>
-<p>Client: <%= get_user_full_name(client) %></p>
-<p>Client Rating: <%= get_avg_rating(client.id) %></p>
+<p><strong>Client:</strong></p>
+<p><%= get_user_full_name(client) %></p>
 
-<p>Description: <%= get_service_listing_description(@service_listing) %></p>
+<% client_rating = get_avg_rating(client.id) %>
+<% if not client_rating.nil? and client_rating >= 1 %>
+	<p>(<%= client_rating %>/5)</p>
+<% else %>
+	<p>(N/A)</p>
+<% end %>
+<br>
 
-<% if @service_listing.user_id == session[:user_id] %> 
+<p><strong>Listing Vacant?</strong></p>
+<p><%= is_service_listing_vacant(@service_listing.id) ? 'Yes' : 'No' %></p><br>
+
+</div>
+
+<div class="col-md-2">
+	
+<p><strong>Task Date:</strong></p>
+<p><%= get_service_listing_task_date(@service_listing).strftime('%B %-d, %Y') %></p><br>
+
+<p><strong>Task Time:</strong></p>
+<% start_time = get_service_listing_start_time_string(@service_listing) %>
+<% end_time = get_service_listing_end_time_string(@service_listing) %>
+<p><%= start_time %>-<%= end_time %></p>
+
+<% duration = get_duration_in_hours(@service_listing) %>
+<% hours_word = duration != 1 ? 'hours' : 'hour' %>
+<p>(<%= duration %> <%= hours_word %>)</p><br>
+
+<p><strong>Hourly Rate:</strong></p>
+<p>$<%= sprintf('%.2f', get_service_listing_hourly_rate(@service_listing)) %>/hr</p><br>
+
+</div>
+
+<div class="col-md-8">
+
+<p><strong>Description:</strong></p>
+<p><%= get_service_listing_description(@service_listing) %></p>
+<br>
+
+<% is_teen = current_user_is_teen() %>
+<% if is_teen && is_service_listing_vacant(@service_listing.id) %>
+    <td><%= button_to 'Apply for job', { controller: 'service_listing_approvals', action: 'create', service_listing_id: @service_listing.id  } %></td>
+<% end %>
+
+</div>
+
+<% if @service_listing.user_id == session[:user_id] %>
+	<div class="col-md-12">
+	<br><h3><strong>Edit Service Listing</strong></h3>
+
 	<%= form_for (@service_listing), url: {controller: "service_listings", action: "update"} do |t| %>
 		<%= t.label :task_date %>
 		<%= t.text_field :task_date %>
@@ -23,9 +69,5 @@
 		<%= t.text_field :description %>
 	  <%= t.submit "Update listing", class: "btn btn-primary" %> 
 	<% end %> 
-<% end %>
-
-<% is_teen = current_user_is_teen() %>
-<% if is_teen && is_service_listing_vacant(@service_listing.id) %>
-    <td><%= button_to 'Apply for job', { controller: 'service_listing_approvals', action: 'create', :service_listing_id => @service_listing.id} %></td>
+	</div>
 <% end %>

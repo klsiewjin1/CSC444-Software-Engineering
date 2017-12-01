@@ -14,6 +14,9 @@
 					<div class="profile-usertitle-job">
 						<%= @user.user_type %>
 					</div>
+					<div class="profile-usertitle-name">
+						Rating: <%= get_avg_rating_text(@user.id) %>
+					</div>
 				</div>
 				<!-- END SIDEBAR USER TITLE -->
 				

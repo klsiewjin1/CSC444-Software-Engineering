@@ -31,7 +31,7 @@
         padding: 0;
       }
       
-      #slidecontainer {
+    .slidecontainer {
       width: 100%;
     }
 
@@ -127,13 +127,25 @@
                handleInfoWinClose(infowindow);
               });
     
-              setupDataForMap(1);
+              setupDataForMap(1, 0, []);
           });
 
           map.setCenter(latlng);
 }
 
-function setupDataForMap(radius) {
+function encodeServiceNames(serviceNames) {
+  var serviceNamesURL = "";
+  for (var i = 0; i < serviceNames.length; i++) {
+    if(i != serviceNames.length -1){
+       serviceNamesURL += serviceNames[i] + ",";
+    }else{
+       serviceNamesURL += serviceNames[i];
+    }
+  }
+  return encodeURI(serviceNamesURL);
+}
+
+function setupDataForMap(radius, minRate, serviceNames) {
         resetMap();
   
         var radiuscircle = (radius / 6378.1) * 6378100;
@@ -165,8 +177,9 @@ function setupDataForMap(radius) {
               console.log(jsonResp);
           };
       }
-      
-      xmlhttp.open("GET", "/nearme.json?radius=" + radius, false);
+      var url = "/nearme.json?radius=" + radius +"&minRate="+ minRate +"&serviceNames=" + encodeServiceNames(serviceNames);
+      console.log(url);
+      xmlhttp.open("GET", url, false);
       xmlhttp.send();
 
       // draw all client markers around the user
@@ -353,10 +366,20 @@ function handleInfoWinClose(iwindow) {
          <button>
           Service Drop down
         </button>
-        <div id="slidecontainer">
+        <div class="slidecontainer">
           <input type="range" min="1" max="3" value="1" class="slider" id="myRange">
           <p>Search Radius: <span id="demo"></span></p>
         </div>
+         <div class="slidecontainer2">
+          <input type="range" min="1" max="25" value="5" class="slider" id="rateSlider">
+          <p>Minimum Hourly Rate $ <span id="rate">5</span>/hr</p>
+        </div>
+        <select id="serviceSelect" name="cars" multiple>
+          <option value="Reading">Reading</option>
+          <option value="saab">Saab</option>
+          <option value="opel">Opel</option>
+          <option value="audi">Audi</option>
+        </select>
         <button onclick="searchClicked()">Search</button>
       
         <ul id="list"></ul>
@@ -371,8 +394,18 @@ function handleInfoWinClose(iwindow) {
       output.innerHTML = this.value;
     }
     
+    var slider2 = document.getElementById("rateSlider");
+    var output2 = document.getElementById("rate");
+    
+    slider2.oninput = function() {
+      output2.innerHTML = this.value;
+    }
+    
     function searchClicked() {
-      setupDataForMap(slider.value);
+      console.log("Radius: " + slider.value);
+      console.log("Rate: " + slider2.value);
+      console.log("Services: " + $('#serviceSelect').val());
+      setupDataForMap(slider.value, slider2.value, $('#serviceSelect').val());
     }
   </script>
 </html>

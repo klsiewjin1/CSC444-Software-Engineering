@@ -1,0 +1,47 @@
+<%= form_with(model: order, local: true) do |form| %>
+  <% if order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+      <% order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name, id: :order_first_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name, id: :order_last_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :card_type %>
+    <%= form.select :card_type, [["Visa", "visa"], ["MasterCard", "master"], ["Discover", "discover"], ["American Express", "american_express"]], id: :order_card_type %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :card_number %>
+    <%= form.text_field :card_number, id: :order_card_number %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :card_cvv %>
+    <%= form.text_field :card_cvv, id: :order_card_cvv %>
+  </div>
+
+  <div class="field">
+    <%= form.label :card_expires_on %>
+    <%= form.date_select :card_expires_on, id: :order_card_expires_on, discard_day: true, start_year: Date.today.year, end_year: (Date.today.year+10), add_month_numbers: true%>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -57,13 +57,23 @@ class ServiceListingsController < ApplicationController
   def nearme
     msg = nil
     status = 200
-    if params[:radius] == nil
+    if !checkParams()
       status = 500
-      msg = { :errorMessage => "No \"radius\" parameter passed!"};
+      msg = { :errorMessage => "No \"radius\", \"minRate\", or \"serviceNames\" parameters passed!"};
     else
-        if validateNearMeParams(params[:radius]) < 0
+        if validateRadius(params[:radius]) < 0
           status = 500
-          msg = { :errorMessage => "Radius must be between 1 and 10 km (inclusive)."};
+          msg = { :errorMessage => "Radius must be between 1 and 3 km (inclusive)."};
+        else
+          if validateMinRate(params[:minRate]) < 0
+            status = 500
+            msg = { :errorMessage => "minRate should be at least $5/hr (5)"};
+          else
+            if validateServiceNames(params[:serviceNames]) < 0
+              status = 500
+              msg = { :errorMessage => "serviceNames should contain service names"};
+            end
+          end
         end
     end
 
@@ -71,7 +81,7 @@ class ServiceListingsController < ApplicationController
       if !msg
         msg = { :radius => "#{params[:radius]}", :userId => current_user.id, 
         :myLat => current_user.lat, :myLon => current_user.long, 
-        :listings => get_listings_near_me(params[:radius])};
+        :listings => get_listings_near_me(params[:radius], params[:serviceNames], params[:minRate])};
       end
       response.headers["Access-Control-Allow-Origin"] = "*"
       format.json {render :json => JSON.pretty_generate(msg) , :status => status}
@@ -80,15 +90,36 @@ class ServiceListingsController < ApplicationController
 
   def mapView
     @current_user = current_user;
+    @service_names = Service.all;
   end
 	
 	private
+	
+	def checkParams()
+	  if (params[:radius] == nil || params[:minRate]  == nil || params[:serviceNames] == nil)
+	    return false;
+	  end
+	  
+	  return true;
+	end
 
-  def validateNearMeParams(radius)
-    if radius.to_i < 1 || radius.to_i > 100
+  def validateRadius(radius)
+    if radius.to_i < 1 || radius.to_i > 3
       return -1;
     end
 
+    return 0;
+  end
+  
+  def validateMinRate(minRate)
+    if minRate.to_i < 0
+      return -1;
+    end
+
+    return 0;
+  end
+  
+  def validateServiceNames(serviceNames) 
     return 0;
   end
 
@@ -111,18 +142,31 @@ class ServiceListingsController < ApplicationController
 
   # assume we are a teen if we get here and that radius is valid. Returns an array to return in the response with
   # client listings near you within the radius provided.
-  def get_listings_near_me(radius)
+  def get_listings_near_me(radius, serviceNames, minRate)
     res = []
     clients = get_clients_within_radius(current_user, radius.to_f);
+    wantedServiceTypes = serviceNames.split(',');
+    
     clients.each do |client|
       listing = {}
-      
       listing[:services] = []
       client.service_listings.each do |clientListing|
         if(!service_listing_is_approved(clientListing.id))
           service = {}
           service[:serviceName] = get_service_listing_service(clientListing)
+          
+          if(wantedServiceTypes.size != 0)
+             #puts("service names exist to check");
+             if (!wantedServiceTypes.include? service[:serviceName])
+               next
+             end
+          end
+         
           service[:rate] = clientListing.hourly_rate
+          if (service[:rate] < minRate.to_i)
+            #puts("excluding due to minRate, rate was: " + service[:rate]);
+            next
+          end
           service[:link] = service_listing_path(clientListing.id)
           listing[:services].push(service)
         end
@@ -139,7 +183,7 @@ class ServiceListingsController < ApplicationController
       
       res.push(listing)
     end
-
+    puts wantedServiceTypes
     return res
   end
 

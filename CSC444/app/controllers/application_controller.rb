@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
   # to avoid this in certain controllers
   before_action :require_login
   
-  
   before_action :check_activated
+
  
   private
  

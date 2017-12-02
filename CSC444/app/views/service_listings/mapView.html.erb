@@ -14,15 +14,31 @@
         height: 100%;
         width: 25%;
         float: left;
-       
       }
       
       #list{
-        height: 100%;
+        height: 58%;
         width: 100%;
         overflow-y: scroll;
         overflow-x: hidden;
       }
+      
+      #searchWrapper {
+        text-align: center;
+      }
+      
+      #serviceSelect {
+        width 20%;
+      }
+      
+      h4 {
+        text-align: center;
+      }
+      
+      ul { list-style: none; }
+      ul li {display:block; text-decoration:none; color:#000000; background-color:#FFFFFF; line-height:30px;
+        border-bottom-style:solid; border-bottom-width:1px; border-bottom-color:#CCCCCC; padding-left:5px; cursor:pointer; }
+      ul li:hover { background-color: #DCDCDC; }
       
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -31,8 +47,13 @@
         padding: 0;
       }
       
-      #slidecontainer {
-      width: 100%;
+    .slidecontainer {
+      width: 85%;
+     margin-left: 10px;
+    }
+    
+    .slidecontainer p {
+      text-align: center;
     }
 
   .slider {
@@ -107,6 +128,7 @@
           google.maps.event.addListener(map, 'zoom_changed', function() {
              if (map.getZoom() < minZoomLevel) map.setZoom(minZoomLevel);
           });
+          
 	        google.maps.event.addListenerOnce(map, 'idle', function(){
               var infowindow = new google.maps.InfoWindow({
                 content: '<b>Your Address: ' + address + '</b>',
@@ -126,14 +148,28 @@
                infowindow.open(map, marker);
                handleInfoWinClose(infowindow);
               });
+              // var ul = document.getElementById("list");
+              // ul.style.height = map.getDiv().offsetHeight;
     
-              setupDataForMap(1);
+              setupDataForMap(1, 0, []);
           });
 
           map.setCenter(latlng);
 }
 
-function setupDataForMap(radius) {
+function encodeServiceNames(serviceNames) {
+  var serviceNamesURL = "";
+  for (var i = 0; i < serviceNames.length; i++) {
+    if(i != serviceNames.length -1){
+       serviceNamesURL += serviceNames[i] + ",";
+    }else{
+       serviceNamesURL += serviceNames[i];
+    }
+  }
+  return encodeURI(serviceNamesURL);
+}
+
+function setupDataForMap(radius, minRate, serviceNames) {
         resetMap();
   
         var radiuscircle = (radius / 6378.1) * 6378100;
@@ -163,39 +199,43 @@ function setupDataForMap(radius) {
           if (this.readyState == 4 && this.status == 200) {
               jsonResp = JSON.parse(this.responseText);
               console.log(jsonResp);
+              // draw all client markers around the user
+              for (var i = 0; i < jsonResp.listings.length; i++) {
+                listing = jsonResp.listings[i];
+                console.log('Plotting client: ' + listing);
+                
+                var clientPos = new google.maps.LatLng(listing.lat, listing.lon);
+                
+                markers[i] = new google.maps.Marker({
+                      position: clientPos,
+                      title: listing.address,
+                      animation: google.maps.Animation.DROP
+                    });
+        
+                infowindows[i] = new google.maps.InfoWindow({
+                    content: appendAllElemToNode(document.createElement("div"), getListingElements(listing)),
+                    size: new google.maps.Size(150, 50)
+                });
+                
+                
+              listenMarker(markers[i], i);
+            
+                // clientMarker.addListener('click', function() {
+                //   clientInfoWindow.open(map, clientMarker);
+                // });
+              }
+              
+              setupList(jsonResp);
+              document.getElementById("search").style.cursor = 'pointer';
+              document.body.style.cursor = 'default';
+              document.getElementById("search").onclick = searchClicked;
           };
       }
-      
-      xmlhttp.open("GET", "/nearme.json?radius=" + radius, false);
+  
+      var url = "/nearme.json?radius=" + radius +"&minRate="+ minRate +"&serviceNames=" + encodeServiceNames(serviceNames);
+      console.log(url);
+      xmlhttp.open("GET", url, true);
       xmlhttp.send();
-
-      // draw all client markers around the user
-      for (var i = 0; i < jsonResp.listings.length; i++) {
-        listing = jsonResp.listings[i];
-        console.log('Plotting client: ' + listing);
-        
-        var clientPos = new google.maps.LatLng(listing.lat, listing.lon);
-        
-        markers[i] = new google.maps.Marker({
-              position: clientPos,
-              title: listing.address,
-              animation: google.maps.Animation.DROP
-            });
-
-        infowindows[i] = new google.maps.InfoWindow({
-            content: appendAllElemToNode(document.createElement("div"), getListingElements(listing)),
-            size: new google.maps.Size(150, 50)
-        });
-        
-        
-      listenMarker(markers[i], i);
-    
-        // clientMarker.addListener('click', function() {
-        //   clientInfoWindow.open(map, clientMarker);
-        // });
-      }
-      
-      setupList(jsonResp);
 }
 
 function setZoom(rad){
@@ -283,7 +323,10 @@ function getListingElements(listing) {
        items.push(serviceItem);
      }
      
+    // items.push(createListItem("hr", ""));
+     
      var rating = getRatingElement(listing.rating);
+     rating.style.marginTop = "20px";
      items.push(rating);
     
      items.push(getNewTabLink(listing.clientPage, "View Client Profile"));
@@ -303,9 +346,9 @@ function getNewTabLink(url, text) {
 
 function getRatingElement(rating) {
   if (rating == -1) {
-    return createListItem("p", "Client Not Yet Rated");
+    return createListItem("h5", "Client Not Yet Rated");
   }
-  return createListItem("p", "Client Rating: " + rating + " / 5");
+  return createListItem("h5", "Client Rating: " + rating + " / 5");
 }
 
 function createListItem(htmlElemName, innerText){
@@ -344,21 +387,25 @@ function handleInfoWinClose(iwindow) {
     <div id="map"><div class="loader"></div></div>
     
     <div id="panel">
-        <button>
-          Rating
-        </button>
-         <button>
-          Hourly Rate
-        </button>
-         <button>
-          Service Drop down
-        </button>
-        <div id="slidecontainer">
+        <div class="slidecontainer">
           <input type="range" min="1" max="3" value="1" class="slider" id="myRange">
           <p>Search Radius: <span id="demo"></span></p>
         </div>
-        <button onclick="searchClicked()">Search</button>
-      
+        <hr>
+         <div class="slidecontainer">
+          <input type="range" min="1" max="25" value="5" class="slider" id="rateSlider">
+          <p>Minimum Hourly Rate $ <span id="rate">5</span>/hr</p>
+        </div>
+        <hr>
+        <h4>Filter By Service (Ctrl + Click)</h4>
+        <select id="serviceSelect" name="cars" multiple>
+          <% @service_names.each do |service| %>
+            <option value="<%= service.name %>"><%= service.name %></option>
+          <% end %>
+        </select>
+        <div id="searchWrapper"><button id="search" onclick="searchClicked()">Search</button></div>
+       
+        
         <ul id="list"></ul>
     </div>
   </body>
@@ -371,8 +418,21 @@ function handleInfoWinClose(iwindow) {
       output.innerHTML = this.value;
     }
     
+    var slider2 = document.getElementById("rateSlider");
+    var output2 = document.getElementById("rate");
+    
+    slider2.oninput = function() {
+      output2.innerHTML = this.value;
+    }
+    
     function searchClicked() {
-      setupDataForMap(slider.value);
+      document.getElementById("search").onclick = null;
+      console.log("Radius: " + slider.value);
+      console.log("Rate: " + slider2.value);
+      console.log("Services: " + $('#serviceSelect').val());
+      document.body.style.cursor = 'progress';
+      document.getElementById("search").style.cursor = 'progress';
+      setupDataForMap(slider.value, slider2.value, $('#serviceSelect').val());
     }
   </script>
 </html>

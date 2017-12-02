@@ -54,4 +54,13 @@ Rails.application.configure do
   
   # Mailing host
   config.action_mailer.default_url_options = { :host => "csc444-andrewallen.c9users.io" }
+  
+  config.after_initialize do  
+    ActiveMerchant::Billing::Base.mode = :test
+    ::GATEWAY = ActiveMerchant::Billing::PaypalGateway.new(  
+      login: "teenderpayments_api1.teender.com",  
+      password: "J4XTMJQZQEURBQ5L",  
+      signature: "AS54rPUCw9wOTuVl0m1aSg09HaI8ASOQoTNvEqCxop7HmGRXiaSUSt1E"  
+    ) 
+  end
 end

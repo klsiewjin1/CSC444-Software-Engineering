@@ -1,2 +1,6 @@
 <h1>Past Completed Jobs</h1>
-<%= get_completed_listings_by_user(@current_user) %>
+<% get_completed_listings_by_user(@current_user).each do |t| %>
+	<%= "Service listing id: " + t.id.to_s  %><br>
+	<%= t.task_date.to_s + " " + get_string_for_time(t.start_time + t.duration).to_s %> <br>
+	<br>
+<% end %>

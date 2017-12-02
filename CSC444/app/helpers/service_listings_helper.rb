@@ -79,24 +79,37 @@ module ServiceListingsHelper
     return ServiceListingApproval.where(teen_id: teen_id, approved: false)
   end
 
-  # returns applications that have been approved by the client, given a user_id
+  # returns applications that have been approved by the client and not completed, given a user_id
   def get_approved_listings_by_user(user_id)
+    approvals = []
     if user_is_teen(@current_user)
-      return ServiceListingApproval.where(teen_id: user_id, approved: true)
+      
+      approvals = ServiceListingApproval.where(teen_id: user_id, approved: true)
     elsif user_is_client(@current_user)
       service_listing = ServiceListing.where(user_id: user_id)
-      return ServiceListingApproval.where(approved: true, service_listing_id: service_listing.ids)
+      service_listing = service_listing.select do |t|
+        service_listing_is_completed(t.id) == false
+      end
+      if !service_listing.empty?
+        approvals =  ServiceListingApproval.where(approved: true, service_listing_id: service_listing.ids)
+      end
     end
+    return approvals
   end
 
-  # def get_completed_listings_by_user(user_id)
-  #   listings = get_service_listings_by_user(user_id)
-  #   if (DateTime(listings.start_time) + listings.duration - DateTime.now() < 0)
-  #     # completed listings
-  #     applications = ServiceListingApproval.where(approved: true, service_listing_id: listings.id)
-  #     return applications
-  #   end
-  # end
+  def get_completed_listings_by_user(user_id)
+    if (@is_client)
+      listings = get_service_listings_by_user(user_id)
+      completed = listings.select do |t|
+          # completed if the task time is smaller than current time
+          # convert to seconds 
+          service_listing_is_completed(t.id) and service_listing_is_approved(t.id) 
+        end
+    elsif (@is_teen)
+
+    end
+    return completed
+  end
 
   # returns all applications for a Service Listing
   def get_SL_approvals_from_SL(service_listing_id)
@@ -109,5 +122,12 @@ module ServiceListingsHelper
     return service_listings.any? {
         |service_listing| service_listing.approved == true
     }
+  end
+
+  def service_listing_is_completed(service_listing_id)
+    service_listings = ServiceListing.where(id: service_listing_id).select do |t|
+      t.task_date + t.start_time/3600 + t.duration/3600 - DateTime.now() < 0
+    end
+
   end
 end

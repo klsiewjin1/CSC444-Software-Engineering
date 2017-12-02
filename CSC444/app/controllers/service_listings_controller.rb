@@ -90,6 +90,7 @@ class ServiceListingsController < ApplicationController
 
   def mapView
     @current_user = current_user;
+    @service_names = Service.all;
   end
 	
 	private

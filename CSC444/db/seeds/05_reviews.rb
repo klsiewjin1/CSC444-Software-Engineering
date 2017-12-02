@@ -30,19 +30,23 @@ completed_listings.each do |listing|
   if rand(4) > 0
     rating1 = [rand(5) + 1, rand(5) + 1].max # bigger of two random values, biases towards more 4 or 5 star ratings
     review1 = rating_reviews[rating1][rand(3)]
-    reviews.push({ reviewer_id: client_id, reviewee_id: teen_id, service_id: service_id, rating: rating1, review: review1 })
+    review_seconds = rand(604800)
+    created_at = (listing.service_listing.task_date.to_time + review_seconds.seconds).to_datetime.strftime('%Y-%m-%d %H:%M:%S') # review time within one week after task date
+    reviews.push({ reviewer_id: client_id, reviewee_id: teen_id, service_id: service_id, rating: rating1, review: review1, created_at: created_at })
   end
   
   # teen reviewing client (set to happen about 75% of the time)
   if rand(4) > 0
     rating2 = [rand(5) + 1, rand(5) + 1].max # bigger of two random values, biases towards more 4 or 5 star ratings
     review2 = rating_reviews[rating2][rand(3)]
-    reviews.push({ reviewer_id: teen_id, reviewee_id: client_id, service_id: service_id, rating: rating2, review: review2 })
+    review_seconds = rand(604800)
+    created_at = (listing.service_listing.task_date.to_time + review_seconds.seconds).to_datetime.strftime('%Y-%m-%d %H:%M:%S') # review time within one week after task date
+    reviews.push({ reviewer_id: teen_id, reviewee_id: client_id, service_id: service_id, rating: rating2, review: review2, created_at: created_at })
   end
 end
 
-created_at = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
-values = reviews.map{ |r| "(#{r[:reviewer_id]}, #{r[:reviewee_id]}, #{r[:service_id]}, #{r[:rating]}, \'#{r[:review]}\', \'#{created_at}\', \'#{created_at}\')" }.join(',')
+# created_at = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
+values = reviews.map{ |r| "(#{r[:reviewer_id]}, #{r[:reviewee_id]}, #{r[:service_id]}, #{r[:rating]}, \'#{r[:review]}\', \'#{r[:created_at]}\', \'#{r[:created_at]}\')" }.join(',')
 ActiveRecord::Base.connection.execute("INSERT INTO reviews (`reviewer_id`, `reviewee_id`, `service_id`, `rating`, `review`, `created_at`, `updated_at`) VALUES #{values}")
 
 # reviews = Review.create([{ reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: 1, rating: 5, review: 'his name is jeff and he was great', service_id: 1 },

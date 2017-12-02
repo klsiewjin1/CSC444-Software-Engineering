@@ -89,6 +89,15 @@ module ServiceListingsHelper
     end
   end
 
+  # def get_completed_listings_by_user(user_id)
+  #   listings = get_service_listings_by_user(user_id)
+  #   if (DateTime(listings.start_time) + listings.duration - DateTime.now() < 0)
+  #     # completed listings
+  #     applications = ServiceListingApproval.where(approved: true, service_listing_id: listings.id)
+  #     return applications
+  #   end
+  # end
+
   # returns all applications for a Service Listing
   def get_SL_approvals_from_SL(service_listing_id)
     return ServiceListingApproval.where(service_listing_id: service_listing_id, approved: false)

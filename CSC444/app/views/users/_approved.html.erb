@@ -1,6 +1,4 @@
 <h1>Accepted Listings</h1>
-<% is_teen = user_is_teen(@current_user) %>
-<% is_client = user_is_client(@current_user) %>
 
 <% @approved_listings = get_approved_listings_by_user(@current_user) %>
 <% @approved_listings.each do |approved_listing| %>
@@ -12,16 +10,17 @@
   <%= listing.task_date %>
   for 
   <%= listing.duration %>
+  minutes
   </strong>
   <br>
   <!-- Removing an accepted job should delete the application -->
-  <% if user_is_teen(@current_user) %>
+  <% if @is_teen %>
     <% client = get_user(listing.user_id) %>
     <strong>Client: </strong>
     <%= link_to (client.fname + " " + client.lname), user_path(client) %> <br>
     <%= link_to "Cancel job", approval_path(approved_listing), :confirm => "Are you sure?", method: :delete %>
     <br>
-  <% elsif user_is_client(@current_user) %>
+  <% elsif @is_client %>
   <!-- Removing an accepted job should update approved from T to F -->
     <% teen = get_user(approved_listing.teen_id) %>
     <strong>Teen: </strong>
@@ -34,6 +33,5 @@
         <%= t.submit "Cancel approval", class: "btn btn-primary" %>
     <% end %>
   <% end %>
-
   <br>
 <% end %>

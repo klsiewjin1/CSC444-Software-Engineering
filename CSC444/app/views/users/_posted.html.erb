@@ -1,5 +1,5 @@
 <h1>Posted Jobs</h1>
-<% @service_listings = get_service_listings_by_client(@current_user) %>
+<% @service_listings = get_service_listings_by_user(@current_user) %>
 <% @service_listings.each do |service_listing| %>
   <% if !service_listing_is_approved(service_listing.id) %> 
     <strong>Type of Sercice: </strong>

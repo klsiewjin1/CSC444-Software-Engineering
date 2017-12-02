@@ -1,7 +1,10 @@
-<% if user_is_teen(@current_user) %>
+<% @is_teen = user_is_teen(@current_user) %>
+<% @is_client = user_is_client(@current_user) %>
+<% if @is_teen %>
 	<%= render "applications" %>
-	<%= render "approved" %>
-<% elsif user_is_client(@current_user) %>
+<% elsif @is_client %>
 	<%= render "posted" %>
+<% end %>
+<% if @is_teen or @is_client %>
 	<%= render "approved" %>
 <% end %>

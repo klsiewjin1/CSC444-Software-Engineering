@@ -14,7 +14,7 @@
     <strong>Hourly Rate text: </strong>
     <%= service_listing.hourly_rate %><br>
     
-    <%= link_to "Cancel job", service_listing_path(service_listing), :confirm => "Are you sure?", method: :delete %>
+    <%= link_to "Cancel job", service_listing_path(service_listing), :confirm => "Are you sure?", method: :delete %><br>
 
     <% @SL_approvals = get_SL_approvals_from_SL(service_listing) %>
     

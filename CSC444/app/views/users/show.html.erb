@@ -2,7 +2,9 @@
 
 <% provide(:title, @user.username) %>
 <div class="container">
-  
+  <% if session[:user_id] == params[:id].to_i %>
+    <h1>Welcome back, <%= @user.fname %></h1>
+  <% end %>
   <div class="row profile">
 		<div class="col-md-3">
       <%= render "layouts/profile" %>

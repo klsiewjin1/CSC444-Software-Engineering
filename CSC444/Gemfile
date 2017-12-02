@@ -40,8 +40,6 @@ gem 'jbuilder', '~> 2.5'
 #For icons
 gem 'font-awesome-rails'
 
-gem 'rails_12factor'
-
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -66,6 +64,7 @@ end
 
 group :production do
   gem 'pg'
+  gem 'rails_12factor'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

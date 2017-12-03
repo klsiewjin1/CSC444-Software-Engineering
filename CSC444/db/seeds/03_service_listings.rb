@@ -22,13 +22,9 @@ end
 
 created_at = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 values = listings.map{ |l| "(#{l[:client_id]}, #{l[:service_id]}, \'#{l[:task_date]}\', #{l[:hourly_rate]}, #{l[:start_time]}, #{l[:duration]}, \'#{l[:description]}\', \'#{created_at}\', \'#{created_at}\')" }.join(',')
-ActiveRecord::Base.connection.execute("INSERT INTO service_listings (`user_id`, `service_id`, `task_date`, `hourly_rate`, `start_time`, `duration`, `description`, `created_at`, `updated_at`) VALUES #{values}")
 
-# kanye = User.all.where(fname: 'Kanye').first
-# kendrick = User.all.where(fname: 'Kendrick').first
+# PostgreSQL (production)
+ActiveRecord::Base.connection.execute("INSERT INTO service_listings (user_id, service_id, task_date, hourly_rate, start_time, duration, description, created_at, updated_at) VALUES #{values}")
 
-# kanye.service_listings.create([{ user_id: kanye.id, service_id: Service.minimum(:id), hourly_rate: 15.5, description: 'I need babysitting', task_date: Date.new(2017, 10, 7), },
-#                               { user_id: kanye.id, service_id: Service.minimum(:id), hourly_rate: 15.5, description: 'I need babysitting', task_date: Date.new(2017, 10, 14) },
-#                               { user_id: kanye.id, service_id: Service.minimum(:id), hourly_rate: 15.5, description: 'I need babysitting', task_date: Date.new(2017, 10, 21) }])
-                                          
-# kendrick.service_listings.create([{ user_id: kendrick.id, service_id: Service.minimum(:id) + 1, hourly_rate: 17.5, description: 'I need yard work', task_date: Date.new(2017, 10, 25) }])
+# MySQL (development)
+# ActiveRecord::Base.connection.execute("INSERT INTO service_listings (`user_id`, `service_id`, `task_date`, `hourly_rate`, `start_time`, `duration`, `description`, `created_at`, `updated_at`) VALUES #{values}")

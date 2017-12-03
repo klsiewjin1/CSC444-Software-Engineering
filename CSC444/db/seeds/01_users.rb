@@ -1013,10 +1013,9 @@ users = [
 
 created_at = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 values = users.map{ |u| "(\'#{u[:user_type]}\', \'#{u[:fname]}\', \'#{u[:lname]}\', \'#{u[:username]}\', \'#{u[:email]}\', \'#{u[:cellphone]}\', \'#{u[:bdate]}\', \'#{u[:address]}\', \'#{u[:city]}\', \'#{u[:state]}\', \'#{u[:pcode]}\', \'#{u[:country]}\', #{u[:lat]}, #{u[:long]}, \'#{u[:password_digest]}\', \'#{created_at}\', \'#{created_at}\')" }.join(',')
-ActiveRecord::Base.connection.execute("INSERT INTO `users` (`user_type`, `fname`, `lname`, `username`, `email`, `cellphone`, `bdate`, `address`, `city`, `state`, `pcode`, `country`, `lat`, `long`, `password_digest`, `created_at`, `updated_at`) VALUES #{values}")
 
-# User.new(fname: 'Kanye', lname: 'West', username: 'kanyes#1fan', user_type: 'client', email: 'kanye.west@mail.utoronto.ca', address: '150 Bloor St W', city: 'Toronto', country: 'Canada', lat: 2, long: 2).save(validate: false)
-# User.new(fname: 'Kendrick', lname: 'Lamar', username: 'poolfullofliquor', user_type: 'client', email: 'kendrick.lamar@mail.utoronto.ca', address: '256 McCaul St', city: 'Toronto', country: 'Canada').save(validate: false)
-# User.new(fname: 'AAA', lname: 'XXX', username: 'aaa', user_type: 'teenager', email: 'aaa.xxx@mail.utoronto.ca', address: '40 St George St', city: 'Toronto', country: 'Canada').save(validate: false)
-# User.new(fname: 'BBB', lname: 'YYY', username: 'bbb', user_type: 'teenager', email: 'bbb.yyy@mail.utoronto.ca').save(validate: false)
-# User.new(fname: 'CCC', lname: 'ZZZ', username: 'ccc', user_type: 'teenager', email: 'ccc.zzz@mail.utoronto.ca').save(validate: false)
+# PostgreSQL (production)
+ActiveRecord::Base.connection.execute("INSERT INTO users (user_type, fname, lname, username, email, cellphone, bdate, address, city, state, pcode, country, lat, long, password_digest, created_at, updated_at) VALUES #{values}")
+
+# MySQL (development)
+# ActiveRecord::Base.connection.execute("INSERT INTO `users` (`user_type`, `fname`, `lname`, `username`, `email`, `cellphone`, `bdate`, `address`, `city`, `state`, `pcode`, `country`, `lat`, `long`, `password_digest`, `created_at`, `updated_at`) VALUES #{values}")

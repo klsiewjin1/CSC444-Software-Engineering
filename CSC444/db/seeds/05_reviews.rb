@@ -47,15 +47,9 @@ end
 
 # created_at = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 values = reviews.map{ |r| "(#{r[:reviewer_id]}, #{r[:reviewee_id]}, #{r[:service_id]}, #{r[:rating]}, \'#{r[:review]}\', \'#{r[:created_at]}\', \'#{r[:created_at]}\')" }.join(',')
-ActiveRecord::Base.connection.execute("INSERT INTO reviews (`reviewer_id`, `reviewee_id`, `service_id`, `rating`, `review`, `created_at`, `updated_at`) VALUES #{values}")
 
-# reviews = Review.create([{ reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: 1, rating: 5, review: 'his name is jeff and he was great', service_id: 1 },
-#                         { reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: 1, rating: 5, review: 'this jeff guy is greaet', service_id: 1 },
-#                         { reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: User.all.where(fname: 'Kanye').first.id, review: 'bro', rating: 5, service_id: 1 },
-#                         { reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: User.all.where(fname: 'Kanye').first.id, review: 'bro', rating: 5, service_id: 1 },
-#                         { reviewer_id: User.all.where(fname: 'BBB').first.id, reviewee_id: User.all.where(fname: 'Kanye').first.id, review: 'bro', rating: 5, service_id: 1 },
-#                         { reviewer_id: User.all.where(fname: 'CCC').first.id, reviewee_id: User.all.where(fname: 'Kanye').first.id, review: 'bro', rating: 4, service_id: 1 },
-#                         { reviewer_id: User.all.where(fname: 'AAA').first.id, reviewee_id: User.all.where(fname: 'Kendrick').first.id, review: 'bro', rating: 5, service_id: 1 },
-#                         { reviewer_id: User.all.where(fname: 'BBB').first.id, reviewee_id: User.all.where(fname: 'Kendrick').first.id, review: 'bro', rating: 4, service_id: 1 }])
+# PostgreSQL (production)
+ActiveRecord::Base.connection.execute("INSERT INTO reviews (reviewer_id, reviewee_id, service_id, rating, review, created_at, updated_at) VALUES #{values}")
 
-
+# MySQL (development)
+# ActiveRecord::Base.connection.execute("INSERT INTO reviews (`reviewer_id`, `reviewee_id`, `service_id`, `rating`, `review`, `created_at`, `updated_at`) VALUES #{values}")

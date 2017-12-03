@@ -167,11 +167,20 @@ class ServiceListingsController < ApplicationController
             #puts("excluding due to minRate, rate was: " + service[:rate]);
             next
           end
+          
+          if(listing.key?(:avgRate))
+            listing[:avgRate] = listing[:avgRate] + clientListing.hourly_rate;
+          else
+            listing[:avgRate] = clientListing.hourly_rate;
+          end
+          
           service[:link] = service_listing_path(clientListing.id)
           listing[:services].push(service)
         end
       end
       next if listing[:services].size == 0
+      
+      listing[:avgRate] = listing[:avgRate]/listing[:services].length.to_f;
       
       listing[:lat] = client.lat
       listing[:lon] = client.long
@@ -184,6 +193,7 @@ class ServiceListingsController < ApplicationController
       res.push(listing)
     end
     puts wantedServiceTypes
+    res.sort! { |x, y| y[:avgRate] <=> x[:avgRate]}
     return res
   end
 

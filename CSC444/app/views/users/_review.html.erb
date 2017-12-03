@@ -7,10 +7,6 @@
   <% if @review_matches.exists? %>
     <% @review_matches.each do |review| %>
       <tr>
-        <!-- To be removed -->
-        <strong>Review ID: </strong>
-        <%= review.id %> <br>
-        
         <strong>Reviewer: </strong>
         <td><% @reviewer = get_user(review.reviewer_id) %></td>
         <%= link_to (@reviewer.fname + " " + @reviewer.lname + " " + @reviewer.id.to_s), user_path(@reviewer) %>

@@ -101,8 +101,10 @@ module ServiceListingsHelper
 
   # returns true if the service listing has been approved
   def service_listing_is_approved(service_listing_id)
-    service_listing = ServiceListingApproval.where(service_listing_id: service_listing_id).first
-    return true if service_listing.approved == true
+    service_listings = ServiceListingApproval.where(service_listing_id: service_listing_id)
+    return service_listings.any? {
+      |service_listing| service_listing.approved == true
+    }
   end
 
   # returns true if the service listing has past its due date and duration
@@ -111,5 +113,13 @@ module ServiceListingsHelper
     end_time = DateTime.parse(service_listing.task_date.to_s)
     end_time = end_time + (service_listing.start_time).minutes + (service_listing.duration).minutes
     return true if end_time < DateTime.now()
+  end
+
+  def get_teen_who_completed_job(service_listing_id)
+    listing = ServiceListing.where(id: service_listing_id).first
+    if (service_listing_is_completed(service_listing_id))
+      applications = ServiceListingApproval.where(service_listing_id: service_listing_id, approved: true).first
+      return get_user(applications.teen_id)
+    end
   end
 end

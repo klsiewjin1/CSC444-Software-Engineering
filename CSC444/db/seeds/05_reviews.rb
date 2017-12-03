@@ -49,7 +49,7 @@ end
 values = reviews.map{ |r| "(#{r[:reviewer_id]}, #{r[:reviewee_id]}, #{r[:service_id]}, #{r[:rating]}, \'#{r[:review]}\', \'#{r[:created_at]}\', \'#{r[:created_at]}\')" }.join(',')
 
 # PostgreSQL (production)
-ActiveRecord::Base.connection.execute("INSERT INTO reviews (reviewer_id, reviewee_id, service_id, rating, review, created_at, updated_at) VALUES #{values}")
+#ActiveRecord::Base.connection.execute("INSERT INTO reviews (reviewer_id, reviewee_id, service_id, rating, review, created_at, updated_at) VALUES #{values}")
 
 # MySQL (development)
-# ActiveRecord::Base.connection.execute("INSERT INTO reviews (`reviewer_id`, `reviewee_id`, `service_id`, `rating`, `review`, `created_at`, `updated_at`) VALUES #{values}")
+ActiveRecord::Base.connection.execute("INSERT INTO reviews (`reviewer_id`, `reviewee_id`, `service_id`, `rating`, `review`, `created_at`, `updated_at`) VALUES #{values}")

@@ -1015,7 +1015,7 @@ created_at = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 values = users.map{ |u| "(\'#{u[:user_type]}\', \'#{u[:fname]}\', \'#{u[:lname]}\', \'#{u[:username]}\', \'#{u[:email]}\', \'#{u[:cellphone]}\', \'#{u[:bdate]}\', \'#{u[:address]}\', \'#{u[:city]}\', \'#{u[:state]}\', \'#{u[:pcode]}\', \'#{u[:country]}\', #{u[:lat]}, #{u[:long]}, \'#{u[:password_digest]}\', \'#{created_at}\', \'#{created_at}\')" }.join(',')
 
 # PostgreSQL (production)
-ActiveRecord::Base.connection.execute("INSERT INTO users (user_type, fname, lname, username, email, cellphone, bdate, address, city, state, pcode, country, lat, long, password_digest, created_at, updated_at) VALUES #{values}")
+#ActiveRecord::Base.connection.execute("INSERT INTO users (user_type, fname, lname, username, email, cellphone, bdate, address, city, state, pcode, country, lat, long, password_digest, created_at, updated_at) VALUES #{values}")
 
 # MySQL (development)
-# ActiveRecord::Base.connection.execute("INSERT INTO `users` (`user_type`, `fname`, `lname`, `username`, `email`, `cellphone`, `bdate`, `address`, `city`, `state`, `pcode`, `country`, `lat`, `long`, `password_digest`, `created_at`, `updated_at`) VALUES #{values}")
+ActiveRecord::Base.connection.execute("INSERT INTO `users` (`user_type`, `fname`, `lname`, `username`, `email`, `cellphone`, `bdate`, `address`, `city`, `state`, `pcode`, `country`, `lat`, `long`, `password_digest`, `created_at`, `updated_at`) VALUES #{values}")

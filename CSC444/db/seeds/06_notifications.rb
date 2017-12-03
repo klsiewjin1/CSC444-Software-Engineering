@@ -17,10 +17,10 @@ end
 values = notifications.map{ |n| "(#{n[:actor_id]}, #{n[:receiver_id]}, \'#{n[:action]}\', \'#{n[:created_at].strftime('%Y-%m-%d %H:%M:%S')}\', \'#{n[:updated_at].strftime('%Y-%m-%d %H:%M:%S')}\')" }.join(',')
 
 # PostgreSQL (production)
-ActiveRecord::Base.connection.execute("INSERT INTO notifications (actor_id, receiver_id, action, created_at, updated_at) VALUES #{values}")
+#ActiveRecord::Base.connection.execute("INSERT INTO notifications (actor_id, receiver_id, action, created_at, updated_at) VALUES #{values}")
 
 # MySQL (development)
-# ActiveRecord::Base.connection.execute("INSERT INTO notifications (`actor_id`, `receiver_id`, `action`, `created_at`, `updated_at`) VALUES #{values}")
+ActiveRecord::Base.connection.execute("INSERT INTO notifications (`actor_id`, `receiver_id`, `action`, `created_at`, `updated_at`) VALUES #{values}")
 
 # Elijah -> Replaced below seeding logic because the notifications generated were not realistic data, also writing to db one row at a time is very slow
 

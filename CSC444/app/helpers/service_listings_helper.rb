@@ -72,43 +72,26 @@ module ServiceListingsHelper
   end
 
   def get_service_listings_by_user(user_id)
-    return ServiceListing.where(user_id: user_id)
+    if (user_is_client(@current_user))
+      return ServiceListing.where(user_id: user_id)
+    elsif (user_is_teen(@current_user))
+      applications = ServiceListingApproval.where(teen_id: user_id)
+      return ServiceListing.where(id: applications.service_listing_ids)
+    end
   end
 
   def get_applied_listings_by_teen(teen_id)
     return ServiceListingApproval.where(teen_id: teen_id, approved: false)
   end
 
-  # returns applications that have been approved by the client and not completed, given a user_id
+  # returns applications that have been approved by the client, given a user_id
   def get_approved_listings_by_user(user_id)
-    approvals = []
     if user_is_teen(@current_user)
-      
-      approvals = ServiceListingApproval.where(teen_id: user_id, approved: true)
+      return ServiceListingApproval.where(teen_id: user_id, approved: true)
     elsif user_is_client(@current_user)
       service_listing = ServiceListing.where(user_id: user_id)
-      service_listing = service_listing.select do |t|
-        service_listing_is_completed(t.id) == false
-      end
-      if !service_listing.empty?
-        approvals =  ServiceListingApproval.where(approved: true, service_listing_id: service_listing.ids)
-      end
+      return ServiceListingApproval.where(approved: true, service_listing_id: service_listing.ids)
     end
-    return approvals
-  end
-
-  def get_completed_listings_by_user(user_id)
-    if (@is_client)
-      listings = get_service_listings_by_user(user_id)
-      completed = listings.select do |t|
-          # completed if the task time is smaller than current time
-          # convert to seconds 
-          service_listing_is_completed(t.id) and service_listing_is_approved(t.id) 
-        end
-    elsif (@is_teen)
-
-    end
-    return completed
   end
 
   # returns all applications for a Service Listing
@@ -118,16 +101,15 @@ module ServiceListingsHelper
 
   # returns true if the service listing has been approved
   def service_listing_is_approved(service_listing_id)
-    service_listings = ServiceListingApproval.where(service_listing_id: service_listing_id)
-    return service_listings.any? {
-        |service_listing| service_listing.approved == true
-    }
+    service_listing = ServiceListingApproval.where(service_listing_id: service_listing_id).first
+    return true if service_listing.approved == true
   end
 
+  # returns true if the service listing has past its due date and duration
   def service_listing_is_completed(service_listing_id)
-    service_listings = ServiceListing.where(id: service_listing_id).select do |t|
-      t.task_date + t.start_time/3600 + t.duration/3600 - DateTime.now() < 0
-    end
-
+    service_listing = ServiceListing.where(id: service_listing_id).first
+    end_time = DateTime.parse(service_listing.task_date.to_s)
+    end_time = end_time + (service_listing.start_time).minutes + (service_listing.duration).minutes
+    return true if end_time < DateTime.now()
   end
 end

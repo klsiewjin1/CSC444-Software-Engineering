@@ -1,41 +1,39 @@
 <h1>Accepted Listings</h1>
 
 <% @approved_listings = get_approved_listings_by_user(@current_user) %>
-<% if !@approved_listings.empty?%>
-    <% @approved_listings.each do |approved_listing| %>
-      <% listing = get_service_listing_by_id(approved_listing.service_listing_id) %>
-      <strong>Service Listing ID: </strong> 
-      <%= link_to (approved_listing.service_listing_id), service_listing_path(approved_listing.service_listing_id) %> <br>
-      <strong>
-      Starts at: 
-      <%= listing.task_date %>
-      for 
-      <%= listing.duration %>
-      minutes
-      </strong>
+<% @approved_listings.each do |approved_listing| %>
+  <% if (!service_listing_is_completed(approved_listing.service_listing_id)) %>
+    <% listing = get_service_listing_by_id(approved_listing.service_listing_id) %>
+    <strong>Service Listing ID: </strong> 
+    <%= link_to (approved_listing.service_listing_id), service_listing_path(approved_listing.service_listing_id) %> <br>
+    <strong>
+    Starts at: 
+    <%= listing.task_date %>
+    for 
+    <%= listing.duration %>
+    minutes
+    </strong>
+    <br>
+    <!-- Removing an accepted job should delete the application -->
+    <% if @is_teen %>
+      <% client = get_user(listing.user_id) %>
+      <strong>Client: </strong>
+      <%= link_to (client.fname + " " + client.lname), user_path(client) %> <br>
+      <%= link_to "Cancel job", approval_path(approved_listing), :confirm => "Are you sure?", method: :delete %>
       <br>
-      <!-- Removing an accepted job should delete the application -->
-      <% if @is_teen %>
-        <% client = get_user(listing.user_id) %>
-        <strong>Client: </strong>
-        <%= link_to (client.fname + " " + client.lname), user_path(client) %> <br>
-        <%= link_to "Cancel job", approval_path(approved_listing), :confirm => "Are you sure?", method: :delete %>
-        <br>
-      <% elsif @is_client %>
-      <!-- Removing an accepted job should update approved from T to F -->
-        <% teen = get_user(approved_listing.teen_id) %>
-        <strong>Teen: </strong>
-        <%= link_to (teen.fname + " " + teen.lname), user_path(teen) %> <br>
-        <%= form_for (approved_listing), url: {controller: "service_listing_approvals", action: "update"} do |t| %>
-            <%= hidden_field_tag :teen_id, approved_listing.teen_id %>
-            <%= hidden_field_tag :approved, false %>
-            <%= hidden_field_tag :service_listing_id, approved_listing.service_listing_id %>
-            <%= hidden_field_tag :id, @user.id %>
-            <%= t.submit "Cancel approval", class: "btn btn-primary" %>
-        <% end %>
+    <% elsif @is_client %>
+    <!-- Removing an accepted job should update approved from T to F -->
+      <% teen = get_user(approved_listing.teen_id) %>
+      <strong>Teen: </strong>
+      <%= link_to (teen.fname + " " + teen.lname), user_path(teen) %> <br>
+      <%= form_for (approved_listing), url: {controller: "service_listing_approvals", action: "update"} do |t| %>
+          <%= hidden_field_tag :teen_id, approved_listing.teen_id %>
+          <%= hidden_field_tag :approved, false %>
+          <%= hidden_field_tag :service_listing_id, approved_listing.service_listing_id %>
+          <%= hidden_field_tag :id, @user.id %>
+          <%= t.submit "Cancel approval", class: "btn btn-primary" %>
       <% end %>
-      <br>
     <% end %>
-<% else %>
-    <h3>There are no pending jobs</h3>
+    <br>
+  <% end %>
 <% end %>

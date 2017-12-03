@@ -93,7 +93,12 @@ module UsersHelper
     # calculate sin and cos of teen latitude to prevent calculating it for every table row during the query
     sin_lat_rad = sin(lat_rad)
     cos_lat_rad = cos(lat_rad)
-    return User.all.where(user_type: 'client').where('acos((? * sin(lat * ?)) + (? * cos(lat * ?) * cos((`long` * ?) - ?))) * ? < ?', sin_lat_rad, PI / 180, cos_lat_rad, PI / 180, PI / 180, long_rad, EARTH_RADIUS, radius).to_a
+    
+    if Rails.configuration.database_configuration[Rails.env]['database'] == 'development'
+      return User.all.where(user_type: 'client').where('acos((? * sin(lat * ?)) + (? * cos(lat * ?) * cos((`long` * ?) - ?))) * ? < ?', sin_lat_rad, PI / 180, cos_lat_rad, PI / 180, PI / 180, long_rad, EARTH_RADIUS, radius).to_a
+    else
+      return User.all.where(user_type: 'client').where('acos((? * sin(lat * ?)) + (? * cos(lat * ?) * cos((long * ?) - ?))) * ? < ?', sin_lat_rad, PI / 180, cos_lat_rad, PI / 180, PI / 180, long_rad, EARTH_RADIUS, radius).to_a
+    end
   end
 
 

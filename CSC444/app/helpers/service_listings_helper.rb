@@ -101,10 +101,9 @@ module ServiceListingsHelper
 
   # returns true if the service listing has been approved
   def service_listing_is_approved(service_listing_id)
-    service_listings = ServiceListingApproval.where(service_listing_id: service_listing_id)
-    return service_listings.any? {
-      |service_listing| service_listing.approved == true
-    }
+    # service_listing = ServiceListingApproval.where(service_listing_id: service_listing_id).first
+    # return true if service_listing.approved == true
+    return ServiceListingApproval.where(service_listing_id: service_listing_id, approved: true).any?
   end
 
   # returns true if the service listing has past its due date and duration

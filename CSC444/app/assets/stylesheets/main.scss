@@ -1649,7 +1649,7 @@
 		}
 		a:hover {
 
-			background-color: transparent ;
+			background-color: transparent !important ;
 			color: black !important;
 		}
 
@@ -2819,6 +2819,14 @@ h2 {
 			
 			#header a:visited {
 				color: inherit !important ;
+			}
+			
+			#banner a:visited {
+				color: white !important ;
+			}
+			
+			#inner a:visited {
+				color: black !important ;
 			}
 
 			#header a:last-child {

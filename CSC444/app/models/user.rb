@@ -1,3 +1,5 @@
+require_relative "../../lib/geocoder.rb"
+
 class User < ApplicationRecord
   has_many :service_listings, dependent: :destroy
   

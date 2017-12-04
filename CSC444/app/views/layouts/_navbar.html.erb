@@ -11,12 +11,12 @@
               <a>  <%= link_to "Browse Jobs", controller: 'service_listings' %></a>
                  <% if !current_user.nil? %>
                 <a>  <%= link_to "Profile", @current_user %></a>
-                <a>  <%= link_to "Contact Us",   '/contact' %></a>
+                <a>  <%= link_to "About Us",   '/contact' %></a>
                 <a>  <%= link_to("Logout", logout_path, method: :delete) %></a>
                   <% @notifications = get_user_notifications(@current_user.id) %>
                     <div class ="dropdown btn-group" data-behavior="notifications">
                       <span class="btn dropdown-toggle fa fa-bell" id="menu1" data-toggle="dropdown"></span>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1" style="max-height: 400px;overflow-y: auto;">
                           <% @notifications.each do |notice| %>
                             <% if notice.action == "approved your application" %>
                               <% path = 'link_to_my_listings' %>

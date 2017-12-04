@@ -6,7 +6,7 @@
     <% @client = get_user((get_service_listing_by_id(applied_listing.service_listing_id).user_id)) %>
     <strong>Client Name: </strong>
     <%= link_to (@client.fname + " " + @client.lname), user_path(@client) %> <br>
-    <strong>Job Listing ID: </strong>
+    <strong>Service Listing ID: </strong>
     <%= link_to (applied_listing.service_listing_id), service_listing_path(applied_listing.service_listing_id) %> <br>
     <strong>Description: </strong>
     <%= get_service_listing_description(applied_listing.service_listing) %><br>

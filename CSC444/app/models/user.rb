@@ -39,7 +39,7 @@ class User < ApplicationRecord
   validates_format_of :email, with: /([\w.-]+)@([\w.-]+)\.([a-zA-Z.]{2,6})/i , on: :create
   
   # Before save callbacks
-  before_save :store_lat_long
+  # before_save :store_lat_long
   before_save :downcase_email
   before_save :downcase_username
   

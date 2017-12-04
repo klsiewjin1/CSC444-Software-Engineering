@@ -113,4 +113,12 @@ module ServiceListingsHelper
     end_time = end_time + (service_listing.start_time).minutes + (service_listing.duration).minutes
     return true if end_time < DateTime.now()
   end
+
+  def get_teen_who_completed_job(service_listing_id)
+    listing = ServiceListing.where(id: service_listing_id).first
+    if (service_listing_is_completed(service_listing_id))
+      applications = ServiceListingApproval.where(service_listing_id: service_listing_id, approved: true).first
+      return get_user(applications.teen_id)
+    end
+  end
 end

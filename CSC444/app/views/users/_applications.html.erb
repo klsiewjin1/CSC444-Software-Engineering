@@ -1,4 +1,5 @@
 <h1>My Applied Jobs</h1>
+<center>
 <!-- Fetch applications by user then check if the service has already been taken by someone else -->
 <% @applied_listings = get_applied_listings_by_teen(@current_user) %>
 <% @applied_listings.each do |applied_listing| %>
@@ -16,3 +17,4 @@
     <br><br>
   <% end %>
 <% end %>
+</center>

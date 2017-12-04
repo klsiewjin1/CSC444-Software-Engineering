@@ -129,8 +129,9 @@
              if (map.getZoom() < minZoomLevel) map.setZoom(minZoomLevel);
           });
           
-	        google.maps.event.addListenerOnce(map, 'idle', function(){
-              var infowindow = new google.maps.InfoWindow({
+	          google.maps.event.addListenerOnce(map, 'idle', function(){
+	            window.setTimeout(function() {
+                var infowindow = new google.maps.InfoWindow({
                 content: '<b>Your Address: ' + address + '</b>',
                 size: new google.maps.Size(150, 50)
               });
@@ -152,6 +153,7 @@
               // ul.style.height = map.getDiv().offsetHeight;
     
               setupDataForMap(1, 0, []);
+              }, 500);
           });
 
           map.setCenter(latlng);

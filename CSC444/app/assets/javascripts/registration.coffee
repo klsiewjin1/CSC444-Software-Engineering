@@ -1,5 +1,5 @@
 currentTab = 0
-initDone = 0
+initDone = 1
 
 $(".users.new").ready ->
   # Show the currentTab, i.e. the first tab

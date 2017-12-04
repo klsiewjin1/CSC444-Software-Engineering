@@ -11,10 +11,7 @@ class AccountActivationsController < ApplicationController
       
       # Log the user in
       login user
-<<<<<<< HEAD
-=======
       flash.clear()
->>>>>>> ce9aca4fbc0cda8bb86008418366d7c98dc4c248
       flash[:success] = "Account activated!"
       redirect_to user
     else

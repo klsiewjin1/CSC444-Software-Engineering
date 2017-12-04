@@ -24,7 +24,7 @@ created_at = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 values = listings.map{ |l| "(#{l[:client_id]}, #{l[:service_id]}, \'#{l[:task_date]}\', #{l[:hourly_rate]}, #{l[:start_time]}, #{l[:duration]}, \'#{l[:description]}\', \'#{created_at}\', \'#{created_at}\')" }.join(',')
 
 # PostgreSQL (production)
-#ActiveRecord::Base.connection.execute("INSERT INTO service_listings (user_id, service_id, task_date, hourly_rate, start_time, duration, description, created_at, updated_at) VALUES #{values}")
+ActiveRecord::Base.connection.execute("INSERT INTO service_listings (user_id, service_id, task_date, hourly_rate, start_time, duration, description, created_at, updated_at) VALUES #{values}")
 
 # MySQL (development)
-ActiveRecord::Base.connection.execute("INSERT INTO service_listings (`user_id`, `service_id`, `task_date`, `hourly_rate`, `start_time`, `duration`, `description`, `created_at`, `updated_at`) VALUES #{values}")
+#ActiveRecord::Base.connection.execute("INSERT INTO service_listings (`user_id`, `service_id`, `task_date`, `hourly_rate`, `start_time`, `duration`, `description`, `created_at`, `updated_at`) VALUES #{values}")

@@ -1,5 +1,6 @@
 class Order < ApplicationRecord
   belongs_to :service_listing
+  has_many :order_transaction
   
   attr_accessor :card_number, :card_cvv, :ip_address
   
@@ -7,17 +8,27 @@ class Order < ApplicationRecord
   
   def purchase
     response = GATEWAY.purchase(price_cents, credit_card, :ip => ip_address)
+    order_transaction.create!(:action => "purchase", :amount => price_cents, :response => response)
     
-    # Update service listing as paid here...
+    if response.success?
+      service_listing = ServiceListing.find(service_listing_id)
+      service_listing.paid = true
+      service_listing.save
+    else
+      service_listing = ServiceListing.find(service_listing_id)
+      service_listing.paid = false
+      service_listing.save
+      return false
+    end
     
-    return response.success?
   end
   
   private
   
   def price_cents
-    # TODO: Get order price...
-    return 100
+    service_listing = ServiceListing.find(service_listing_id)
+    
+    return ((service_listing.hourly_rate * (service_listing.duration / 60)) / 100)
   end
   
   def validate_card

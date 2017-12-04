@@ -32,7 +32,7 @@ created_at = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 values = approvals.map{ |a| "(#{a[:service_listing_id]}, #{a[:teen_id]}, #{a[:approved]}, \'#{created_at}\', \'#{created_at}\')" }.join(',')
 
 # PostgreSQL (production)
-# ActiveRecord::Base.connection.execute("INSERT INTO service_listing_approvals (service_listing_id, teen_id, approved, created_at, updated_at) VALUES #{values}")
+ActiveRecord::Base.connection.execute("INSERT INTO service_listing_approvals (service_listing_id, teen_id, approved, created_at, updated_at) VALUES #{values}")
 
 # MySQL (development)
-ActiveRecord::Base.connection.execute("INSERT INTO service_listing_approvals (`service_listing_id`, `teen_id`, `approved`, `created_at`, `updated_at`) VALUES #{values}")
+#ActiveRecord::Base.connection.execute("INSERT INTO service_listing_approvals (`service_listing_id`, `teen_id`, `approved`, `created_at`, `updated_at`) VALUES #{values}")

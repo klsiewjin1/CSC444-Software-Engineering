@@ -15,6 +15,8 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     @order = Order.new
+    @price = params[:price]
+    Rails.logger.debug params.inspect
   end
 
   # GET /orders/1/edit
@@ -27,17 +29,24 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.ip_address = request.remote_ip
     
-    if @order.save
+    Rails.logger.debug params.inspect
+    
+    respond_to do |format|
+      
+      if @order.save
+        if @order.purchase
+          flash[:success] = "Transaction success!"
+        else
+          flash[:danger] = "Transaction failed! " + OrderTransaction.find_by(order_id: @order.id).message
+        end
         
-      if @order.purchase
-        flash[:danger] = "Order success"
+        format.html { redirect_to ServiceListing.find(@order.service_listing_id) }
+        format.json { render :show, status: :created, location: @order }
+          
       else
-        flash[:danger] = "Order failed"
+        format.html { redirect_to ServiceListing.find(@order.service_listing_id) }
+        flash[:danger] = @order.errors
       end
-        
-    else
-      format.html { render :new }
-      format.json { render json: @order.errors, status: :unprocessable_entity }
     end
   end
 
@@ -73,6 +82,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:service_listing_id, :ip_address, :first_name, :last_name, :card_type, :card_expires_on)
+      params.require(:order).permit(:service_listing_id, :ip_address, :first_name, :last_name, :card_type, :card_expires_on, :card_number, :card_cvv)
     end
 end

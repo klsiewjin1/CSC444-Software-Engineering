@@ -85,10 +85,34 @@ Rails.application.configure do
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
+  config.serve_static_assets = true
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
   
   # Mailing host
   config.action_mailer.default_url_options = { :host => "csc444-andrewallen.c9users.io" }
+  
+  config.after_initialize do  
+    ActiveMerchant::Billing::Base.mode = :test
+    ::GATEWAY = ActiveMerchant::Billing::PaypalGateway.new(  
+      login: "teenderpayments_api1.teender.com",  
+      password: "J4XTMJQZQEURBQ5L",  
+      signature: "AS54rPUCw9wOTuVl0m1aSg09HaI8ASOQoTNvEqCxop7HmGRXiaSUSt1E"  
+    ) 
+  end
+  
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :smtp
+  host = 'teender.herokuapp.com'
+  config.action_mailer.default_url_options = { host: host }
+  ActionMailer::Base.smtp_settings = {
+    :address        => 'smtp.sendgrid.net',
+    :port           => '587',
+    :authentication => :plain,
+    :user_name      => ENV['SENDGRID_USERNAME'],
+    :password       => ENV['SENDGRID_PASSWORD'],
+    :domain         => 'heroku.com',
+    :enable_starttls_auto => true
+  }
 end

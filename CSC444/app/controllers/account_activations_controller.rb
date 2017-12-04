@@ -12,6 +12,7 @@ class AccountActivationsController < ApplicationController
       # Log the user in
       login user
       flash[:success] = "Account activated!"
+      flash[:warning] = ""
       redirect_to user
     else
       flash[:danger] = "Invalid activation link"

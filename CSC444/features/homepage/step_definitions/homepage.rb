@@ -1,19 +1,25 @@
 Given("I am not logged in") do
-  pending # Write code here that turns the phrase above into concrete actions
+    current_user = nil
 end
 
 Given("I am on the homepage") do
-  pending # Write code here that turns the phrase above into concrete actions
+    visit "/"
 end
 
 Then("I should see the navbar") do
-  pending # Write code here that turns the phrase above into concrete actions
+  	page.has_content?("login")
+  	page.has_content?("home")
+  	page.has_content?("my jobs")
+  	page.has_content?("browse jobs")
 end
 
 Then("I should see the title and subtitles") do
-  pending # Write code here that turns the phrase above into concrete actions
+	page.has_content?("This is Teender")
+    page.has_content?("fast")
+	page.has_content?("reliable")
+    page.has_content?("easy")
 end
 
 Then("I should be able to login") do
-  pending # Write code here that turns the phrase above into concrete actions
+	page.has_content?("NEW USER? SIGN UP!")
 end

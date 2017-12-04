@@ -6,13 +6,13 @@
 				<div class="">
 					<div class= "logo"><%= link_to "TEENDER", root_path %></div>
 					<nav id="nav">
-                <%= link_to "Home",   welcome_index_url %>
-                <%= link_to "My Jobs", listing_users_path %>
-                <%= link_to "Browse Jobs", controller: 'service_listings' %>
+               <a> <%= link_to "Home",   welcome_index_url %></a>
+               <a> <%= link_to "My Jobs", listing_users_path %></a>
+              <a>  <%= link_to "Browse Jobs", controller: 'service_listings' %></a>
                  <% if !current_user.nil? %>
-                  <%= link_to "Profile", @current_user %>
-                  <%= link_to "Contact Us",   '/contact' %>
-                  <%= link_to("Logout", logout_path, method: :delete) %>
+                <a>  <%= link_to "Profile", @current_user %></a>
+                <a>  <%= link_to "Contact Us",   '/contact' %></a>
+                <a>  <%= link_to("Logout", logout_path, method: :delete) %></a>
                   <% @notifications = get_user_notifications(@current_user.id) %>
                     <div class ="dropdown btn-group" data-behavior="notifications">
                       <span class="btn dropdown-toggle fa fa-bell" id="menu1" data-toggle="dropdown"></span>

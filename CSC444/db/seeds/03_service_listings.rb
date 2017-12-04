@@ -27,4 +27,4 @@ values = listings.map{ |l| "(#{l[:client_id]}, #{l[:service_id]}, \'#{l[:task_da
 ActiveRecord::Base.connection.execute("INSERT INTO service_listings (user_id, service_id, task_date, hourly_rate, start_time, duration, description, created_at, updated_at) VALUES #{values}")
 
 # MySQL (development)
-# ActiveRecord::Base.connection.execute("INSERT INTO service_listings (`user_id`, `service_id`, `task_date`, `hourly_rate`, `start_time`, `duration`, `description`, `created_at`, `updated_at`) VALUES #{values}")
+#ActiveRecord::Base.connection.execute("INSERT INTO service_listings (`user_id`, `service_id`, `task_date`, `hourly_rate`, `start_time`, `duration`, `description`, `created_at`, `updated_at`) VALUES #{values}")

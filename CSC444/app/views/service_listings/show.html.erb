@@ -48,6 +48,22 @@
 	<br>
 	
 	<% is_teen = current_user_is_teen() %>
+	
+	<p><strong>Total Balance:</strong></p
+	<% price = @service_listing.hourly_rate * (@service_listing.duration / 60) %>
+	<p>$<%= price %></p>
+	
+	<p><strong>Is Paid:</strong></p>
+	<% if @service_listing.paid? %>
+	<p>Yes</p>
+	<% else %>
+	<p>No</p> <% if !is_teen && current_user.id == @service_listing.user_id %> <a href="/orders/new?service_listing_id=<%= @service_listing.id %>&price=<%= price %>" >Pay Now</a> <% end %>
+	<% end %>
+	<br>
+	
+	
+	
+
 	<% if is_teen && is_service_listing_vacant(@service_listing.id) %>
 	    <td><%= button_to 'Apply for job', { controller: 'service_listing_approvals', action: 'create', service_listing_id: @service_listing.id  } %></td>
 	<% end %>
@@ -72,5 +88,6 @@
 	</div>
 <% end %>
 
-<h1>TRANSACTIONS WIP</h1>
-<%= link_to "Transaction/Order", new_order_path %>
+<% if !@service_listing.paid? %>
+
+<% end %>

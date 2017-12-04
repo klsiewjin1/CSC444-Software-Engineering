@@ -7,8 +7,15 @@
     <% if @is_client %>
       <% teen = get_teen_who_completed_job(listing.service_listing_id) %>
       completed by <%= link_to teen.fname, user_path(teen) %><br>
+    <% elsif @is_teen %>
+    <% tmp = get_service_listing_by_id(listing.service_listing_id) %>
+    <br>Job: 
+    <%= get_service_listing_service(tmp) %>
+    <% client = get_service_listing_client(tmp) %>
+    <br>Client: 
+    <%= link_to client.fname, user_path(client) %>
     <% end %>
-    <br>
+    <br><br>
   <% end %>
 <% end %>
 

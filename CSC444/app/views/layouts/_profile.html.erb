@@ -31,15 +31,24 @@
 						<li><a href="tel:<%= @user.cellphone %>">
 							<i class="glyphicon glyphicon-phone"></i><%= @user.cellphone %></a>
 						</li>
-						<li>
-							<%= link_to edit_user_path(@user) do %>
-							<i class="glyphicon glyphicon-user"></i>Account Settings<% end %>
+						<li><a href="https://maps.google.com/?q=<%= @user.address %>">
+							<i class="icon fa-home"></i><%= @user.address %></a>
 						</li>
-						<li>
-							<a href=<%= listing_users_path %> target="_blank">
-							<i class="glyphicon glyphicon-ok"></i>
-							See your listings </a>
+						<li><a href="mailto:<%= @user.email %>">
+							<i><strong>@</strong></i><%= @user.email %></a>
 						</li>
+						
+						<%if(session[:user_id]==@user.id) %>
+							<li>
+								<%= link_to edit_user_path(@user) do %>
+								<i class="glyphicon glyphicon-user"></i>Account Settings<% end %>
+							</li>
+							<li>
+								<a href=<%= listing_users_path %> target="_blank">
+								<i class="glyphicon glyphicon-ok"></i>
+								See your listings </a>
+							</li>
+						<%end%>
 						<!--<li>
 							<a href="#">
 							<i class="glyphicon glyphicon-flag"></i>

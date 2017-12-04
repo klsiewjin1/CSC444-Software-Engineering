@@ -1,9 +1,10 @@
 <h1>Past Completed Jobs</h1>
-
+<center>
 <% approved_listings = get_approved_listings_by_user(@current_user) %>
 <% approved_listings.each do |listing| %>
   <% if service_listing_is_completed(listing.service_listing_id) %>
-    <strong>Service Listing ID: </strong><%= link_to (listing.service_listing_id), service_listing_path(listing.service_listing_id) %>
+    <strong>Service Listing ID: </strong>
+    <%= link_to (listing.service_listing_id), service_listing_path(listing.service_listing_id) %>
     <% if @is_client %>
       <% teen = get_teen_who_completed_job(listing.service_listing_id) %>
       completed by <%= link_to teen.fname, user_path(teen) %><br>
@@ -15,7 +16,7 @@
     <br>Client: 
     <%= link_to client.fname, user_path(client) %>
     <% end %>
-    <br><br>
+    <br>
   <% end %>
 <% end %>
-
+</center>

@@ -1,11 +1,13 @@
 <h1>Accepted Jobs</h1>
-
+<center>
+<div class="eightydiv">
 <% @approved_listings = get_approved_listings_by_user(@current_user) %>
 <% @approved_listings.each do |approved_listing| %>
   <% if (!service_listing_is_completed(approved_listing.service_listing_id)) %>
     <% listing = get_service_listing_by_id(approved_listing.service_listing_id) %>
     <strong>Service Listing ID: </strong> 
-    <%= link_to (approved_listing.service_listing_id), service_listing_path(approved_listing.service_listing_id) %> <br>
+    <%= link_to (approved_listing.service_listing_id), service_listing_path(approved_listing.service_listing_id) %>
+    <br>
     <strong>
     Starts at: 
     <%= listing.task_date.to_s + " "+ get_string_for_time(listing.start_time) %>
@@ -34,6 +36,7 @@
           <%= t.submit "Cancel approval", class: "btn btn-primary" %>
       <% end %>
     <% end %>
-    <br>
-  <% end %>
+  <% end %>  
 <% end %>
+</div>
+</center>

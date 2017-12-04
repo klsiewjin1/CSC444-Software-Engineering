@@ -40,7 +40,7 @@ class OrdersController < ApplicationController
           flash[:danger] = "Transaction failed! " + OrderTransaction.find_by(order_id: @order.id).message
         end
         
-        format.html { redirect_to ServiceListing.find(@order.service_listing_id), notice: 'Transaction record created' }
+        format.html { redirect_to ServiceListing.find(@order.service_listing_id) }
         format.json { render :show, status: :created, location: @order }
           
       else

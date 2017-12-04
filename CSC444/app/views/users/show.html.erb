@@ -31,16 +31,3 @@
 
 
 <%#= render "notification" %>
-<% if @user.id != session[:user_id] and user_is_client(get_user(params[:id]))%>
-  <h1>Posted Jobs</h1>
-  <% posted = get_service_listings_by_user(get_user(@user.id)) %>
-  <% if posted.empty? %>
-    No jobs posted at the moment
-  <% else %>
-    <% posted.each do |service_listing| %>
-      <% if !service_listing_is_completed(service_listing) %>
-        <%= link_to get_service_listing_service(service_listing), service_listing_path(service_listing.id) %>
-      <% end %>
-    <% end %>
-  <% end %>
-<% end %>

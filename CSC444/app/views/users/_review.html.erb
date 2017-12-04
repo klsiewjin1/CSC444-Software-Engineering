@@ -41,7 +41,7 @@
 
 <%if(session[:user_id]!=@user.id) %>
   <div class="row">
-    <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-8 col-md-offset-0">
     
       <%= form_for(@review) do |f| %>
 
@@ -53,7 +53,7 @@
         <%= f.label :rating %>
         <%= f.text_field :rating %>
 
-      <br><%= f.submit "Leave Review", class: "button" %>
+      <br><%= f.submit "Leave Review", class: "btn btn-primary" %>
       <% end %>
     </div>
   </div>

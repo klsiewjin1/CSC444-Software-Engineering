@@ -39,5 +39,6 @@
   <% end %>
   <br>
 <% end %>
-
-<%= link_to 'Add a new posting!', new_service_listing_path, :class => "button" %>
+<% if params[:id] == session[:user_id] %>
+  <%= link_to 'Add a new posting!', new_service_listing_path, :class => "button" %>
+<% end %>

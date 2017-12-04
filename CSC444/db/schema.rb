@@ -80,11 +80,6 @@ ActiveRecord::Schema.define(version: 20171204042021) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "transactions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "user_type"
     t.string "username"

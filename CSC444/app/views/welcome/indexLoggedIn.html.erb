@@ -10,15 +10,24 @@
 							<div class="image round">
 								<%= image_tag("lawn-mower.jpg", alt: "Rails logo")%>
 							</div>
-							<header>
-								<h3>Post a service listing!</h3>
-								<h5>Click below to post a job listing</h5>
-							</header>
-							
-							<footer>
-								<%= link_to 'Add a new service posting!', new_service_listing_path, :class => "button" %>
-							</footer>
-						</article>
+							<% if user_is_client(@current_user) %>
+								<header>
+									<h3>Post a service listing!</h3>
+									<h5>Click below to post a job listing</h5>
+								</header>
+								<footer>
+									<%= link_to 'Add a new service posting!', new_service_listing_path, :class => "button" %>
+								</footer>
+							<% else %>
+								<header>
+									<h3>Find the list of available jobs!</h3>
+									<h5>Apply to a service listing now</h5>
+								</header>
+								<footer>
+									<%= link_to 'Browse jobs!', '/service_listings', :class => "button" %>
+								</footer>
+							<% end %>						
+							</article>
 						
 						<article>
 							<div class="image round">

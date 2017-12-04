@@ -91,6 +91,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   
   # Mailing host
+<<<<<<< HEAD
   config.action_mailer.default_url_options = { :host => "csc444-andrewallen.c9users.io" }
   
   config.after_initialize do  
@@ -101,4 +102,19 @@ Rails.application.configure do
       signature: "AS54rPUCw9wOTuVl0m1aSg09HaI8ASOQoTNvEqCxop7HmGRXiaSUSt1E"  
     ) 
   end
+=======
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :smtp
+  host = 'teender.herokuapp.com'
+  config.action_mailer.default_url_options = { host: host }
+  ActionMailer::Base.smtp_settings = {
+    :address        => 'smtp.sendgrid.net',
+    :port           => '587',
+    :authentication => :plain,
+    :user_name      => ENV['SENDGRID_USERNAME'],
+    :password       => ENV['SENDGRID_PASSWORD'],
+    :domain         => 'heroku.com',
+    :enable_starttls_auto => true
+  }
+>>>>>>> ce9aca4fbc0cda8bb86008418366d7c98dc4c248
 end

@@ -1,4 +1,4 @@
-<h1>Accepted Listings</h1>
+<h1>Accepted Jobs</h1>
 
 <% @approved_listings = get_approved_listings_by_user(@current_user) %>
 <% @approved_listings.each do |approved_listing| %>
@@ -8,7 +8,7 @@
     <%= link_to (approved_listing.service_listing_id), service_listing_path(approved_listing.service_listing_id) %> <br>
     <strong>
     Starts at: 
-    <%= listing.task_date %>
+    <%= listing.task_date.to_s + " "+ get_string_for_time(listing.start_time) %>
     for 
     <%= listing.duration %>
     minutes
